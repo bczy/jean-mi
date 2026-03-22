@@ -121,11 +121,11 @@
         <div>
           <div class="mono text-home-400 text-xs tracking-widest mb-2"><a href="index.html" class="text-home-400 hover:text-home-300">← Accueil</a> · Avancement</div>
           <h1 class="text-4xl font-extrabold tracking-tight text-white">Tableau de bord</h1>
-          <p class="mt-2 text-slate2-300 text-sm max-w-xl">État des achats — les tableaux comparatifs s'affichent uniquement pour les articles non encore acquis.</p>
+          <p class="mt-2 text-slate2-300 text-sm max-w-xl">État des achats et prochaines étapes — 1 article acheté, 2 restants.</p>
         </div>
         <div class="text-right">
           <div class="mono text-slate2-400 text-xs">Budget de référence</div>
-          <div class="text-white font-semibold text-sm mt-1">~102 € — tout UE, port inclus</div>
+          <div class="text-white font-semibold text-sm mt-1">~91 € — tout UE, port inclus</div>
           <div class="mono text-slate2-400 text-xs mt-2">
             <a href="jean-mi.html" class="text-home-400 hover:text-home-300">← Comparatif complet</a>
           </div>
@@ -156,8 +156,8 @@
           <span class="mono text-xs text-slate2-400">Micro USB</span>
           <span id="check-micro" class="check-pending text-xl">○</span>
         </div>
-        <div class="font-bold text-slate2-800">ReSpeaker XVF-3800</div>
-        <div id="meta-micro" class="text-slate2-500 text-xs mt-2 mono">Non acheté · ~76 €</div>
+        <div class="font-bold text-slate2-800">ReSpeaker USB Mic Array (SEE-15689)</div>
+        <div id="meta-micro" class="text-slate2-500 text-xs mt-2 mono">Acheté · mars 2026</div>
       </div>
 
       <!-- Prise Zigbee -->
@@ -190,14 +190,61 @@
       <a href="jean-mi.html" class="inline-block mt-4 mono text-xs text-home-600 hover:underline">Voir le comparatif complet →</a>
     </div>
 
-    <!-- Séparateur : comparatifs d'achat -->
-    <div id="section-comparatifs-header" class="fade-up fade-up-2 pt-2">
-      <div class="mono text-xs text-slate2-400 tracking-widest uppercase mb-2">Comparatifs d'achat</div>
-      <p class="text-slate2-500 text-sm mb-6">Les tableaux ci-dessous s'affichent uniquement pour les articles non encore acquis. Une fois tous les articles achetés, cette section disparaît.</p>
-    </div>
+    <!-- Section : hardware restant à acheter -->
+    <section id="section-restant" class="fade-up fade-up-3">
+      <div class="mono text-xs text-slate2-400 tracking-widest uppercase mb-3">Hardware restant à acheter</div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
 
-    <!-- TABLE 1 : MICRO -->
-    <section id="section-micro" class="section-card fade-up fade-up-2">
+        <!-- NOUS A1Z -->
+        <div id="card-restant-prise" class="section-card p-5">
+          <div class="flex items-start justify-between gap-3 mb-3">
+            <div>
+              <span class="badge tag-rec rec-badge" style="display:inline-block;margin-bottom:6px">★ Recommandé</span>
+              <div class="font-bold text-slate2-800">NOUS A1Z</div>
+              <div class="mono text-xs text-slate2-400 mt-1">Prise Zigbee secteur · 16A · mesure conso · end-device</div>
+            </div>
+            <span class="mono text-xs text-slate2-400 whitespace-nowrap">~13–15 €</span>
+          </div>
+          <div class="flex flex-wrap gap-2 mb-3">
+            <span class="badge tag-ebay">eBay</span>
+            <span class="badge tag-new">Neuf</span>
+            <span class="mono text-xs text-slate2-500">🇵🇱 Pologne · port offert</span>
+          </div>
+          <div class="pro-text mb-3">Marque polonaise (UE) · très bien supportée Z2M + HA · mesure conso incluse</div>
+          <div class="flex items-center justify-between mt-2">
+            <a href="jean-mi.html#section-prise" class="mono text-xs text-home-600 hover:underline">Voir le comparatif complet →</a>
+            <a href="https://www.ebay.fr/sch/i.html?_nkw=NOUS+A1Z+Zigbee" target="_blank" class="btn-acheter">Chercher sur eBay ↗</a>
+          </div>
+        </div>
+
+        <!-- SONOFF ZBMINIL2 -->
+        <div id="card-restant-plafonnier" class="section-card p-5">
+          <div class="flex items-start justify-between gap-3 mb-3">
+            <div>
+              <span class="badge tag-rec rec-badge" style="display:inline-block;margin-bottom:6px">★ Recommandé</span>
+              <div class="font-bold text-slate2-800">SONOFF ZBMINIL2</div>
+              <div class="mono text-xs text-slate2-400 mt-1">Module plafonnier · sans neutre · 6A/1440W · Zigbee 3.0</div>
+            </div>
+            <span class="mono text-xs text-slate2-400 whitespace-nowrap">~10–14 €</span>
+          </div>
+          <div class="flex flex-wrap gap-2 mb-3">
+            <span class="badge tag-ebay">eBay</span>
+            <span class="badge tag-new">Neuf</span>
+            <span class="mono text-xs text-slate2-500">🇩🇪 Allemagne · port offert</span>
+          </div>
+          <div class="pro-text mb-3">Ultra-compact · sans neutre · bien documenté HA + Z2M · même écosystème SONOFF</div>
+          <div class="con-text mb-3">End-device (pas routeur Zigbee) · vérifier câblage avant achat</div>
+          <div class="flex items-center justify-between mt-2">
+            <a href="jean-mi.html#section-plafonnier" class="mono text-xs text-home-600 hover:underline">Voir le comparatif complet →</a>
+            <a href="https://www.ebay.fr/itm/314632303696" target="_blank" class="btn-acheter">Voir sur eBay ↗</a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- TABLE 1 : MICRO (supprimé — voir jean-mi.html) -->
+    <section id="section-micro" class="section-card fade-up fade-up-2" style="display:none">
       <div class="section-header">
         <span class="dot bg-home-500"></span>
         <h2 class="font-bold text-slate2-800 text-base">Micro USB pieuvre</h2>
@@ -306,8 +353,8 @@
       </div>
     </section>
 
-    <!-- TABLE 2 : PRISE -->
-    <section id="section-prise" class="section-card fade-up fade-up-3">
+    <!-- TABLE 2 : PRISE (supprimé — voir jean-mi.html) -->
+    <section id="section-prise" class="section-card fade-up fade-up-3" style="display:none">
       <div class="section-header">
         <span class="dot bg-amber-500"></span>
         <h2 class="font-bold text-slate2-800 text-base">Prise Zigbee secteur</h2>
@@ -448,8 +495,8 @@
       </div>
     </section>
 
-    <!-- TABLE 3 : PLAFONNIER -->
-    <section id="section-plafonnier" class="section-card fade-up fade-up-4">
+    <!-- TABLE 3 : PLAFONNIER (supprimé — voir jean-mi.html) -->
+    <section id="section-plafonnier" class="section-card fade-up fade-up-4" style="display:none">
       <div class="section-header">
         <span class="dot bg-blue-500"></span>
         <h2 class="font-bold text-slate2-800 text-base">Module plafonnier</h2>
@@ -563,7 +610,7 @@
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2">
         <div id="step-micro" class="flex items-center gap-2 text-sm text-slate2-600">
           <span id="step-micro-icon" class="mono text-slate2-300">○</span>
-          Acheter le micro ReSpeaker XVF-3800
+          Acheter le micro ReSpeaker USB Mic Array (SEE-15689)
         </div>
         <div id="step-prise" class="flex items-center gap-2 text-sm text-slate2-600">
           <span id="step-prise-icon" class="mono text-slate2-300">○</span>
@@ -663,9 +710,9 @@
 
   <script>
     const ITEMS = {
-      micro:      { section: 'section-micro',      card: 'card-micro',      check: 'check-micro',      meta: 'meta-micro',      step: 'step-micro',      stepIcon: 'step-micro-icon',      defaultMeta: 'Non acheté · ~76 €' },
-      prise_zigbee: { section: 'section-prise',    card: 'card-prise',      check: 'check-prise',      meta: 'meta-prise',      step: 'step-prise',      stepIcon: 'step-prise-icon',      defaultMeta: 'Non acheté · ~13–15 €' },
-      module_plafonnier: { section: 'section-plafonnier', card: 'card-plafonnier', check: 'check-plafonnier', meta: 'meta-plafonnier', step: 'step-plafonnier', stepIcon: 'step-plafonnier-icon', defaultMeta: 'Non acheté · ~10–14 €' },
+      micro:             { card: 'card-micro',      check: 'check-micro',      meta: 'meta-micro',      step: 'step-micro',      stepIcon: 'step-micro-icon',      defaultMeta: 'Non acheté · ~76 €' },
+      prise_zigbee:      { card: 'card-prise',      check: 'check-prise',      meta: 'meta-prise',      step: 'step-prise',      stepIcon: 'step-prise-icon',      defaultMeta: 'Non acheté · ~13–15 €' },
+      module_plafonnier: { card: 'card-plafonnier', check: 'check-plafonnier', meta: 'meta-plafonnier', step: 'step-plafonnier', stepIcon: 'step-plafonnier-icon', defaultMeta: 'Non acheté · ~10–14 €' },
     };
 
     async function loadStatus() {
@@ -685,16 +732,12 @@
         const done = !!item.achete;
         if (done) doneCount++;
 
-        const section = document.getElementById(cfg.section);
         const card    = document.getElementById(cfg.card);
         const check   = document.getElementById(cfg.check);
         const meta    = document.getElementById(cfg.meta);
         const stepIcon = document.getElementById(cfg.stepIcon);
 
         if (done) {
-          // Masquer le tableau comparatif
-          section.style.display = 'none';
-
           // Mettre à jour la carte de statut
           card.classList.remove('status-card-pending');
           card.classList.add('status-card-done');
@@ -722,6 +765,20 @@
         } else {
           meta.textContent = cfg.defaultMeta;
         }
+      }
+
+      // Masquer les cartes "hardware restant" pour les articles déjà achetés
+      if ((data['prise_zigbee'] || {}).achete) {
+        const c = document.getElementById('card-restant-prise');
+        if (c) c.style.display = 'none';
+      }
+      if ((data['module_plafonnier'] || {}).achete) {
+        const c = document.getElementById('card-restant-plafonnier');
+        if (c) c.style.display = 'none';
+      }
+      if ((data['prise_zigbee'] || {}).achete && (data['module_plafonnier'] || {}).achete) {
+        const s = document.getElementById('section-restant');
+        if (s) s.style.display = 'none';
       }
 
       // Barre de progression

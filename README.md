@@ -23,6 +23,12 @@ Conçu pour un salon de ~20m², entièrement local (sans cloud), basé sur le pr
 
 Consulter [jean-mi.html](jean-mi.html) pour le comparatif complet.
 
+| Article | Modèle | État |
+|---------|--------|------|
+| Micro USB | ReSpeaker USB Mic Array (SEE-15689) | ✓ Acheté — mars 2026 (Botland) |
+| Prise Zigbee | NOUS A1Z | À acheter (~13–15 €) |
+| Module plafonnier | SONOFF ZBMINIL2 | À acheter (~10–14 €) |
+
 ---
 
 ## Structure du projet
@@ -46,7 +52,7 @@ jean-mi/
 - [Home Assistant](https://www.home-assistant.io/)
 - [Zigbee2MQTT](https://www.zigbee2mqtt.io/)
 - [Compatibilité appareils Zigbee](https://home-assistant-devices.com/fr)
-- [OpenELAB — ReSpeaker XVF-3800](https://openelab.io/fr/products/respeaker-usb-mic-array-v2)
+- [Botland — ReSpeaker USB Mic Array (SEE-15689)](https://botland.store/voice-assistants/15689-respeaker-usb-mic-array-voice-assistant-5904422377939.html) — acheté mars 2026
 - [Domadoo — SONOFF](https://www.domadoo.fr/fr/336_sonoff)
 
 ---
