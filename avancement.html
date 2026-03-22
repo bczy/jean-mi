@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Projet Jean-Mi — Matériel Domotique</title>
+  <title>Projet Jean-Mi — Avancement</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
   <script>
@@ -87,13 +87,15 @@
     .tag-rec  { background: #d1fae5; color: #065f46; border: 1.5px solid #0f7a59; }
     .free-port { color: #0f7a59; font-weight: 600; font-family: 'DM Mono', monospace; font-size: 0.78rem; }
     .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
-    th.sortable { cursor: pointer; user-select: none; }
-    th.sortable:hover { background: #eeece6; }
-    th.sort-asc::after  { content: ' ▲'; color: #0f7a59; font-size: 0.6rem; }
-    th.sort-desc::after { content: ' ▼'; color: #0f7a59; font-size: 0.6rem; }
     .btn-acheter { display: inline-block; padding: 4px 12px; border-radius: 6px; background: #0f7a59; color: white !important; font-family: 'DM Mono', monospace; font-size: 0.68rem; font-weight: 500; text-decoration: none !important; white-space: nowrap; }
     .btn-acheter:hover { background: #085d44; }
     .btn-acheter-off { display: inline-block; padding: 4px 12px; border-radius: 6px; background: #d8d5cb; color: #5a5549 !important; font-family: 'DM Mono', monospace; font-size: 0.68rem; font-weight: 500; text-decoration: none !important; white-space: nowrap; cursor: default; pointer-events: none; }
+    .progress-bar-bg { background: #eeece6; border-radius: 999px; height: 8px; overflow: hidden; }
+    .progress-bar-fill { background: #1d9e75; border-radius: 999px; height: 8px; transition: width 0.6s ease; }
+    .status-card-done { background: #f0faf5; border: 1.5px solid #6dcda2; }
+    .status-card-pending { background: white; border: 1.5px solid #e8e5dc; }
+    .check-done { color: #0f7a59; }
+    .check-pending { color: #d8d5cb; }
   </style>
 </head>
 <body class="min-h-screen">
@@ -103,63 +105,79 @@
     <div class="max-w-7xl mx-auto px-6 py-10">
       <div class="flex items-start justify-between flex-wrap gap-4">
         <div>
-          <div class="mono text-home-400 text-xs tracking-widest mb-2">PROJET / JEAN-MI</div>
-          <h1 class="text-4xl font-extrabold tracking-tight text-white">Domotique Home Assistant</h1>
-          <p class="mt-2 text-slate2-300 text-sm max-w-xl">Comparatif matériel — micro USB pieuvre, prise Zigbee secteur, micro-module plafonnier. Sources : eBay UE · Le Bon Coin · Google Products · Rakuten FR · Domotique-Store.</p>
+          <div class="mono text-home-400 text-xs tracking-widest mb-2">PROJET / JEAN-MI / AVANCEMENT</div>
+          <h1 class="text-4xl font-extrabold tracking-tight text-white">Tableau de bord</h1>
+          <p class="mt-2 text-slate2-300 text-sm max-w-xl">État des achats — les tableaux comparatifs s'affichent uniquement pour les articles non encore acquis.</p>
         </div>
         <div class="text-right">
-          <div class="mono text-slate2-400 text-xs">PC cible</div>
-          <div class="text-white font-semibold text-sm mt-1">NiPoGi E3B · Ryzen 7 7735HS</div>
-          <div class="mono text-slate2-400 text-xs mt-1">Ubuntu 24.04 + GNOME · SONOFF ZigBee 3.0</div>
+          <div class="mono text-slate2-400 text-xs">Budget de référence</div>
+          <div class="text-white font-semibold text-sm mt-1">~102 € — tout UE, port inclus</div>
+          <div class="mono text-slate2-400 text-xs mt-2">
+            <a href="jean-mi.html" class="text-home-400 hover:text-home-300">← Comparatif complet</a>
+          </div>
         </div>
       </div>
 
-      <!-- Config pills -->
-      <div class="flex flex-wrap gap-2 mt-6">
-        <span class="badge bg-home-800 text-home-200">Home Assistant</span>
-        <span class="badge bg-home-800 text-home-200">Zigbee2MQTT</span>
-        <span class="badge bg-slate2-700 text-slate2-200">16 Go LPDDR5</span>
-        <span class="badge bg-slate2-700 text-slate2-200">512 Go NVMe</span>
-        <span class="badge bg-slate2-700 text-slate2-200">Salon ~20m²</span>
-        <span class="badge bg-amber-900 text-amber-200">Livraison France uniquement</span>
-        <span class="badge bg-amber-900 text-amber-200">Provenance UE uniquement</span>
+      <!-- Barre de progression globale -->
+      <div class="mt-8">
+        <div class="flex items-center justify-between mb-2">
+          <span class="mono text-xs text-slate2-400">PROGRESSION GLOBALE</span>
+          <span id="progress-label" class="mono text-xs text-home-400">0 / 3 articles achetés</span>
+        </div>
+        <div class="progress-bar-bg">
+          <div id="progress-bar" class="progress-bar-fill" style="width: 0%"></div>
+        </div>
       </div>
     </div>
   </header>
 
   <main class="max-w-7xl mx-auto px-6 py-10 space-y-10">
 
-    <!-- Préférences achat -->
-    <div class="fade-up fade-up-2 grid grid-cols-2 lg:grid-cols-5 gap-4">
-      <div class="section-card p-5">
-        <div class="mono text-xs text-slate2-400 mb-1">Priorité 1</div>
-        <div class="font-bold text-lg text-slate2-800">eBay</div>
-        <div class="text-slate2-500 text-sm mt-1">Occasion de préférence, vendeurs UE uniquement</div>
+    <!-- Cartes de statut -->
+    <div class="fade-up fade-up-2 grid grid-cols-1 sm:grid-cols-3 gap-4">
+
+      <!-- Micro -->
+      <div id="card-micro" class="section-card p-5 status-card-pending">
+        <div class="flex items-center justify-between mb-2">
+          <span class="mono text-xs text-slate2-400">Micro USB</span>
+          <span id="check-micro" class="check-pending text-xl">○</span>
+        </div>
+        <div class="font-bold text-slate2-800">ReSpeaker XVF-3800</div>
+        <div id="meta-micro" class="text-slate2-500 text-xs mt-2 mono">Non acheté · ~76 €</div>
       </div>
-      <div class="section-card p-5">
-        <div class="mono text-xs text-slate2-400 mb-1">Priorité 2</div>
-        <div class="font-bold text-lg text-slate2-800">Le Bon Coin</div>
-        <div class="text-slate2-500 text-sm mt-1">Particuliers France, remise en main propre possible</div>
+
+      <!-- Prise Zigbee -->
+      <div id="card-prise" class="section-card p-5 status-card-pending">
+        <div class="flex items-center justify-between mb-2">
+          <span class="mono text-xs text-slate2-400">Prise Zigbee</span>
+          <span id="check-prise" class="check-pending text-xl">○</span>
+        </div>
+        <div class="font-bold text-slate2-800">NOUS A1Z</div>
+        <div id="meta-prise" class="text-slate2-500 text-xs mt-2 mono">Non acheté · ~13–15 €</div>
       </div>
-      <div class="section-card p-5">
-        <div class="mono text-xs text-slate2-400 mb-1">Priorité 3</div>
-        <div class="font-bold text-lg text-slate2-800">Google Products</div>
-        <div class="text-slate2-500 text-sm mt-1">Revendeurs spécialisés UE (Domadoo, OpenELAB…)</div>
+
+      <!-- Module plafonnier -->
+      <div id="card-plafonnier" class="section-card p-5 status-card-pending">
+        <div class="flex items-center justify-between mb-2">
+          <span class="mono text-xs text-slate2-400">Module plafonnier</span>
+          <span id="check-plafonnier" class="check-pending text-xl">○</span>
+        </div>
+        <div class="font-bold text-slate2-800">SONOFF ZBMINIL2</div>
+        <div id="meta-plafonnier" class="text-slate2-500 text-xs mt-2 mono">Non acheté · ~10–14 €</div>
       </div>
-      <div class="section-card p-5">
-        <div class="mono text-xs text-slate2-400 mb-1">Priorité 4</div>
-        <div class="font-bold text-lg text-slate2-800">Rakuten FR</div>
-        <div class="text-slate2-500 text-sm mt-1">Marketplace FR, vendeurs pro, occasion certifiée, retours 30j</div>
-      </div>
-      <div class="section-card p-5">
-        <div class="mono text-xs text-slate2-400 mb-1">Priorité 5</div>
-        <div class="font-bold text-lg text-slate2-800">Domotique-Store</div>
-        <div class="text-slate2-500 text-sm mt-1">Spécialiste domotique FR, conseils Z2M/HA, SAV technique</div>
-      </div>
+
+    </div>
+
+    <!-- Message : tout acheté -->
+    <div id="all-done" class="hidden fade-up fade-up-2 section-card p-8 text-center">
+      <div class="text-5xl mb-4">🎉</div>
+      <h2 class="font-extrabold text-2xl text-home-700 mb-2">Tout le matériel est acheté !</h2>
+      <p class="text-slate2-500 text-sm">Il ne reste plus qu'à installer et configurer Home Assistant.</p>
+      <a href="jean-mi.html" class="inline-block mt-4 mono text-xs text-home-600 hover:underline">Voir le comparatif complet →</a>
     </div>
 
     <!-- TABLE 1 : MICRO -->
-    <section class="section-card fade-up fade-up-2">
+    <section id="section-micro" class="section-card fade-up fade-up-2">
       <div class="section-header">
         <span class="dot bg-home-500"></span>
         <h2 class="font-bold text-slate2-800 text-base">Micro USB pieuvre</h2>
@@ -243,7 +261,7 @@
               <td class="price-cell">~30–40 €</td>
               <td><span class="price-cell">~5–6 €</span><div class="sub-text">Colissimo FR</div></td>
               <td class="pro-text">Protection acheteur Rakuten, vendeurs pro FR vérifiés, retour 30j garanti</td>
-              <td class="con-text">Produit EOL — aucune annonce active trouvée en 2025, stock quasi-nul ; les rares exemplaires dépasseraient 60-80€</td>
+              <td class="con-text">Produit EOL — aucune annonce active trouvée en 2025, stock quasi-nul ; les rares exemplaires dépasseraient 60–80 €</td>
               <td class="total-norm" style="color:#b45309">Introuvable (EOL)</td>
               <td><a href="https://fr.shopping.rakuten.com/s/respeaker+usb+mic+array" target="_blank" class="btn-acheter">Chercher ↗</a></td>
             </tr>
@@ -251,21 +269,6 @@
               <td>
                 <div class="font-semibold text-slate2-800">ReSpeaker USB Mic Array</div>
                 <div class="sub-text">4 mics XMOS XVF-3000</div>
-              </td>
-              <td><span class="badge tag-ds">Domotique-Store</span></td>
-              <td><span class="badge tag-new">Neuf</span></td>
-              <td class="mono text-xs">🇫🇷 France</td>
-              <td class="price-cell">~1.5 W<div class="sub-text">USB 5V</div></td>
-              <td class="price-cell">~49 €</td>
-              <td><span class="price-cell">~5–6 €</span><div class="sub-text">ou offert selon seuil</div></td>
-              <td class="pro-text">Spécialiste HA/Z2M, conseils techniques gratuits, SAV FR</td>
-              <td class="con-text">Site en maintenance au moment de la vérification (mars 2026) — disponibilité et prix à confirmer</td>
-              <td class="total-norm" style="color:#b45309">Site hors ligne</td>
-              <td><span class="btn-acheter-off">Site hors ligne</span></td>
-            </tr>
-            <tr>
-              <td>
-                <div class="font-semibold text-slate2-800">ReSpeaker USB Mic Array</div>
               </td>
               <td><span class="badge tag-gp">Google Prod.</span></td>
               <td><span class="badge tag-new">Neuf</span></td>
@@ -284,7 +287,7 @@
     </section>
 
     <!-- TABLE 2 : PRISE -->
-    <section class="section-card fade-up fade-up-3">
+    <section id="section-prise" class="section-card fade-up fade-up-3">
       <div class="section-header">
         <span class="dot bg-amber-500"></span>
         <h2 class="font-bold text-slate2-800 text-base">Prise Zigbee secteur</h2>
@@ -374,22 +377,6 @@
             </tr>
             <tr>
               <td>
-                <div class="font-semibold text-slate2-800">NOUS A1Z</div>
-                <div class="sub-text">16A · mesure conso · routeur Zigbee</div>
-              </td>
-              <td><span class="badge tag-ds">Domotique-Store</span></td>
-              <td><span class="badge tag-new">Neuf</span></td>
-              <td class="mono text-xs">🇫🇷 France</td>
-              <td class="price-cell">~0.5 W<div class="sub-text">en veille</div></td>
-              <td class="price-cell">~13–15 €</td>
-              <td><span class="price-cell">~5 €</span><div class="sub-text">ou offert selon seuil</div></td>
-              <td class="pro-text">Spécialiste HA/Z2M, conseils intégration, SAV technique FR, stock fiable</td>
-              <td class="con-text">Neuf uniquement, port payant si petite commande, moins compétitif que eBay</td>
-              <td class="total-norm">~13–20 €</td>
-              <td><span class="btn-acheter-off">Site hors ligne</span></td>
-            </tr>
-            <tr>
-              <td>
                 <div class="font-semibold text-slate2-800">Innr SP 240</div>
                 <div class="sub-text">Prise Zigbee premium</div>
               </td>
@@ -410,7 +397,7 @@
     </section>
 
     <!-- TABLE 3 : PLAFONNIER -->
-    <section class="section-card fade-up fade-up-4">
+    <section id="section-plafonnier" class="section-card fade-up fade-up-4">
       <div class="section-header">
         <span class="dot bg-blue-500"></span>
         <h2 class="font-bold text-slate2-800 text-base">Module plafonnier</h2>
@@ -501,22 +488,6 @@
             <tr>
               <td>
                 <div class="font-semibold text-slate2-800">SONOFF ZBMINIL2</div>
-                <div class="sub-text">Sans neutre · 6A/1440W · Zigbee 3.0</div>
-              </td>
-              <td><span class="badge tag-ds">Domotique-Store</span></td>
-              <td><span class="badge tag-new">Neuf</span></td>
-              <td class="mono text-xs">🇫🇷 France</td>
-              <td class="price-cell">~0.3 W<div class="sub-text">module</div></td>
-              <td class="price-cell">~14–15 €</td>
-              <td><span class="price-cell">~5 €</span><div class="sub-text">ou offert selon seuil</div></td>
-              <td class="pro-text">Spécialiste domotique FR, stock SONOFF stable, conseils sans-neutre Z2M/HA</td>
-              <td class="con-text">Neuf uniquement, port payant si commande isolée, équivalent Domadoo en prix</td>
-              <td class="total-norm">~14–20 €</td>
-              <td><span class="btn-acheter-off">Site hors ligne</span></td>
-            </tr>
-            <tr>
-              <td>
-                <div class="font-semibold text-slate2-800">SONOFF ZBMINIL2</div>
               </td>
               <td><span class="badge tag-gp">Google Prod.</span></td>
               <td><span class="badge tag-new">Neuf</span></td>
@@ -534,48 +505,50 @@
       </div>
     </section>
 
-    <!-- Récap budget optimal -->
-    <section class="fade-up fade-up-4 section-card p-6">
-      <h2 class="font-bold text-slate2-800 text-base mb-4">Scénario budget optimal — tout UE, livraison France</h2>
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
-        <div class="bg-slate2-50 rounded-xl p-4 border border-slate2-100">
-          <div class="mono text-xs text-slate2-400 mb-1">Micro pieuvre</div>
-          <div class="font-bold text-home-700 text-xl">~76 €</div>
-          <div class="text-slate2-500 text-xs mt-1">ReSpeaker XVF3800 🇩🇪 OpenELAB — port offert</div>
-          <div class="mono text-xs mt-1" style="color:#b45309">⚠ Ancien modèle EOL — 96,95 € (Botland : 65 €)</div>
+    <!-- Checklist installation -->
+    <section id="section-checklist" class="fade-up fade-up-4 section-card p-6">
+      <h2 class="font-bold text-slate2-800 text-base mb-4">Prochaines étapes</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2">
+        <div id="step-micro" class="flex items-center gap-2 text-sm text-slate2-600">
+          <span id="step-micro-icon" class="mono text-slate2-300">○</span>
+          Acheter le micro ReSpeaker XVF-3800
         </div>
-        <div class="bg-slate2-50 rounded-xl p-4 border border-slate2-100">
-          <div class="mono text-xs text-slate2-400 mb-1">Prise Zigbee</div>
-          <div class="font-bold text-home-700 text-xl">~14 €</div>
-          <div class="text-slate2-500 text-xs mt-1">NOUS A1Z eBay.fr 🇵🇱 — port offert</div>
+        <div id="step-prise" class="flex items-center gap-2 text-sm text-slate2-600">
+          <span id="step-prise-icon" class="mono text-slate2-300">○</span>
+          Acheter la prise NOUS A1Z
         </div>
-        <div class="bg-slate2-50 rounded-xl p-4 border border-slate2-100">
-          <div class="mono text-xs text-slate2-400 mb-1">Module plafonnier</div>
-          <div class="font-bold text-home-700 text-xl">~12 €</div>
-          <div class="text-slate2-500 text-xs mt-1">ZBMINIL2 eBay.fr 🇩🇪 — port offert</div>
+        <div id="step-plafonnier" class="flex items-center gap-2 text-sm text-slate2-600">
+          <span id="step-plafonnier-icon" class="mono text-slate2-300">○</span>
+          Acheter le module SONOFF ZBMINIL2
         </div>
-      </div>
-      <div class="flex items-center justify-between border-t border-slate2-100 pt-4">
-        <div class="text-slate2-500 text-sm">Total estimé toutes plateformes confondues</div>
-        <div class="font-extrabold text-2xl text-slate2-800">~102 €</div>
-      </div>
-      <div class="mt-3 text-xs text-slate2-400 mono">* Prix vérifiés mars 2026 · Frais de port inclus · Provenance UE garantie · Livraison France · Micro EOL : budget fortement révisé à la hausse</div>
-    </section>
-
-    <!-- GitHub instructions -->
-    <section class="fade-up fade-up-4 bg-slate2-900 text-white rounded-2xl p-6">
-      <h2 class="font-bold text-base mb-3 text-slate2-100">Déploiement GitHub — projet jean-mi</h2>
-      <div class="mono text-xs text-slate2-300 space-y-1">
-        <div class="text-home-400 mb-2"># Créer le repo et pousser ce fichier</div>
-        <div>git init jean-mi</div>
-        <div>cd jean-mi</div>
-        <div>cp /path/to/jean-mi.html index.html</div>
-        <div>git add index.html</div>
-        <div>git commit -m "feat: comparatif matériel domotique HA"</div>
-        <div>git remote add origin https://github.com/TON_USER/jean-mi.git</div>
-        <div>git push -u origin main</div>
-        <div class="text-home-400 mt-3 mb-1"># Activer GitHub Pages (Settings → Pages → Branch: main)</div>
-        <div class="text-slate2-300">→ Accessible sur https://TON_USER.github.io/jean-mi/</div>
+        <div class="flex items-center gap-2 text-sm text-slate2-500">
+          <span class="mono text-slate2-200">○</span>
+          Installer Home Assistant sur Ubuntu 24.04
+        </div>
+        <div class="flex items-center gap-2 text-sm text-slate2-500">
+          <span class="mono text-slate2-200">○</span>
+          Appairer le coordinateur SONOFF Zigbee Dongle Plus
+        </div>
+        <div class="flex items-center gap-2 text-sm text-slate2-500">
+          <span class="mono text-slate2-200">○</span>
+          Configurer Zigbee2MQTT
+        </div>
+        <div class="flex items-center gap-2 text-sm text-slate2-500">
+          <span class="mono text-slate2-200">○</span>
+          Appairer la prise NOUS A1Z
+        </div>
+        <div class="flex items-center gap-2 text-sm text-slate2-500">
+          <span class="mono text-slate2-200">○</span>
+          Installer le ZBMINIL2 derrière l'interrupteur
+        </div>
+        <div class="flex items-center gap-2 text-sm text-slate2-500">
+          <span class="mono text-slate2-200">○</span>
+          Brancher le ReSpeaker et configurer la voix
+        </div>
+        <div class="flex items-center gap-2 text-sm text-slate2-500">
+          <span class="mono text-slate2-200">○</span>
+          Intégrer Spotify et YouTube
+        </div>
       </div>
     </section>
 
@@ -584,47 +557,91 @@
   <footer class="max-w-7xl mx-auto px-6 py-6 border-t border-slate2-200 mt-4">
     <div class="flex items-center justify-between flex-wrap gap-2">
       <div class="mono text-xs text-slate2-400">Projet Jean-Mi · Home Assistant · Généré avec Claude</div>
-      <div class="mono text-xs text-slate2-400">Données indicatives — vérifier les prix avant achat</div>
+      <div class="mono text-xs text-slate2-400">
+        Mettre à jour <code>achats.json</code> pour refléter les achats effectués
+        · <a href="jean-mi.html" class="text-home-600 hover:underline">Comparatif complet →</a>
+      </div>
     </div>
   </footer>
 
   <script>
-    (function () {
-      // Parse a cell's text to a sortable value (numeric if possible)
-      function cellVal(td) {
-        var raw = td.innerText.trim();
-        // Extract first number found (handles "~12–14 €", "58,90 €", etc.)
-        var m = raw.replace(',', '.').match(/[\d]+(?:\.\d+)?/);
-        return m ? parseFloat(m[0]) : raw.toLowerCase();
+    const ITEMS = {
+      micro:      { section: 'section-micro',      card: 'card-micro',      check: 'check-micro',      meta: 'meta-micro',      step: 'step-micro',      stepIcon: 'step-micro-icon',      defaultMeta: 'Non acheté · ~76 €' },
+      prise_zigbee: { section: 'section-prise',    card: 'card-prise',      check: 'check-prise',      meta: 'meta-prise',      step: 'step-prise',      stepIcon: 'step-prise-icon',      defaultMeta: 'Non acheté · ~13–15 €' },
+      module_plafonnier: { section: 'section-plafonnier', card: 'card-plafonnier', check: 'check-plafonnier', meta: 'meta-plafonnier', step: 'step-plafonnier', stepIcon: 'step-plafonnier-icon', defaultMeta: 'Non acheté · ~10–14 €' },
+    };
+
+    async function loadStatus() {
+      let data;
+      try {
+        const res = await fetch('achats.json?t=' + Date.now());
+        data = await res.json();
+      } catch (e) {
+        console.warn('Impossible de charger achats.json — affichage complet par défaut.');
+        data = { micro: { achete: false }, prise_zigbee: { achete: false }, module_plafonnier: { achete: false } };
       }
 
-      function sortTable(table, colIdx, asc) {
-        var tbody = table.tBodies[0];
-        var rows = Array.from(tbody.rows);
-        rows.sort(function (a, b) {
-          var va = cellVal(a.cells[colIdx]);
-          var vb = cellVal(b.cells[colIdx]);
-          if (typeof va === 'number' && typeof vb === 'number') return asc ? va - vb : vb - va;
-          return asc ? String(va).localeCompare(String(vb), 'fr') : String(vb).localeCompare(String(va), 'fr');
-        });
-        rows.forEach(function (r) { tbody.appendChild(r); });
+      let doneCount = 0;
+
+      for (const [key, cfg] of Object.entries(ITEMS)) {
+        const item = data[key] || {};
+        const done = !!item.achete;
+        if (done) doneCount++;
+
+        const section = document.getElementById(cfg.section);
+        const card    = document.getElementById(cfg.card);
+        const check   = document.getElementById(cfg.check);
+        const meta    = document.getElementById(cfg.meta);
+        const stepIcon = document.getElementById(cfg.stepIcon);
+
+        if (done) {
+          // Masquer le tableau comparatif
+          section.style.display = 'none';
+
+          // Mettre à jour la carte de statut
+          card.classList.remove('status-card-pending');
+          card.classList.add('status-card-done');
+          check.classList.remove('check-pending');
+          check.classList.add('check-done');
+          check.textContent = '✓';
+
+          // Afficher les infos d'achat
+          const parts = [];
+          if (item.produit) parts.push(item.produit);
+          if (item.prix)    parts.push(item.prix + ' €');
+          if (item.source)  parts.push(item.source);
+          if (item.date)    parts.push(item.date);
+          meta.textContent = parts.length ? parts.join(' · ') : 'Acheté';
+          meta.style.color = '#0f7a59';
+
+          // Checklist
+          if (stepIcon) {
+            stepIcon.textContent = '✓';
+            stepIcon.style.color = '#0f7a59';
+            stepIcon.parentElement.style.color = '#0f7a59';
+            stepIcon.parentElement.style.textDecoration = 'line-through';
+            stepIcon.parentElement.style.opacity = '0.6';
+          }
+        } else {
+          meta.textContent = cfg.defaultMeta;
+        }
       }
 
-      document.querySelectorAll('table').forEach(function (table) {
-        var ths = table.querySelectorAll('thead th');
-        ths.forEach(function (th, idx) {
-          th.classList.add('sortable');
-          th._sortAsc = true;
-          th.addEventListener('click', function () {
-            // Reset all headers in this table
-            ths.forEach(function (h) { h.classList.remove('sort-asc', 'sort-desc'); });
-            sortTable(table, idx, th._sortAsc);
-            th.classList.add(th._sortAsc ? 'sort-asc' : 'sort-desc');
-            th._sortAsc = !th._sortAsc;
-          });
-        });
-      });
-    })();
+      // Barre de progression
+      const total = Object.keys(ITEMS).length;
+      const pct   = Math.round((doneCount / total) * 100);
+      document.getElementById('progress-bar').style.width = pct + '%';
+      document.getElementById('progress-label').textContent = doneCount + ' / ' + total + ' articles achetés';
+
+      // Message "tout acheté"
+      if (doneCount === total) {
+        document.getElementById('all-done').classList.remove('hidden');
+        document.getElementById('section-checklist').style.display = 'none';
+      }
+    }
+
+    loadStatus();
   </script>
+
 </body>
 </html>

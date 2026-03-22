@@ -1,11 +1,11 @@
-# 🏠 Projet Jean-Mi — Domotique Home Assistant
+# Projet Jean-Mi — Domotique Home Assistant
 
-Comparatif matériel pour un projet domotique **Home Assistant** avec commande vocale locale, piloté par IA.  
+Comparatif matériel pour un projet domotique **Home Assistant** avec commande vocale locale, piloté par IA.
 Conçu pour un salon de ~20m², entièrement local (pas de cloud), basé sur le protocole **Zigbee**.
 
 ---
 
-## 📋 Description
+## Description
 
 Ce projet recense et compare le matériel nécessaire pour :
 
@@ -13,11 +13,11 @@ Ce projet recense et compare le matériel nécessaire pour :
 - **Contrôler les lumières** du salon via Zigbee
 - **Faire tourner une IA locale** sur Linux sans dépendance cloud
 
-Le fichier `index.html` contient les tableaux comparatifs interactifs, avec prix, frais de port, avantages/inconvénients et liens directs vers les vendeurs.
+Le fichier `jean-mi.html` contient les tableaux comparatifs interactifs, avec prix, frais de port, avantages/inconvénients et liens directs vers les vendeurs.
 
 ---
 
-## 🖥️ Stack technique
+## Stack technique
 
 | Composant | Détail |
 |-----------|--------|
@@ -30,46 +30,53 @@ Le fichier `index.html` contient les tableaux comparatifs interactifs, avec prix
 
 ---
 
-## 🛒 Matériel à acheter
+## Matériel à acheter
 
-### 🎤 Micro USB pieuvre
-**ReSpeaker USB Mic Array** — 4 mics XMOS XVF-3000, champ lointain 5m, AEC/AGC/NS, plug & play Linux
+### Micro USB pieuvre
+
+**ReSpeaker XVF-3800** — 4 mics, champ lointain 5m, AEC/AGC/NS, plug & play Linux
+
+> Le ReSpeaker XVF-3000 est **EOL** (prix actuel ~96,95 €). Le successeur **XVF-3800** (~75,95 €) est la référence recommandée.
 
 | Source recommandée | Prix | Port | Total |
 |--------------------|------|------|-------|
-| OpenELAB 🇩🇪 (Google Products) | ~45 € | Gratuit ≥ 50 € | **~45 €** |
+| OpenELAB 🇩🇪 (Google Products) | ~75,95 € | Gratuit ≥ 50 € | **~76 €** |
 
-### 🔌 Prise Zigbee secteur
+### Prise Zigbee secteur
+
 **NOUS A1Z** — 16A, mesure de consommation, routeur Zigbee, compatible Zigbee2MQTT + HA
 
 | Source recommandée | Prix | Port | Total |
 |--------------------|------|------|-------|
 | eBay.fr 🇵🇱 (vendeur UE) | ~11–14 € | Gratuit | **~11–14 €** |
 
-### 💡 Module plafonnier (sans neutre)
+### Module plafonnier (sans neutre)
+
 **SONOFF ZBMINIL2** — Zigbee 3.0, 6A/1440W, ultra-compact, sans fil neutre requis
 
 | Source recommandée | Prix | Port | Total |
 |--------------------|------|------|-------|
 | eBay.fr 🇩🇪 (vendeur UE) | ~10–14 € | Gratuit | **~10–14 €** |
 
-### 💰 Budget total estimé : ~69 €
+### Budget total estimé : ~102 €
 
 ---
 
-## 🗂️ Structure du projet
+## Structure du projet
 
 ```
 jean-mi/
-├── index.html     # Comparatif interactif (Tailwind CSS CDN)
-└── README.md      # Ce fichier
+├── jean-mi.html   # Comparatif interactif (Tailwind CSS CDN) — source de vérité
+├── README.md      # Ce fichier
+├── PROJET.md      # Spec complète, SSH, déploiement, checklist
+└── CLAUDE.md      # Guide de contexte pour Claude Code
 ```
 
 ---
 
-## 🚀 Utilisation
+## Utilisation
 
-Ouvrir `index.html` directement dans un navigateur — aucune dépendance à installer.
+Ouvrir `jean-mi.html` directement dans un navigateur — aucune dépendance à installer.
 
 Le fichier utilise :
 - [Tailwind CSS](https://cdn.tailwindcss.com) via CDN
@@ -77,7 +84,7 @@ Le fichier utilise :
 
 ---
 
-## ⚙️ Préférences d'achat
+## Préférences d'achat
 
 | Priorité | Plateforme | Critères |
 |----------|------------|----------|
@@ -85,26 +92,26 @@ Le fichier utilise :
 | 2 | **Le Bon Coin** | Particuliers France, remise en main propre |
 | 3 | **Google Products** | Revendeurs spécialisés UE (Domadoo, OpenELAB…) |
 
-> ⚠️ **Règles absolues** : provenance Zone Économique Européenne uniquement · Livraison en France uniquement
+> **Règles absolues** : provenance Zone Économique Européenne uniquement · Livraison en France uniquement
 
 ---
 
-## 🔗 Liens utiles
+## Liens utiles
 
 - [Home Assistant](https://www.home-assistant.io/)
 - [Zigbee2MQTT](https://www.zigbee2mqtt.io/)
 - [Compatibilité appareils Zigbee](https://home-assistant-devices.com/fr)
-- [OpenELAB — ReSpeaker](https://openelab.io/fr/products/respeaker-usb-mic-array)
+- [OpenELAB — ReSpeaker XVF-3800](https://openelab.io/fr/products/respeaker-usb-mic-array-v2)
 - [Domadoo — SONOFF](https://www.domadoo.fr/fr/336_sonoff)
 
 ---
 
-## 🌐 GitHub Pages
+## GitHub Pages
 
-Ce projet est conçu pour être hébergé sur GitHub Pages.  
+Ce projet est conçu pour être hébergé sur GitHub Pages.
 Une fois le repo créé, activer dans **Settings → Pages → Branch: main**.
 
-Accessible sur : `https://TON_USER.github.io/jean-mi/`
+Accessible sur : `https://bczy.github.io/jean-mi/`
 
 ---
 

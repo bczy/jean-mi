@@ -1,0 +1,23 @@
+{
+  "micro": {
+    "achete": false,
+    "produit": null,
+    "prix": null,
+    "source": null,
+    "date": null
+  },
+  "prise_zigbee": {
+    "achete": false,
+    "produit": null,
+    "prix": null,
+    "source": null,
+    "date": null
+  },
+  "module_plafonnier": {
+    "achete": false,
+    "produit": null,
+    "prix": null,
+    "source": null,
+    "date": null
+  }
+}
