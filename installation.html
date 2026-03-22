@@ -129,7 +129,7 @@
         </div>
       </div>
       <div class="flex flex-wrap gap-2 mt-6">
-        <span class="badge bg-home-800 text-home-200">8 phases</span>
+        <span class="badge bg-home-800 text-home-200">9 phases</span>
         <span class="badge bg-slate2-700 text-slate2-200">Local · sans cloud</span>
         <span class="badge bg-slate2-700 text-slate2-200">Commandes vocales FR</span>
       </div>
@@ -138,7 +138,7 @@
 
   <main class="max-w-4xl mx-auto px-6 py-12 fade-up fade-up-2">
 
-    <!-- Tableau récapitulatif des 8 phases -->
+    <!-- Tableau récapitulatif des 9 phases -->
     <div class="section-card p-4 mb-8">
       <div class="mono text-xs text-slate2-400 tracking-widest uppercase mb-3 px-2">Récapitulatif des phases</div>
       <div class="overflow-x-auto">
@@ -194,9 +194,15 @@
               <td class="px-3 py-2 mono text-xs text-slate2-500">~30 min</td>
               <td class="px-3 py-2"><span class="badge status-done">✓ Documenté</span></td>
             </tr>
-            <tr class="hover:bg-slate2-50 transition-colors">
+            <tr class="border-b border-slate2-100 hover:bg-slate2-50 transition-colors">
               <td class="px-3 py-2 mono text-xs text-slate2-400">8</td>
               <td class="px-3 py-2"><a href="#phase-8" class="font-semibold text-slate2-800 hover:text-home-500 transition-colors">Spotify + YouTube</a></td>
+              <td class="px-3 py-2 mono text-xs text-slate2-500">~20 min</td>
+              <td class="px-3 py-2"><span class="badge status-done">✓ Documenté</span></td>
+            </tr>
+            <tr class="hover:bg-slate2-50 transition-colors">
+              <td class="px-3 py-2 mono text-xs text-slate2-400">9</td>
+              <td class="px-3 py-2"><a href="#phase-9" class="font-semibold text-slate2-800 hover:text-home-500 transition-colors">Freebox Player (décodeur TV)</a></td>
               <td class="px-3 py-2 mono text-xs text-slate2-500">~20 min</td>
               <td class="px-3 py-2"><span class="badge status-done">✓ Documenté</span></td>
             </tr>
@@ -255,10 +261,16 @@
               <td class="px-4 py-3 text-slate2-500 text-xs">Whisper Wyoming · Piper TTS · HA Assist en français</td>
               <td class="px-6 py-3 text-right"><span class="badge status-done">✓ Documenté</span></td>
             </tr>
-            <tr>
+            <tr class="border-b border-slate2-100">
               <td class="px-6 py-3 mono text-xs text-slate2-400">8</td>
               <td class="px-4 py-3 font-semibold text-slate2-800">Spotify + YouTube</td>
               <td class="px-4 py-3 text-slate2-500 text-xs">Spotcast / Spotify Connect · yt-dlp + mpv</td>
+              <td class="px-6 py-3 text-right"><span class="badge status-done">✓ Documenté</span></td>
+            </tr>
+            <tr>
+              <td class="px-6 py-3 mono text-xs text-slate2-400">9</td>
+              <td class="px-4 py-3 font-semibold text-slate2-800">Freebox Player</td>
+              <td class="px-4 py-3 text-slate2-500 text-xs">Contrôle du décodeur TV via HACS · power · volume · chaînes</td>
               <td class="px-6 py-3 text-right"><span class="badge status-done">✓ Documenté</span></td>
             </tr>
           </tbody>
@@ -865,6 +877,111 @@ EOF</span>
         <pre id="pre-yt-3"><button class="copy-btn" onclick="copyPre('pre-yt-3')">Copier</button>service: shell_command.youtube_play
 data:
   url: <span class="str">"https://www.youtube.com/watch?v=<span class="placeholder">VIDEO_ID</span>"</span></pre>
+      </div>
+    </div>
+
+    <!-- ─────────────────────────────── PHASE 9 — FREEBOX PLAYER ─────────────────────────────── -->
+    <div id="phase-9" class="section-card mb-6">
+      <div class="phase-header bg-slate2-50">
+        <div class="phase-num bg-slate2-800 text-white">9</div>
+        <div>
+          <div class="font-bold text-slate2-800">Freebox Player — Décodeur TV</div>
+          <div class="mono text-xs text-slate2-500 mt-0.5">Contrôle vocal du décodeur via HACS · power · volume · chaînes</div>
+        </div>
+        <div class="ml-auto"><span class="badge bg-slate2-100 text-slate2-500">~20 min</span></div>
+      </div>
+
+      <div class="step">
+        <div class="step-label">Contexte technique</div>
+        <div class="warn">⚠️ Le <strong>Freebox Player</strong> (décodeur TV) ne tourne <strong>pas</strong> sous Ubuntu — il tourne sur un OS embarqué propriétaire de Free. C'est le <strong>NiPoGi Mini PC</strong> qui tourne sous Ubuntu (avec Home Assistant). HA communique avec le décodeur via l'<strong>API locale</strong> de la Freebox Pop (réseau local uniquement, sans cloud).</div>
+        <div class="note mt-2">L'intégration utilisée est le composant communautaire <strong>freebox_player</strong> (GitHub : <a href="https://github.com/Pouzor/freebox_player" class="underline" target="_blank" rel="noopener">Pouzor/freebox_player</a>), installé via HACS. Elle expose une entité <code class="mono">media_player.freebox_player</code> permettant : allumer/éteindre, régler le volume, changer de chaîne et naviguer dans les menus.</div>
+      </div>
+
+      <!-- Étape 1 — HACS -->
+      <div class="step">
+        <div class="step-label">Étape 1 — Installer HACS dans Home Assistant</div>
+        <p class="text-sm text-slate2-600">HACS (Home Assistant Community Store) est le gestionnaire de composants communautaires. À exécuter en SSH sur le Mini PC.</p>
+        <pre id="pre-fb1"><button class="copy-btn" onclick="copyPre('pre-fb1')">Copier</button><span class="comment"># Se connecter au Mini PC</span>
+<span class="cmd">ssh jean-mi</span>
+
+<span class="comment"># Télécharger et exécuter le script d'installation HACS</span>
+<span class="cmd">wget -O - https://get.hacs.xyz | bash -</span>
+<span class="out">  → HACS is now installed</span>
+<span class="out">  → Please restart Home Assistant</span></pre>
+        <div class="note">Puis dans Home Assistant : <strong>Settings → System → Restart</strong>. Après redémarrage : <strong>Settings → Devices &amp; Services → Add Integration</strong> → rechercher "HACS" et suivre l'assistant (connexion GitHub requise).</div>
+      </div>
+
+      <!-- Étape 2 — freebox_player -->
+      <div class="step">
+        <div class="step-label">Étape 2 — Installer freebox_player via HACS</div>
+        <p class="text-sm text-slate2-600">Dans Home Assistant, une fois HACS installé :</p>
+        <ol class="list-decimal list-inside text-sm text-slate2-600 space-y-1 mt-2 mb-2">
+          <li>Ouvrir <strong>HACS → Intégrations</strong></li>
+          <li>Cliquer <strong>Explore &amp; download repositories</strong></li>
+          <li>Rechercher <code class="mono text-slate2-700">freebox_player</code></li>
+          <li>Sélectionner <strong>Freebox Player</strong> (auteur : Pouzor) → <strong>Download</strong></li>
+          <li>Redémarrer Home Assistant</li>
+        </ol>
+        <div class="note">Alternative via SSH : cloner directement dans le dossier <code class="mono">custom_components</code> :<br>
+          <code class="mono text-xs">cd ~/homeassistant/config && mkdir -p custom_components && cd custom_components</code><br>
+          <code class="mono text-xs">git clone https://github.com/Pouzor/freebox_player.git freebox_player</code>
+        </div>
+      </div>
+
+      <!-- Étape 3 — configuration.yaml -->
+      <div class="step">
+        <div class="step-label">Étape 3 — Configurer dans configuration.yaml</div>
+        <p class="text-sm text-slate2-600 mb-2">Ajouter dans <code class="mono text-slate2-700">~/homeassistant/config/configuration.yaml</code> :</p>
+        <pre id="pre-fb3"><button class="copy-btn" onclick="copyPre('pre-fb3')">Copier</button>freebox_player:
+  host: mafreebox.freebox.fr  <span class="comment"># résout en local sur le réseau Free</span></pre>
+        <p class="text-sm text-slate2-600 mt-2">Puis redémarrer HA : <strong>Settings → System → Restart</strong>.</p>
+        <div class="note">Le hostname <code class="mono">mafreebox.freebox.fr</code> est résolu localement par la Freebox sur votre réseau (pas besoin d'accès Internet). Si ça ne fonctionne pas, remplacer par l'IP locale de la Freebox (ex : <code class="mono">192.168.0.254</code>).</div>
+      </div>
+
+      <!-- Étape 4 — Vérifier l'entité -->
+      <div class="step">
+        <div class="step-label">Étape 4 — Vérifier l'entité media_player</div>
+        <p class="text-sm text-slate2-600">Après redémarrage, vérifier que l'entité est disponible :</p>
+        <pre id="pre-fb4"><button class="copy-btn" onclick="copyPre('pre-fb4')">Copier</button><span class="comment"># Dans HA : Settings → Devices &amp; Services → Entities</span>
+<span class="comment"># Chercher "freebox" → doit apparaître :</span>
+<span class="out">  media_player.freebox_player  →  État : idle / on / off</span></pre>
+        <div class="note">Tu peux aussi tester depuis <strong>Developer Tools → Services</strong> en appelant <code class="mono">media_player.turn_on</code> sur l'entité <code class="mono">media_player.freebox_player</code> pour allumer le décodeur.</div>
+      </div>
+
+      <!-- Étape 5 — Commandes vocales -->
+      <div class="step">
+        <div class="step-label">Étape 5 — Commandes vocales via HA Assist</div>
+        <p class="text-sm text-slate2-600 mb-2">Créer des automations ou des scripts dans HA pour associer des phrases aux actions. Exemples de phrases utilisables directement via Assist :</p>
+        <pre id="pre-fb5"><button class="copy-btn" onclick="copyPre('pre-fb5')">Copier</button><span class="comment"># Dans ~/homeassistant/config/scripts.yaml</span>
+
+freebox_on:
+  alias: <span class="str">"Allume la Freebox"</span>
+  sequence:
+    - service: media_player.turn_on
+      target:
+        entity_id: media_player.freebox_player
+
+freebox_off:
+  alias: <span class="str">"Éteins la Freebox"</span>
+  sequence:
+    - service: media_player.turn_off
+      target:
+        entity_id: media_player.freebox_player
+
+freebox_volume_up:
+  alias: <span class="str">"Monte le son de la Freebox"</span>
+  sequence:
+    - service: media_player.volume_up
+      target:
+        entity_id: media_player.freebox_player
+
+freebox_volume_down:
+  alias: <span class="str">"Baisse le son de la Freebox"</span>
+  sequence:
+    - service: media_player.volume_down
+      target:
+        entity_id: media_player.freebox_player</pre>
+        <div class="note">Commandes vocales testables après activation dans HA Assist : <em>"Allume la Freebox"</em>, <em>"Éteins la Freebox"</em>, <em>"Monte le son de la Freebox"</em>, <em>"Baisse le son de la Freebox"</em>.<br>Pour changer de chaîne : utiliser le service <code class="mono">media_player.play_media</code> avec <code class="mono">media_content_id</code> = numéro de chaîne (ex : <code class="mono">1</code> pour TF1, <code class="mono">2</code> pour France 2).</div>
       </div>
     </div>
 

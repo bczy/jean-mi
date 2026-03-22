@@ -13,6 +13,10 @@ Créer un système domotique **Home Assistant** avec commande vocale locale (san
 - "Joue ma playlist X"
 - "Allume la lumière du salon"
 - "Je voudrais regarder ça sur YouTube"
+- "Allume la Freebox"
+- "Éteins la Freebox"
+- "Monte le son de la Freebox"
+- "Baisse le son de la Freebox"
 
 ---
 
@@ -172,6 +176,7 @@ Accessible sur : https://bczy.github.io/jean-mi/
 - [ ] Brancher le ReSpeaker XVF-3800
 - [ ] Configurer la reconnaissance vocale locale
 - [ ] Intégrer Spotify et YouTube
+- [ ] Intégrer le Freebox Player via HACS (contrôle vocal du décodeur TV)
 
 ---
 

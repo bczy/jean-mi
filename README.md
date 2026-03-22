@@ -15,6 +15,7 @@ Conçu pour un salon de ~20m², entièrement local (sans cloud), basé sur le pr
 | **OS** | Ubuntu 24.04 LTS + GNOME |
 | **Domotique** | Home Assistant Container (Docker) + Zigbee2MQTT |
 | **Coordinateur Zigbee** | SONOFF ZBDongle-E (EFR32MG21, `1a86:55d4`, `ttyACM0`) |
+| **Freebox Player** | Décodeur TV contrôlable via HA (HACS · freebox_player) |
 
 ---
 
