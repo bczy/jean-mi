@@ -38,7 +38,7 @@ Créer un système domotique **Home Assistant** avec commande vocale locale (san
 | 2 | **Le Bon Coin** | Particuliers France, remise en main propre |
 | 3 | **Google Products** | Revendeurs spécialisés UE (Domadoo, OpenELAB…) |
 | 4 | **Rakuten FR** | Marketplace FR, vendeurs pro, occasion certifiée, retours 30j |
-| 5 | **Domotique-Store** | Spécialiste FR — hors ligne depuis mars 2026 |
+| 5 | **Domotique-Store** | Spécialiste FR — hors ligne depuis fin 2024 |
 | 6 | **IKEA** | Magasin physique FR, retrait immédiat, gamme DIRIGERA/TRÅDFRI — pertinent uniquement pour les prises Zigbee |
 
 > **Règles absolues**

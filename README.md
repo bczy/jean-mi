@@ -15,6 +15,8 @@ Ce projet recense et compare le matériel nécessaire pour :
 
 Le fichier `jean-mi.html` contient les tableaux comparatifs interactifs, avec prix, frais de port, avantages/inconvénients et liens directs vers les vendeurs.
 
+Le fichier `installation.html` est le guide d'installation software complet : SSH, Docker, Home Assistant, Zigbee2MQTT, commande vocale locale (Wyoming) et Spotify.
+
 ---
 
 ## Stack technique
@@ -44,11 +46,11 @@ Le fichier `jean-mi.html` contient les tableaux comparatifs interactifs, avec pr
 
 ### Prise Zigbee secteur
 
-**NOUS A1Z** — 16A, mesure de consommation, routeur Zigbee, compatible Zigbee2MQTT + HA
+**NOUS A1Z** — 16A, mesure de consommation, end-device, compatible Zigbee2MQTT + HA
 
 | Source recommandée | Prix | Port | Total |
 |--------------------|------|------|-------|
-| eBay.fr 🇵🇱 (vendeur UE) | ~11–14 € | Gratuit | **~11–14 €** |
+| eBay.fr 🇵🇱 (vendeur UE) | ~13–15 € | Gratuit | **~13–15 €** |
 
 ### Module plafonnier (sans neutre)
 
@@ -66,10 +68,14 @@ Le fichier `jean-mi.html` contient les tableaux comparatifs interactifs, avec pr
 
 ```
 jean-mi/
-├── jean-mi.html   # Comparatif interactif (Tailwind CSS CDN) — source de vérité
-├── README.md      # Ce fichier
-├── PROJET.md      # Spec complète, SSH, déploiement, checklist
-└── CLAUDE.md      # Guide de contexte pour Claude Code
+├── index.html        # Page d'accueil — navigation vers les autres pages
+├── jean-mi.html      # Comparatif interactif (Tailwind CSS CDN) — source de vérité
+├── avancement.html   # Suivi des achats et de la progression
+├── installation.html # Guide d'installation software (SSH · Docker · HA · Z2M · Voix)
+├── achats.json       # État des achats (micro, prise Zigbee, module plafonnier)
+├── README.md         # Ce fichier
+├── PROJET.md         # Spec complète, SSH, déploiement, checklist
+└── CLAUDE.md         # Guide de contexte pour Claude Code
 ```
 
 ---
@@ -92,7 +98,7 @@ Le fichier utilise :
 | 2 | **Le Bon Coin** | Particuliers France, remise en main propre |
 | 3 | **Google Products** | Revendeurs spécialisés UE (Domadoo, OpenELAB…) |
 | 4 | **Rakuten FR** | Marketplace FR, vendeurs pro, occasion certifiée |
-| 5 | **Domotique-Store** | Spécialiste FR — hors ligne depuis mars 2026 |
+| 5 | **Domotique-Store** | Spécialiste FR — hors ligne depuis fin 2024 |
 | 6 | **IKEA** | Magasin physique FR, retrait immédiat — pertinent pour les prises Zigbee |
 
 > **Règles absolues** : provenance Zone Économique Européenne uniquement · Livraison en France uniquement

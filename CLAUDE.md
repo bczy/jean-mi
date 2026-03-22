@@ -40,7 +40,7 @@ Guide de contexte pour Claude Code. À lire avant toute modification du projet.
 | 2 | Le Bon Coin | Particuliers France, remise en main propre |
 | 3 | Google Products | Revendeurs spécialisés UE (Domadoo, OpenELAB…) |
 | 4 | Rakuten FR | Vendeurs pro UE, occasion certifiée |
-| 5 | Domotique-Store | Spécialiste FR — hors ligne depuis mars 2026 |
+| 5 | Domotique-Store | Spécialiste FR — hors ligne depuis fin 2024 |
 | 6 | **IKEA** | Magasin physique FR, retrait immédiat, gamme DIRIGERA/TRÅDFRI — pertinent uniquement pour les prises Zigbee |
 
 > IKEA badge CSS : `.tag-ikea { background: #fef9c3; color: #713f12; }` — couleur jaune IKEA.
@@ -52,7 +52,7 @@ Guide de contexte pour Claude Code. À lire avant toute modification du projet.
 | Produit | Référence | Prix indicatif | Source recommandée |
 |---------|-----------|---------------|--------------------|
 | Micro USB | **ReSpeaker XVF-3800** (successeur XVF-3000 EOL) | ~75,95 € | OpenELAB 🇩🇪 |
-| Prise Zigbee | **NOUS A1Z** — 16A, mesure conso, routeur | ~11–14 € | eBay.fr 🇵🇱 |
+| Prise Zigbee | **NOUS A1Z** — 16A, mesure conso, end-device | ~13–15 € | eBay.fr 🇵🇱 |
 | Module plafonnier | **SONOFF ZBMINIL2** — sans neutre, 6A/1440W | ~10–14 € | eBay.fr 🇩🇪 |
 | **TOTAL** | | **~102 €** | |
 
@@ -64,7 +64,11 @@ Guide de contexte pour Claude Code. À lire avant toute modification du projet.
 
 | Fichier | Rôle | À modifier en priorité |
 |---------|------|------------------------|
+| `index.html` | Page d'accueil — navigation vers les 3 pages principales | Non (sauf ajout de page) |
 | `jean-mi.html` | **Source de vérité** — comparatif interactif complet | Oui, en premier |
+| `avancement.html` | Suivi des achats et de la progression | Après jean-mi.html |
+| `installation.html` | Guide d'installation software (SSH · Docker · HA · Z2M · Voix) | Indépendant |
+| `achats.json` | État des achats (micro, prise Zigbee, module plafonnier) | Après avancement.html |
 | `README.md` | Intro rapide, stack, budget résumé, déploiement | Après jean-mi.html |
 | `PROJET.md` | Spec complète, tableaux détaillés, checklist, SSH/GitHub | Après jean-mi.html |
 | `CLAUDE.md` | Ce fichier — contexte pour Claude Code | Mettre à jour si changement majeur |
@@ -81,6 +85,6 @@ Guide de contexte pour Claude Code. À lire avant toute modification du projet.
 - SONOFF ZBMINIL2 est un **end-device** (pas routeur Zigbee) — à noter dans les inconvénients
 - Le port est **gratuit** chez OpenELAB pour commandes ≥ 50 € — à vérifier si commande < 50 €
 - **IKEA INSPELNING E2201** : mesure conso incluse mais précision parfois aberrante (kWh bloqué à 0) — à signaler dans les inconvénients
-- **IKEA TRETAKT E22x4** : pas de mesure conso, 10A max (vs 16A NOUS A1Z) — on/off uniquement
+- **IKEA TRETAKT E22x4** : pas de mesure conso, ~15A max (vs 16A NOUS A1Z) — on/off uniquement
 - IKEA n'a **pas** d'équivalent pour le micro USB ni pour le module plafonnier sans-neutre
 - GitHub Pages : `https://bczy.github.io/jean-mi/` — fichier principal : `jean-mi.html`
