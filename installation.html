@@ -156,31 +156,31 @@
               <td class="px-6 py-3 mono text-xs text-slate2-400">4</td>
               <td class="px-4 py-3 font-semibold text-slate2-800">Dongle Zigbee</td>
               <td class="px-4 py-3 text-slate2-500 text-xs">Identifier /dev/ttyUSB* · règles udev · droits dialout</td>
-              <td class="px-6 py-3 text-right"><span class="badge status-todo">À venir</span></td>
+              <td class="px-6 py-3 text-right"><span class="badge status-done">✓ Documenté</span></td>
             </tr>
             <tr class="border-b border-slate2-100">
               <td class="px-6 py-3 mono text-xs text-slate2-400">5</td>
               <td class="px-4 py-3 font-semibold text-slate2-800">Mosquitto + Zigbee2MQTT</td>
               <td class="px-4 py-3 text-slate2-500 text-xs">Broker MQTT · Z2M Docker · appairage NOUS A1Z + ZBMINIL2</td>
-              <td class="px-6 py-3 text-right"><span class="badge status-todo">À venir</span></td>
+              <td class="px-6 py-3 text-right"><span class="badge status-done">✓ Documenté</span></td>
             </tr>
             <tr class="border-b border-slate2-100">
               <td class="px-6 py-3 mono text-xs text-slate2-400">6</td>
               <td class="px-4 py-3 font-semibold text-slate2-800">ReSpeaker XVF-3800</td>
               <td class="px-4 py-3 text-slate2-500 text-xs">Plug & play Linux · test arecord · carte ALSA par défaut</td>
-              <td class="px-6 py-3 text-right"><span class="badge status-todo">À venir</span></td>
+              <td class="px-6 py-3 text-right"><span class="badge status-done">✓ Documenté</span></td>
             </tr>
             <tr class="border-b border-slate2-100">
               <td class="px-6 py-3 mono text-xs text-slate2-400">7</td>
               <td class="px-4 py-3 font-semibold text-slate2-800">Voix locale (STT + TTS)</td>
               <td class="px-4 py-3 text-slate2-500 text-xs">Whisper Wyoming · Piper TTS · HA Assist en français</td>
-              <td class="px-6 py-3 text-right"><span class="badge status-todo">À venir</span></td>
+              <td class="px-6 py-3 text-right"><span class="badge status-done">✓ Documenté</span></td>
             </tr>
             <tr>
               <td class="px-6 py-3 mono text-xs text-slate2-400">8</td>
               <td class="px-4 py-3 font-semibold text-slate2-800">Spotify + YouTube</td>
-              <td class="px-4 py-3 text-slate2-500 text-xs">Spotcast / Spotify Connect · media player</td>
-              <td class="px-6 py-3 text-right"><span class="badge status-todo">À venir</span></td>
+              <td class="px-4 py-3 text-slate2-500 text-xs">Spotcast / Spotify Connect · yt-dlp + mpv</td>
+              <td class="px-6 py-3 text-right"><span class="badge status-done">✓ Documenté</span></td>
             </tr>
           </tbody>
         </table>
@@ -353,69 +353,423 @@ EOF</span></pre>
       </div>
     </div>
 
-    <!-- ─────────────────────────────── PHASES 4-8 — À VENIR ─────────────────────────────── -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-
-      <div class="section-card opacity-60">
-        <div class="phase-header">
-          <div class="phase-num bg-slate2-200 text-slate2-500">4</div>
-          <div>
-            <div class="font-bold text-slate2-600">Dongle Zigbee</div>
-            <div class="mono text-xs text-slate2-400 mt-0.5">SONOFF ZigBee 3.0 USB · udev · dialout</div>
-          </div>
-          <div class="ml-auto"><span class="badge status-todo">À venir</span></div>
+    <!-- ─────────────────────────────── PHASE 4 — DONGLE ZIGBEE ─────────────────────────────── -->
+    <div class="section-card mb-6">
+      <div class="phase-header bg-slate2-50">
+        <div class="phase-num bg-slate2-800 text-white">4</div>
+        <div>
+          <div class="font-bold text-slate2-800">Dongle Zigbee</div>
+          <div class="mono text-xs text-slate2-400 mt-0.5">SONOFF ZigBee 3.0 USB Dongle Plus (EFR32MG21) · udev · dialout</div>
         </div>
-        <div class="px-6 py-4 text-xs text-slate2-400 mono">Après réception du matériel</div>
+        <div class="ml-auto"><span class="badge status-done">✓ Documenté</span></div>
       </div>
 
-      <div class="section-card opacity-60">
-        <div class="phase-header">
-          <div class="phase-num bg-slate2-200 text-slate2-500">5</div>
-          <div>
-            <div class="font-bold text-slate2-600">Mosquitto + Zigbee2MQTT</div>
-            <div class="mono text-xs text-slate2-400 mt-0.5">MQTT broker · Z2M · appairage appareils</div>
-          </div>
-          <div class="ml-auto"><span class="badge status-todo">À venir</span></div>
-        </div>
-        <div class="px-6 py-4 text-xs text-slate2-400 mono">Après phase 4</div>
+      <div class="step">
+        <div class="step-label">Étape 1 — Identifier le port série après branchement USB</div>
+        <p class="text-sm text-slate2-600">Brancher le dongle, puis repérer son chemin dans <code class="mono text-slate2-700">/dev/serial/by-id/</code> — ce chemin est stable entre les redémarrages, contrairement à <code class="mono text-slate2-700">/dev/ttyUSB0</code>.</p>
+        <pre id="pre-z4-1"><button class="copy-btn" onclick="copyPre('pre-z4-1')">Copier</button><span class="comment"># Lister les ports série présents</span>
+<span class="cmd">ls /dev/ttyUSB* /dev/ttyACM* 2>/dev/null</span>
+
+<span class="comment"># Lire le journal système pour confirmer la détection</span>
+<span class="cmd">dmesg | tail -20</span>
+<span class="out">  → usb 1-1: cp210x converter now attached to ttyUSB0</span>
+
+<span class="comment"># Trouver le by-id stable — à utiliser dans Z2M</span>
+<span class="cmd">ls -la /dev/serial/by-id/</span>
+<span class="out">  → usb-Silicon_Labs_SONOFF_Zigbee_3.0_USB_Dongle_Plus_XXXXX-if00 -> ../../ttyUSB0</span></pre>
+        <div class="note">Copier le chemin complet <strong>/dev/serial/by-id/usb-Silicon_Labs_…</strong> — il sera utilisé dans le <code class="mono">compose.yaml</code> de Zigbee2MQTT.</div>
       </div>
 
-      <div class="section-card opacity-60">
-        <div class="phase-header">
-          <div class="phase-num bg-slate2-200 text-slate2-500">6</div>
-          <div>
-            <div class="font-bold text-slate2-600">ReSpeaker XVF-3800</div>
-            <div class="mono text-xs text-slate2-400 mt-0.5">Plug & play · arecord · ALSA</div>
-          </div>
-          <div class="ml-auto"><span class="badge status-todo">À venir</span></div>
-        </div>
-        <div class="px-6 py-4 text-xs text-slate2-400 mono">Après réception du ReSpeaker</div>
+      <div class="step">
+        <div class="step-label">Étape 2 — Ajouter l'utilisateur au groupe dialout</div>
+        <p class="text-sm text-slate2-600">Sans cela, accéder au port série nécessite <code class="mono text-slate2-700">sudo</code>. Docker le passera en <code class="mono text-slate2-700">privileged</code>, mais c'est bon à avoir pour les tests manuels.</p>
+        <pre id="pre-z4-2"><button class="copy-btn" onclick="copyPre('pre-z4-2')">Copier</button><span class="cmd">sudo usermod -aG dialout $USER</span>
+<span class="cmd">newgrp dialout</span>
+
+<span class="comment"># Vérifier</span>
+<span class="cmd">groups</span>
+<span class="out">  → bertrand adm dialout cdrom sudo ...</span></pre>
+        <div class="warn">⚠️ Fermer et rouvrir la session pour que le groupe prenne effet globalement.</div>
       </div>
 
-      <div class="section-card opacity-60">
-        <div class="phase-header">
-          <div class="phase-num bg-slate2-200 text-slate2-500">7</div>
-          <div>
-            <div class="font-bold text-slate2-600">Voix locale</div>
-            <div class="mono text-xs text-slate2-400 mt-0.5">Whisper STT · Piper TTS · HA Assist FR</div>
-          </div>
-          <div class="ml-auto"><span class="badge status-todo">À venir</span></div>
-        </div>
-        <div class="px-6 py-4 text-xs text-slate2-400 mono">Après phase 6</div>
-      </div>
+      <div class="step">
+        <div class="step-label">Étape 3 (optionnel) — Règle udev pour alias permanent</div>
+        <p class="text-sm text-slate2-600">Crée un alias <code class="mono text-slate2-700">/dev/zigbee-sonoff</code> indépendant du numéro USB attribué au boot.</p>
+        <pre id="pre-z4-3"><button class="copy-btn" onclick="copyPre('pre-z4-3')">Copier</button><span class="comment"># Créer la règle udev (idVendor/idProduct Silicon Labs CP210x)</span>
+<span class="cmd">sudo tee /etc/udev/rules.d/99-sonoff-zigbee.rules << 'EOF'
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="ea60", SYMLINK+="zigbee-sonoff", GROUP="dialout", MODE="0666"
+EOF</span>
 
+<span class="comment"># Recharger les règles</span>
+<span class="cmd">sudo udevadm control --reload-rules && sudo udevadm trigger</span>
+
+<span class="comment"># Vérifier</span>
+<span class="cmd">ls -la /dev/zigbee-sonoff</span>
+<span class="out">  → /dev/zigbee-sonoff -> ttyUSB0</span></pre>
+      </div>
     </div>
 
-    <div class="section-card mb-6 opacity-60">
-      <div class="phase-header">
-        <div class="phase-num bg-slate2-200 text-slate2-500">8</div>
+    <!-- ─────────────────────────────── PHASE 5 — MOSQUITTO + Z2M ─────────────────────────────── -->
+    <div class="section-card mb-6">
+      <div class="phase-header bg-slate2-50">
+        <div class="phase-num bg-slate2-800 text-white">5</div>
         <div>
-          <div class="font-bold text-slate2-600">Spotify + YouTube</div>
-          <div class="mono text-xs text-slate2-400 mt-0.5">Spotcast / Spotify Connect · media player</div>
+          <div class="font-bold text-slate2-800">Mosquitto + Zigbee2MQTT</div>
+          <div class="mono text-xs text-slate2-400 mt-0.5">Broker MQTT + bridge Zigbee · Docker Compose · interface web :8080</div>
         </div>
-        <div class="ml-auto"><span class="badge status-todo">À venir</span></div>
+        <div class="ml-auto"><span class="badge status-done">✓ Documenté</span></div>
       </div>
-      <div class="px-6 py-4 text-xs text-slate2-400 mono">Après phase 7 — commandes vocales de lecture multimédia</div>
+
+      <div class="step">
+        <div class="step-label">Étape 1 — Créer la structure de répertoires</div>
+        <pre id="pre-z5-1"><button class="copy-btn" onclick="copyPre('pre-z5-1')">Copier</button><span class="cmd">mkdir -p ~/homeassistant/mosquitto/{config,data,log}
+mkdir -p ~/homeassistant/zigbee2mqtt/data</span></pre>
+      </div>
+
+      <div class="step">
+        <div class="step-label">Étape 2 — Fichier mosquitto.conf</div>
+        <pre id="pre-z5-2"><button class="copy-btn" onclick="copyPre('pre-z5-2')">Copier</button><span class="cmd">cat > ~/homeassistant/mosquitto/config/mosquitto.conf << 'EOF'
+listener 1883
+protocol mqtt
+allow_anonymous true
+persistence true
+persistence_location /mosquitto/data/
+EOF</span></pre>
+      </div>
+
+      <div class="step">
+        <div class="step-label">Étape 3 — Fichier configuration.yaml pour Zigbee2MQTT</div>
+        <pre id="pre-z5-3"><button class="copy-btn" onclick="copyPre('pre-z5-3')">Copier</button><span class="cmd">cat > ~/homeassistant/zigbee2mqtt/data/configuration.yaml << 'EOF'
+version: 5
+frontend:
+  enabled: true
+  port: 8080
+homeassistant:
+  enabled: true
+mqtt:
+  base_topic: zigbee2mqtt
+  server: "mqtt://mosquitto:1883"
+serial:
+  port: /dev/ttyUSB0
+  adapter: auto
+permit_join: true
+advanced:
+  network_key: GENERATE
+  pan_id: GENERATE
+  channel: 15
+EOF</span></pre>
+        <div class="note">Le port <code class="mono">/dev/ttyUSB0</code> correspond au mapping <code class="mono">devices:</code> du compose.yaml ci-dessous.</div>
+      </div>
+
+      <div class="step">
+        <div class="step-label">Étape 4 — Étendre compose.yaml avec Mosquitto + Zigbee2MQTT</div>
+        <p class="text-sm text-slate2-600 mb-2">Ajouter ces deux services dans <code class="mono text-slate2-700">~/homeassistant/compose.yaml</code>, après le service <code class="mono text-slate2-700">homeassistant</code>. Remplacer le chemin du device par le <code class="mono text-slate2-700">by-id</code> trouvé en Phase 4.</p>
+        <pre id="pre-z5-4"><button class="copy-btn" onclick="copyPre('pre-z5-4')">Copier</button>  mosquitto:
+    image: eclipse-mosquitto:latest
+    container_name: mosquitto
+    restart: unless-stopped
+    ports:
+      - "1883:1883"
+    volumes:
+      - ./mosquitto/config:/mosquitto/config
+      - ./mosquitto/data:/mosquitto/data
+      - ./mosquitto/log:/mosquitto/log
+
+  zigbee2mqtt:
+    image: koenkk/zigbee2mqtt:latest
+    container_name: zigbee2mqtt
+    restart: unless-stopped
+    privileged: true
+    depends_on:
+      - mosquitto
+    ports:
+      - "8080:8080"
+    environment:
+      TZ: Europe/Paris
+    volumes:
+      - ./zigbee2mqtt/data:/app/data
+      - /run/udev:/run/udev:ro
+    devices:
+      - <span class="placeholder">/dev/serial/by-id/usb-Silicon_Labs_SONOFF_Zigbee_3.0_USB_Dongle_Plus_XXXXX-if00</span>:/dev/ttyUSB0</pre>
+      </div>
+
+      <div class="step">
+        <div class="step-label">Étape 5 — Démarrer et accéder à l'interface</div>
+        <pre id="pre-z5-5"><button class="copy-btn" onclick="copyPre('pre-z5-5')">Copier</button><span class="cmd">cd ~/homeassistant && docker compose up -d</span>
+
+<span class="comment"># Suivre les logs Z2M (vérifier la connexion MQTT + coordinateur)</span>
+<span class="cmd">docker compose logs -f zigbee2mqtt</span>
+<span class="out">  → Coordinator firmware version: {"meta":{"maintrel":3,"majorrel":2,...}}</span>
+<span class="out">  → Connected to MQTT server</span>
+<span class="out">  → Started frontend on port 8080</span></pre>
+        <div class="note">Interface Zigbee2MQTT : <strong>http://IP_UBUNTU:8080</strong></div>
+      </div>
+
+      <div class="step">
+        <div class="step-label">Étape 6 — Appairer les appareils Zigbee</div>
+        <p class="text-sm text-slate2-600 mb-2"><code class="mono text-slate2-700">permit_join: true</code> est déjà actif dans la config. Mettre l'appareil en mode appairage :</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3">
+          <div class="bg-slate2-50 rounded-lg p-4 text-sm">
+            <div class="mono text-xs font-semibold text-slate2-600 mb-2">NOUS A1Z (prise)</div>
+            <div class="text-slate2-600">Maintenir le bouton <strong>5–7 secondes</strong> jusqu'au clignotement rapide du voyant → Z2M détecte l'appareil automatiquement.</div>
+          </div>
+          <div class="bg-slate2-50 rounded-lg p-4 text-sm">
+            <div class="mono text-xs font-semibold text-slate2-600 mb-2">SONOFF ZBMINIL2 (plafonnier)</div>
+            <div class="text-slate2-600">Maintenir le bouton <strong>5 secondes</strong> (voyant s'éteint) — OU basculer l'interrupteur mural <strong>10 fois</strong> rapidement.</div>
+          </div>
+        </div>
+        <pre id="pre-z5-6"><button class="copy-btn" onclick="copyPre('pre-z5-6')">Copier</button><span class="comment"># Suivre les logs pendant l'appairage</span>
+<span class="cmd">docker compose logs -f zigbee2mqtt</span>
+<span class="out">  → Successfully interviewed 'NOUS A1Z', model 'A1Z'</span>
+<span class="out">  → Pairing successful</span></pre>
+      </div>
+
+      <div class="step">
+        <div class="step-label">Étape 7 — Désactiver permit_join après appairage</div>
+        <pre id="pre-z5-7"><button class="copy-btn" onclick="copyPre('pre-z5-7')">Copier</button><span class="comment"># Éditer la config Z2M</span>
+<span class="cmd">sed -i 's/permit_join: true/permit_join: false/' ~/homeassistant/zigbee2mqtt/data/configuration.yaml</span>
+
+<span class="comment"># Redémarrer Z2M</span>
+<span class="cmd">docker compose restart zigbee2mqtt</span></pre>
+        <div class="warn">⚠️ Garder <code class="mono">permit_join: false</code> en usage normal — évite l'appairage non sollicité d'appareils tiers.</div>
+      </div>
+    </div>
+
+    <!-- ─────────────────────────────── PHASE 6 — RESPEAKER ─────────────────────────────── -->
+    <div class="section-card mb-6">
+      <div class="phase-header bg-slate2-50">
+        <div class="phase-num bg-slate2-800 text-white">6</div>
+        <div>
+          <div class="font-bold text-slate2-800">ReSpeaker XVF-3800</div>
+          <div class="mono text-xs text-slate2-400 mt-0.5">4 mics · AEC · beamforming · plug & play Linux</div>
+        </div>
+        <div class="ml-auto"><span class="badge status-done">✓ Documenté</span></div>
+      </div>
+
+      <div class="step">
+        <div class="step-label">Étape 1 — Vérifier la détection USB</div>
+        <p class="text-sm text-slate2-600">Le XVF-3800 est plug & play sur Linux via le driver USB Audio standard — aucune installation de driver requise.</p>
+        <pre id="pre-rs-1"><button class="copy-btn" onclick="copyPre('pre-rs-1')">Copier</button><span class="comment"># Vérifier la présence du périphérique USB</span>
+<span class="cmd">lsusb</span>
+<span class="out">  → Bus 001 Device 003: ID 2886:0018 ... reSpeaker XVF3800</span>
+
+<span class="comment"># Lister les cartes audio détectées (noter le numéro de carte X)</span>
+<span class="cmd">arecord -l</span>
+<span class="out">  → card X: Array [reSpeaker XVF3800 4-Mic Array], device 0: USB Audio [USB Audio]</span></pre>
+        <div class="note">Retenir le numéro de carte <strong>X</strong> — il sera utilisé dans toutes les commandes suivantes à la place de <code class="mono">CARD</code>.</div>
+      </div>
+
+      <div class="step">
+        <div class="step-label">Étape 2 — Test d'enregistrement</div>
+        <p class="text-sm text-slate2-600 mb-2">Le canal 0 (left) contient le flux <strong>traité (AEC + beamforming)</strong> — c'est celui à utiliser pour la reconnaissance vocale.</p>
+        <pre id="pre-rs-2"><button class="copy-btn" onclick="copyPre('pre-rs-2')">Copier</button><span class="comment"># Enregistrer 5 secondes (remplacer CARD par le numéro trouvé)</span>
+<span class="cmd">arecord -D plughw:<span class="placeholder">CARD</span>,0 -c 2 -r 16000 -f S16_LE -d 5 test.wav</span>
+
+<span class="comment"># Écouter l'enregistrement</span>
+<span class="cmd">aplay test.wav</span></pre>
+      </div>
+
+      <div class="step">
+        <div class="step-label">Étape 3 — Définir le ReSpeaker comme carte ALSA par défaut</div>
+        <pre id="pre-rs-3"><button class="copy-btn" onclick="copyPre('pre-rs-3')">Copier</button><span class="comment"># Créer ~/.asoundrc (remplacer CARD et SPEAKER_CARD par vos numéros)</span>
+<span class="cmd">cat > ~/.asoundrc << 'EOF'
+pcm.!default {
+  type asym
+  playback.pcm "speaker"
+  capture.pcm "mic"
+}
+pcm.mic {
+  type plug
+  slave { pcm hw:CARD,0; rate 16000 }
+}
+pcm.speaker {
+  type plug
+  slave { pcm hw:SPEAKER_CARD,0 }
+}
+ctl.!default {
+  type hw
+  card CARD
+}
+EOF</span>
+
+<span class="comment"># Vérifier avec un enregistrement simple</span>
+<span class="cmd">arecord -d 3 -f S16_LE -r 16000 verif.wav && aplay verif.wav</span></pre>
+        <div class="warn">⚠️ Remplacer <code class="mono">CARD</code> par le numéro de la carte ReSpeaker, et <code class="mono">SPEAKER_CARD</code> par le numéro de la sortie audio (HDMI, jack…) — visible dans <code class="mono">aplay -l</code>.</div>
+      </div>
+    </div>
+
+    <!-- ─────────────────────────────── PHASE 7 — VOIX LOCALE ─────────────────────────────── -->
+    <div class="section-card mb-6">
+      <div class="phase-header bg-slate2-50">
+        <div class="phase-num bg-slate2-800 text-white">7</div>
+        <div>
+          <div class="font-bold text-slate2-800">Voix locale — Whisper + Piper + Wyoming</div>
+          <div class="mono text-xs text-slate2-400 mt-0.5">STT + TTS + wake word · tout en Docker · HA Assist en français</div>
+        </div>
+        <div class="ml-auto"><span class="badge status-done">✓ Documenté</span></div>
+      </div>
+
+      <div class="step">
+        <div class="step-label">Architecture</div>
+        <p class="text-sm text-slate2-600 mb-3">HA Container n'a pas d'add-on store. Les services vocaux tournent en tant que conteneurs Docker séparés, connectés à HA via le protocole <strong>Wyoming</strong> (TCP).</p>
+        <div class="overflow-x-auto">
+          <table class="w-full text-xs">
+            <thead><tr class="border-b border-slate2-200"><th class="px-3 py-2 text-left mono text-slate2-400">Service</th><th class="px-3 py-2 text-left mono text-slate2-400">Image Docker</th><th class="px-3 py-2 text-left mono text-slate2-400">Port Wyoming</th><th class="px-3 py-2 text-left mono text-slate2-400">Rôle</th></tr></thead>
+            <tbody>
+              <tr class="border-b border-slate2-100"><td class="px-3 py-2 mono text-slate2-700">wyoming-whisper</td><td class="px-3 py-2 mono text-slate2-600">rhasspy/wyoming-whisper</td><td class="px-3 py-2 mono text-slate2-600">10300</td><td class="px-3 py-2 text-slate2-600">Transcription vocale (STT)</td></tr>
+              <tr class="border-b border-slate2-100"><td class="px-3 py-2 mono text-slate2-700">wyoming-piper</td><td class="px-3 py-2 mono text-slate2-600">rhasspy/wyoming-piper</td><td class="px-3 py-2 mono text-slate2-600">10200</td><td class="px-3 py-2 text-slate2-600">Synthèse vocale française (TTS)</td></tr>
+              <tr><td class="px-3 py-2 mono text-slate2-700">wyoming-openwakeword</td><td class="px-3 py-2 mono text-slate2-600">rhasspy/wyoming-openwakeword</td><td class="px-3 py-2 mono text-slate2-600">10400</td><td class="px-3 py-2 text-slate2-600">Détection mot de réveil</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-label">Étape 1 — Ajouter les services dans compose.yaml</div>
+        <p class="text-sm text-slate2-600 mb-2">Modèle Whisper conseillé : <code class="mono text-slate2-700">tiny-int8</code> pour commencer (rapide), puis <code class="mono text-slate2-700">base-int8</code> en usage courant. Le Ryzen 7 7735HS gère facilement <code class="mono text-slate2-700">small-int8</code>.</p>
+        <pre id="pre-v7-1"><button class="copy-btn" onclick="copyPre('pre-v7-1')">Copier</button>  wyoming-whisper:
+    image: rhasspy/wyoming-whisper:latest
+    container_name: wyoming-whisper
+    restart: unless-stopped
+    ports:
+      - "10300:10300"
+    volumes:
+      - ./whisper-data:/data
+    command: --model tiny-int8 --language fr
+    environment:
+      TZ: Europe/Paris
+
+  wyoming-piper:
+    image: rhasspy/wyoming-piper:latest
+    container_name: wyoming-piper
+    restart: unless-stopped
+    ports:
+      - "10200:10200"
+    volumes:
+      - ./piper-data:/data
+    command: --voice fr_FR-siwis-medium
+    environment:
+      TZ: Europe/Paris
+
+  wyoming-openwakeword:
+    image: rhasspy/wyoming-openwakeword:latest
+    container_name: wyoming-openwakeword
+    restart: unless-stopped
+    ports:
+      - "10400:10400"
+    volumes:
+      - ./openwakeword-data:/data
+    command: --preload-model "ok nabu"
+    environment:
+      TZ: Europe/Paris</pre>
+      </div>
+
+      <div class="step">
+        <div class="step-label">Étape 2 — Démarrer les services</div>
+        <pre id="pre-v7-2"><button class="copy-btn" onclick="copyPre('pre-v7-2')">Copier</button><span class="comment"># Créer les répertoires de données (modèles téléchargés automatiquement)</span>
+<span class="cmd">mkdir -p ~/homeassistant/{whisper-data,piper-data,openwakeword-data}</span>
+
+<span class="comment"># Démarrer tous les services</span>
+<span class="cmd">cd ~/homeassistant && docker compose up -d</span>
+
+<span class="comment"># Suivre le téléchargement des modèles (2–5 minutes au 1er démarrage)</span>
+<span class="cmd">docker compose logs -f wyoming-whisper wyoming-piper wyoming-openwakeword</span>
+<span class="out">  → Loaded model tiny-int8</span>
+<span class="out">  → Loaded voice fr_FR-siwis-medium</span>
+<span class="out">  → Loaded wake word model ok_nabu</span></pre>
+      </div>
+
+      <div class="step">
+        <div class="step-label">Étape 3 — Connecter Wyoming à Home Assistant</div>
+        <p class="text-sm text-slate2-600 mb-2">Dans HA : <strong>Settings → Devices & Services → Add Integration → Wyoming Protocol</strong></p>
+        <p class="text-sm text-slate2-600">Ajouter 3 fois (une par service) :</p>
+        <div class="overflow-x-auto mt-3">
+          <table class="w-full text-xs">
+            <thead><tr class="border-b border-slate2-200"><th class="px-3 py-2 text-left mono text-slate2-400">Host</th><th class="px-3 py-2 text-left mono text-slate2-400">Port</th><th class="px-3 py-2 text-left mono text-slate2-400">Service reconnu</th></tr></thead>
+            <tbody>
+              <tr class="border-b border-slate2-100"><td class="px-3 py-2 mono text-slate2-600">IP_UBUNTU</td><td class="px-3 py-2 mono text-slate2-600">10300</td><td class="px-3 py-2 text-slate2-600">Whisper STT</td></tr>
+              <tr class="border-b border-slate2-100"><td class="px-3 py-2 mono text-slate2-600">IP_UBUNTU</td><td class="px-3 py-2 mono text-slate2-600">10200</td><td class="px-3 py-2 text-slate2-600">Piper TTS</td></tr>
+              <tr><td class="px-3 py-2 mono text-slate2-600">IP_UBUNTU</td><td class="px-3 py-2 mono text-slate2-600">10400</td><td class="px-3 py-2 text-slate2-600">openWakeWord (ok nabu)</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="note mt-3">Ensuite : <strong>Settings → Voice Assistants</strong> → modifier l'assistant par défaut → Language : Français · STT : Wyoming (Whisper) · TTS : Wyoming (Piper) · Wake word : Wyoming (ok nabu)</div>
+      </div>
+    </div>
+
+    <!-- ─────────────────────────────── PHASE 8 — SPOTIFY + YOUTUBE ─────────────────────────────── -->
+    <div class="section-card mb-6">
+      <div class="phase-header bg-slate2-50">
+        <div class="phase-num bg-slate2-800 text-white">8</div>
+        <div>
+          <div class="font-bold text-slate2-800">Spotify + YouTube</div>
+          <div class="mono text-xs text-slate2-400 mt-0.5">Spotify Connect via API native HA · YouTube via yt-dlp + mpv</div>
+        </div>
+        <div class="ml-auto"><span class="badge status-done">✓ Documenté</span></div>
+      </div>
+
+      <div class="step">
+        <div class="step-label">8A — Spotify · Créer une app Developer</div>
+        <p class="text-sm text-slate2-600 mb-2">Un compte <strong>Spotify Premium</strong> est obligatoire depuis février 2026. L'intégration native HA utilise OAuth2.</p>
+        <ol class="text-sm text-slate2-600 space-y-1 list-decimal pl-5 mb-3">
+          <li>Aller sur <strong>developer.spotify.com/dashboard</strong> → Create app</li>
+          <li>App name : <em>Jean-Mi Home Assistant</em></li>
+          <li>Dans Edit Settings → Redirect URIs → ajouter exactement : <code class="mono text-slate2-700">https://my.home-assistant.io/redirect/oauth</code></li>
+          <li>Copier le <strong>Client ID</strong> et le <strong>Client Secret</strong></li>
+        </ol>
+      </div>
+
+      <div class="step">
+        <div class="step-label">8A — Spotify · Intégrer dans Home Assistant</div>
+        <p class="text-sm text-slate2-600 mb-2"><strong>Settings → Devices & Services → Add Integration → Spotify</strong><br>Saisir Client ID + Client Secret → suivre le flux OAuth → une entité <code class="mono text-slate2-700">media_player.spotify_USERNAME</code> est créée.</p>
+        <p class="text-sm text-slate2-600 mb-2">Lancer une playlist via un service HA (dans Developer Tools → Services) :</p>
+        <pre id="pre-sp-1"><button class="copy-btn" onclick="copyPre('pre-sp-1')">Copier</button>service: media_player.play_media
+target:
+  entity_id: media_player.spotify_<span class="placeholder">USERNAME</span>
+data:
+  media_content_type: playlist
+  media_content_id: <span class="str">"spotify:playlist:XXXXXXXXXXXX"</span></pre>
+        <div class="note">Obtenir l'URI d'une playlist : Spotify app → <strong>···</strong> → Share → Copy Spotify URI → format <code class="mono">spotify:playlist:XXXX</code></div>
+      </div>
+
+      <div class="step">
+        <div class="step-label">8A — Spotify · Commandes vocales en français</div>
+        <p class="text-sm text-slate2-600 mb-2"><strong>Settings → Automations & Scenes → Create Automation → Trigger : Sentence</strong></p>
+        <pre id="pre-sp-2"><button class="copy-btn" onclick="copyPre('pre-sp-2')">Copier</button><span class="comment"># Exemples de phrases à configurer</span>
+Joue ma playlist de travail
+Joue la playlist cozy
+Lance Spotify</pre>
+        <p class="text-sm text-slate2-600 mt-2">Action : appeler <code class="mono text-slate2-700">media_player.play_media</code> avec l'URI de la playlist correspondante.</p>
+      </div>
+
+      <div class="step">
+        <div class="step-label">8B — YouTube · Installer yt-dlp + mpv</div>
+        <p class="text-sm text-slate2-600 mb-2">Solution recommandée pour Ubuntu sans Chromecast : <code class="mono text-slate2-700">mpv</code> + <code class="mono text-slate2-700">yt-dlp</code>.</p>
+        <pre id="pre-yt-1"><button class="copy-btn" onclick="copyPre('pre-yt-1')">Copier</button><span class="comment"># Installer mpv et yt-dlp</span>
+<span class="cmd">sudo apt install -y mpv python3-pip</span>
+<span class="cmd">pip3 install yt-dlp</span>
+
+<span class="comment"># Créer la config mpv</span>
+<span class="cmd">mkdir -p ~/.config/mpv</span>
+<span class="cmd">cat > ~/.config/mpv/mpv.conf << 'EOF'
+ytdl-format=best[height<=720]/best
+volume=100
+EOF</span>
+
+<span class="comment"># Test direct</span>
+<span class="cmd">mpv "https://www.youtube.com/watch?v=<span class="placeholder">VIDEO_ID</span>"</span></pre>
+      </div>
+
+      <div class="step">
+        <div class="step-label">8B — YouTube · Intégrer dans Home Assistant</div>
+        <p class="text-sm text-slate2-600 mb-2">Dans <code class="mono text-slate2-700">~/homeassistant/config/configuration.yaml</code> :</p>
+        <pre id="pre-yt-2"><button class="copy-btn" onclick="copyPre('pre-yt-2')">Copier</button>shell_command:
+  youtube_play: <span class="str">"nohup mpv '{{ url }}' &"</span></pre>
+        <p class="text-sm text-slate2-600 mt-2">Puis redémarrer HA et appeler le service depuis une automation ou Developer Tools :</p>
+        <pre id="pre-yt-3"><button class="copy-btn" onclick="copyPre('pre-yt-3')">Copier</button>service: shell_command.youtube_play
+data:
+  url: <span class="str">"https://www.youtube.com/watch?v=<span class="placeholder">VIDEO_ID</span>"</span></pre>
+      </div>
     </div>
 
   </main>
