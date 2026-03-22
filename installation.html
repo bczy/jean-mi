@@ -849,11 +849,12 @@ Joue ma playlist de travail
 Joue la playlist cozy
 Lance Spotify</pre>
         <p class="text-sm text-slate2-600 mt-2">Action : appeler <code class="mono text-slate2-700">media_player.play_media</code> avec l'URI de la playlist correspondante.</p>
+        <div class="note">Pour lancer Spotify <strong>directement sur le TV</strong> (son par le TV via HDMI), utiliser Spotcast avec l'entité Chromecast du Freebox Player — voir <a href="#phase-9" class="underline text-home-600">Phase 9B</a>.</div>
       </div>
 
       <div class="step">
         <div class="step-label">8B — YouTube · Installer yt-dlp + mpv</div>
-        <p class="text-sm text-slate2-600 mb-2">Solution recommandée pour Ubuntu sans Chromecast : <code class="mono text-slate2-700">mpv</code> + <code class="mono text-slate2-700">yt-dlp</code>.</p>
+        <p class="text-sm text-slate2-600 mb-2">Lecture locale sur le Mini PC (son par les enceintes du salon) : <code class="mono text-slate2-700">mpv</code> + <code class="mono text-slate2-700">yt-dlp</code>. Pour caster une vidéo YouTube directement sur le TV, voir <a href="#phase-9" class="underline text-home-600">Phase 9B — Chromecast</a>.</p>
         <pre id="pre-yt-1"><button class="copy-btn" onclick="copyPre('pre-yt-1')">Copier</button><span class="comment"># Installer mpv et yt-dlp (yt-dlp disponible dans noble/universe — pas besoin de pip)</span>
 <span class="cmd">sudo apt install -y mpv yt-dlp</span>
 
@@ -886,15 +887,25 @@ data:
         <div class="phase-num bg-slate2-800 text-white">9</div>
         <div>
           <div class="font-bold text-slate2-800">Freebox Player — Décodeur TV</div>
-          <div class="mono text-xs text-slate2-500 mt-0.5">Contrôle vocal du décodeur via HACS · power · volume · chaînes</div>
+          <div class="mono text-xs text-slate2-500 mt-0.5">9A — HACS : power · volume · chaînes · 9B — Chromecast : casting YouTube / Spotify</div>
         </div>
         <div class="ml-auto"><span class="badge bg-slate2-100 text-slate2-500">~20 min</span></div>
       </div>
 
       <div class="step">
         <div class="step-label">Contexte technique</div>
-        <div class="warn">⚠️ Le <strong>Freebox Player</strong> (décodeur TV) ne tourne <strong>pas</strong> sous Ubuntu — il tourne sur un OS embarqué propriétaire de Free. C'est le <strong>NiPoGi Mini PC</strong> qui tourne sous Ubuntu (avec Home Assistant). HA communique avec le décodeur via l'<strong>API locale</strong> de la Freebox Pop (réseau local uniquement, sans cloud).</div>
-        <div class="note mt-2">L'intégration utilisée est le composant communautaire <strong>freebox_player</strong> (GitHub : <a href="https://github.com/Pouzor/freebox_player" class="underline" target="_blank" rel="noopener">Pouzor/freebox_player</a>), installé via HACS. Elle expose une entité <code class="mono">media_player.freebox_player</code> permettant : allumer/éteindre, régler le volume, changer de chaîne et naviguer dans les menus.</div>
+        <div class="warn">⚠️ Le <strong>Freebox Player</strong> (décodeur TV) ne tourne <strong>pas</strong> sous Ubuntu — il tourne sous <strong>Android TV</strong> (OS de Free). C'est le <strong>NiPoGi Mini PC</strong> qui tourne sous Ubuntu (avec Home Assistant). HA communique avec le décodeur via deux canaux distincts selon l'usage.</div>
+        <div class="note mt-2">
+          <strong>Deux intégrations complémentaires :</strong><br>
+          <strong>9A — freebox_player (HACS)</strong> : contrôle de la box TV via l'API locale Freebox — allumer, éteindre, changer de chaîne, régler le volume. Entité : <code class="mono">media_player.freebox_player</code>.<br>
+          <strong>9B — Google Cast (officielle HA)</strong> : le Freebox Player embarque un <strong>Chromecast intégré</strong> (Android TV). HA auto-découvre le device et permet de caster YouTube, Spotify, TTS. Entité : <code class="mono">media_player.freebox_player_pop</code> (ou nom auto-assigné). <em>⚠️ WiFi obligatoire — ne fonctionne pas en Ethernet.</em>
+        </div>
+      </div>
+
+      <!-- 9A — Contrôle TV via HACS -->
+      <div class="step" style="background:#f8f7f4; border-bottom: 2px solid #e8e5dc;">
+        <div class="mono text-xs text-slate2-400 tracking-widest uppercase">9A — Contrôle TV (freebox_player via HACS)</div>
+        <p class="text-sm text-slate2-500 mt-1">Power · volume · chaînes via l'API locale Freebox. Ne nécessite pas le WiFi.</p>
       </div>
 
       <!-- Étape 1 — HACS -->
@@ -982,6 +993,60 @@ freebox_volume_down:
       target:
         entity_id: media_player.freebox_player</pre>
         <div class="note">Commandes vocales testables après activation dans HA Assist : <em>"Allume la Freebox"</em>, <em>"Éteins la Freebox"</em>, <em>"Monte le son de la Freebox"</em>, <em>"Baisse le son de la Freebox"</em>.<br>Pour changer de chaîne : utiliser le service <code class="mono">media_player.play_media</code> avec <code class="mono">media_content_id</code> = numéro de chaîne (ex : <code class="mono">1</code> pour TF1, <code class="mono">2</code> pour France 2).</div>
+      </div>
+
+      <!-- 9B — Chromecast -->
+      <div class="step" style="background:#f8f7f4; border-bottom: 2px solid #e8e5dc; margin-top: 0.5rem;">
+        <div class="mono text-xs text-slate2-400 tracking-widest uppercase">9B — Casting média (Chromecast intégré)</div>
+        <p class="text-sm text-slate2-500 mt-1">YouTube · Spotify · TTS via le Chromecast Android TV du Freebox Player.</p>
+      </div>
+
+      <div class="step">
+        <div class="step-label">9B — Prérequis : Freebox Player en WiFi</div>
+        <div class="warn">⚠️ Le Chromecast du Freebox Player fonctionne <strong>uniquement en WiFi</strong>. Si le décodeur est branché en Ethernet, le Chromecast est inactif (conflit UPnP connu). Vérifier dans <strong>Paramètres Freebox Player → Réseau</strong> que le WiFi est activé.</div>
+      </div>
+
+      <div class="step">
+        <div class="step-label">9B — Auto-découverte dans Home Assistant</div>
+        <p class="text-sm text-slate2-600">HA découvre automatiquement les Chromecast via <strong>mDNS</strong> — aucune configuration requise. Vérifier que l'entité est apparue :</p>
+        <pre id="pre-cc1"><button class="copy-btn" onclick="copyPre('pre-cc1')">Copier</button><span class="comment"># Dans HA : Settings → Devices &amp; Services → Entities</span>
+<span class="comment"># Chercher "freebox" ou "cast" → doit apparaître automatiquement :</span>
+<span class="out">  media_player.freebox_player_pop  →  État : idle / playing / off</span></pre>
+        <div class="note">Si l'entité n'apparaît pas : vérifier que le Freebox Player et le Mini PC sont sur le <strong>même réseau local</strong> (même sous-réseau), que le Player est en WiFi, et que mDNS n'est pas bloqué. L'intégration <strong>Google Cast</strong> doit être activée dans HA (Settings → Devices &amp; Services → Add Integration → "Google Cast" si pas auto-découverte).</div>
+      </div>
+
+      <div class="step">
+        <div class="step-label">9B — Caster YouTube sur le TV</div>
+        <p class="text-sm text-slate2-600 mb-2">Envoyer une vidéo YouTube directement sur le TV depuis HA :</p>
+        <pre id="pre-cc2"><button class="copy-btn" onclick="copyPre('pre-cc2')">Copier</button>service: media_player.play_media
+target:
+  entity_id: media_player.freebox_player_pop
+data:
+  media_content_type: cast
+  media_content_id: <span class="str">'{"app_name":"youtube","media_id":"<span class="placeholder">VIDEO_ID</span>"}'</span></pre>
+        <div class="note">Remplacer <code class="mono">VIDEO_ID</code> par l'identifiant YouTube (la partie après <code class="mono">?v=</code> dans l'URL). Alternative plus simple : utiliser le bouton Cast depuis l'app YouTube sur smartphone — le Freebox Player apparaîtra comme cible Chromecast.</div>
+      </div>
+
+      <div class="step">
+        <div class="step-label">9B — Spotify via Spotcast sur le TV</div>
+        <p class="text-sm text-slate2-600 mb-2">Spotcast (Phase 8A) peut cibler le Freebox Player comme speaker Chromecast pour lancer Spotify directement sur le TV :</p>
+        <pre id="pre-cc3"><button class="copy-btn" onclick="copyPre('pre-cc3')">Copier</button>service: spotcast.start
+data:
+  entity_id: media_player.freebox_player_pop
+  uri: <span class="str">"spotify:playlist:<span class="placeholder">PLAYLIST_ID</span>"</span></pre>
+        <div class="note">Le son sortira par le TV (via HDMI). Pour contrôler le volume : utiliser <code class="mono">media_player.volume_set</code> sur l'entité Chromecast, pas sur l'entité <code class="mono">freebox_player</code> HACS.</div>
+      </div>
+
+      <div class="step">
+        <div class="step-label">9B — TTS (annonces vocales) sur le TV</div>
+        <div class="warn">⚠️ TTS vers Chromecast fonctionne mais avec un <strong>délai de ~2-3 minutes</strong> (contrainte Google Cast). Pour les annonces en temps réel, préférer les enceintes locales pilotées par Wyoming Piper (Phase 7).</div>
+        <pre id="pre-cc4"><button class="copy-btn" onclick="copyPre('pre-cc4')">Copier</button><span class="comment"># Annonce sur le TV — délai ~2-3 min</span>
+service: tts.speak
+target:
+  entity_id: tts.piper
+data:
+  media_player_entity_id: media_player.freebox_player_pop
+  message: <span class="str">"Bonjour, le dîner est prêt"</span></pre>
       </div>
     </div>
 
