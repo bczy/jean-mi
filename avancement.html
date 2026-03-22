@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Projet Jean-Mi — Avancement</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏠</text></svg>">
+  <meta name="description" content="Jean-Mi — Suivi d'avancement : état des achats matériel domotique et progression de l'installation Home Assistant.">
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
   <script>
@@ -103,6 +105,17 @@
 
   <!-- Header -->
   <header class="bg-slate2-900 text-white fade-up fade-up-1">
+
+    <!-- Barre de navigation -->
+    <nav class="bg-slate2-800 border-b border-slate2-700">
+      <div class="max-w-7xl mx-auto px-6 py-2 flex items-center gap-6">
+        <a href="index.html" class="mono text-xs text-slate2-400 hover:text-white">Accueil</a>
+        <a href="jean-mi.html" class="mono text-xs text-slate2-400 hover:text-white">Tableau d'achat</a>
+        <a href="avancement.html" class="mono text-xs text-home-400">Avancement</a>
+        <a href="installation.html" class="mono text-xs text-slate2-400 hover:text-white">Guide d'installation</a>
+      </div>
+    </nav>
+
     <div class="max-w-7xl mx-auto px-6 py-10">
       <div class="flex items-start justify-between flex-wrap gap-4">
         <div>
@@ -175,6 +188,12 @@
       <h2 class="font-extrabold text-2xl text-home-700 mb-2">Tout le matériel est acheté !</h2>
       <p class="text-slate2-500 text-sm">Il ne reste plus qu'à installer et configurer Home Assistant.</p>
       <a href="jean-mi.html" class="inline-block mt-4 mono text-xs text-home-600 hover:underline">Voir le comparatif complet →</a>
+    </div>
+
+    <!-- Séparateur : comparatifs d'achat -->
+    <div id="section-comparatifs-header" class="fade-up fade-up-2 pt-2">
+      <div class="mono text-xs text-slate2-400 tracking-widest uppercase mb-2">Comparatifs d'achat</div>
+      <p class="text-slate2-500 text-sm mb-6">Les tableaux ci-dessous s'affichent uniquement pour les articles non encore acquis. Une fois tous les articles achetés, cette section disparaît.</p>
     </div>
 
     <!-- TABLE 1 : MICRO -->
@@ -582,6 +601,46 @@
           <span class="mono text-slate2-200">○</span>
           Intégrer Spotify et YouTube
         </div>
+      </div>
+
+      <!-- Sous-titre installation software -->
+      <div class="mt-8 mb-4 mono text-xs text-slate2-400 tracking-widest uppercase">Installation software</div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2">
+        <div class="flex items-center gap-2 text-sm text-slate2-500">
+          <span class="mono text-slate2-200">○</span>
+          Phase 1 — Connexion SSH Mac → Ubuntu
+        </div>
+        <div class="flex items-center gap-2 text-sm text-slate2-500">
+          <span class="mono text-slate2-200">○</span>
+          Phase 2 — Installation Docker
+        </div>
+        <div class="flex items-center gap-2 text-sm text-slate2-500">
+          <span class="mono text-slate2-200">○</span>
+          Phase 3 — Déploiement Home Assistant
+        </div>
+        <div class="flex items-center gap-2 text-sm text-slate2-500">
+          <span class="mono text-slate2-200">○</span>
+          Phase 4 — Configuration dongle Zigbee
+        </div>
+        <div class="flex items-center gap-2 text-sm text-slate2-500">
+          <span class="mono text-slate2-200">○</span>
+          Phase 5 — Mosquitto + Zigbee2MQTT
+        </div>
+        <div class="flex items-center gap-2 text-sm text-slate2-500">
+          <span class="mono text-slate2-200">○</span>
+          Phase 6 — ReSpeaker (micro USB)
+        </div>
+        <div class="flex items-center gap-2 text-sm text-slate2-500">
+          <span class="mono text-slate2-200">○</span>
+          Phase 7 — Commande vocale locale (Wyoming)
+        </div>
+        <div class="flex items-center gap-2 text-sm text-slate2-500">
+          <span class="mono text-slate2-200">○</span>
+          Phase 8 — Spotify / YouTube
+        </div>
+      </div>
+      <div class="mt-4">
+        <a href="installation.html" class="mono text-xs text-home-600 hover:underline">Voir le guide d'installation →</a>
       </div>
     </section>
 

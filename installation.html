@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Installation — Jean-Mi Domotique</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏠</text></svg>">
+  <meta name="description" content="Jean-Mi — Guide d'installation Home Assistant sur Ubuntu 24.04 : SSH, Docker, Zigbee2MQTT, commande vocale locale Wyoming, Spotify.">
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
   <script>
@@ -100,6 +102,16 @@
 </head>
 <body class="min-h-screen">
 
+  <!-- Barre de navigation commune -->
+  <nav class="bg-slate2-800 border-b border-slate2-700">
+    <div class="max-w-4xl mx-auto px-6 py-2 flex flex-wrap gap-4 items-center">
+      <a href="index.html" class="mono text-xs text-slate2-400 hover:text-white transition-colors">Accueil</a>
+      <a href="jean-mi.html" class="mono text-xs text-slate2-400 hover:text-white transition-colors">Tableau d'achat</a>
+      <a href="avancement.html" class="mono text-xs text-slate2-400 hover:text-white transition-colors">Avancement</a>
+      <a href="installation.html" class="mono text-xs text-home-400">Guide d'installation</a>
+    </div>
+  </nav>
+
   <!-- Header -->
   <header class="bg-slate2-900 text-white fade-up fade-up-1">
     <div class="max-w-4xl mx-auto px-6 py-10">
@@ -125,6 +137,73 @@
   </header>
 
   <main class="max-w-4xl mx-auto px-6 py-12 fade-up fade-up-2">
+
+    <!-- Tableau récapitulatif des 8 phases -->
+    <div class="section-card p-4 mb-8">
+      <div class="mono text-xs text-slate2-400 tracking-widest uppercase mb-3 px-2">Récapitulatif des phases</div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="border-b border-slate2-200">
+              <th class="px-3 py-2 text-left mono text-xs text-slate2-400">Phase</th>
+              <th class="px-3 py-2 text-left mono text-xs text-slate2-400">Titre</th>
+              <th class="px-3 py-2 text-left mono text-xs text-slate2-400">Durée estimée</th>
+              <th class="px-3 py-2 text-left mono text-xs text-slate2-400">Statut</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-b border-slate2-100 hover:bg-slate2-50 transition-colors">
+              <td class="px-3 py-2 mono text-xs text-slate2-400">1</td>
+              <td class="px-3 py-2"><a href="#phase-1" class="font-semibold text-slate2-800 hover:text-home-500 transition-colors">Connexion SSH Mac → Ubuntu</a></td>
+              <td class="px-3 py-2 mono text-xs text-slate2-500">~10 min</td>
+              <td class="px-3 py-2"><span class="badge status-done">✓ Documenté</span></td>
+            </tr>
+            <tr class="border-b border-slate2-100 hover:bg-slate2-50 transition-colors">
+              <td class="px-3 py-2 mono text-xs text-slate2-400">2</td>
+              <td class="px-3 py-2"><a href="#phase-2" class="font-semibold text-slate2-800 hover:text-home-500 transition-colors">Installation Docker</a></td>
+              <td class="px-3 py-2 mono text-xs text-slate2-500">~15 min</td>
+              <td class="px-3 py-2"><span class="badge status-done">✓ Documenté</span></td>
+            </tr>
+            <tr class="border-b border-slate2-100 hover:bg-slate2-50 transition-colors">
+              <td class="px-3 py-2 mono text-xs text-slate2-400">3</td>
+              <td class="px-3 py-2"><a href="#phase-3" class="font-semibold text-slate2-800 hover:text-home-500 transition-colors">Déploiement Home Assistant</a></td>
+              <td class="px-3 py-2 mono text-xs text-slate2-500">~20 min</td>
+              <td class="px-3 py-2"><span class="badge status-done">✓ Documenté</span></td>
+            </tr>
+            <tr class="border-b border-slate2-100 hover:bg-slate2-50 transition-colors">
+              <td class="px-3 py-2 mono text-xs text-slate2-400">4</td>
+              <td class="px-3 py-2"><a href="#phase-4" class="font-semibold text-slate2-800 hover:text-home-500 transition-colors">Configuration dongle Zigbee</a></td>
+              <td class="px-3 py-2 mono text-xs text-slate2-500">~10 min</td>
+              <td class="px-3 py-2"><span class="badge status-done">✓ Documenté</span></td>
+            </tr>
+            <tr class="border-b border-slate2-100 hover:bg-slate2-50 transition-colors">
+              <td class="px-3 py-2 mono text-xs text-slate2-400">5</td>
+              <td class="px-3 py-2"><a href="#phase-5" class="font-semibold text-slate2-800 hover:text-home-500 transition-colors">Mosquitto + Zigbee2MQTT</a></td>
+              <td class="px-3 py-2 mono text-xs text-slate2-500">~20 min</td>
+              <td class="px-3 py-2"><span class="badge status-done">✓ Documenté</span></td>
+            </tr>
+            <tr class="border-b border-slate2-100 hover:bg-slate2-50 transition-colors">
+              <td class="px-3 py-2 mono text-xs text-slate2-400">6</td>
+              <td class="px-3 py-2"><a href="#phase-6" class="font-semibold text-slate2-800 hover:text-home-500 transition-colors">ReSpeaker (micro USB)</a></td>
+              <td class="px-3 py-2 mono text-xs text-slate2-500">~5 min</td>
+              <td class="px-3 py-2"><span class="badge status-done">✓ Documenté</span></td>
+            </tr>
+            <tr class="border-b border-slate2-100 hover:bg-slate2-50 transition-colors">
+              <td class="px-3 py-2 mono text-xs text-slate2-400">7</td>
+              <td class="px-3 py-2"><a href="#phase-7" class="font-semibold text-slate2-800 hover:text-home-500 transition-colors">Commande vocale locale (Wyoming)</a></td>
+              <td class="px-3 py-2 mono text-xs text-slate2-500">~30 min</td>
+              <td class="px-3 py-2"><span class="badge status-done">✓ Documenté</span></td>
+            </tr>
+            <tr class="hover:bg-slate2-50 transition-colors">
+              <td class="px-3 py-2 mono text-xs text-slate2-400">8</td>
+              <td class="px-3 py-2"><a href="#phase-8" class="font-semibold text-slate2-800 hover:text-home-500 transition-colors">Spotify + YouTube</a></td>
+              <td class="px-3 py-2 mono text-xs text-slate2-500">~20 min</td>
+              <td class="px-3 py-2"><span class="badge status-done">✓ Documenté</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
 
     <!-- Roadmap overview -->
     <div class="section-card mb-8">
@@ -188,7 +267,7 @@
     </div>
 
     <!-- ─────────────────────────────── PHASE 1 — SSH ─────────────────────────────── -->
-    <div class="section-card mb-6">
+    <div id="phase-1" class="section-card mb-6">
       <div class="phase-header bg-slate2-50">
         <div class="phase-num bg-slate2-800 text-white">1</div>
         <div>
@@ -210,7 +289,8 @@
 
 <span class="comment"># Vérifier que le service tourne</span>
 <span class="cmd">sudo systemctl status ssh</span>
-<span class="out">  → Active: active (running) since ...</span></pre>
+<span class="comment">  # → résultat attendu :</span>
+<span class="out">  Active: active (running) since ...</span></pre>
       </div>
 
       <!-- Étape 2 -->
@@ -269,14 +349,15 @@
       <div class="step">
         <div class="step-label">Étape 6 — Sur Mac · tester la connexion</div>
         <pre id="pre-ssh6"><button class="copy-btn" onclick="copyPre('pre-ssh6')">Copier</button><span class="cmd">ssh jean-mi</span>
-<span class="out">  → Welcome to Ubuntu 24.04 LTS ...</span>
-<span class="out">  → USER@nipogl:~$</span></pre>
+<span class="comment">  # → résultat attendu :</span>
+<span class="out">  Welcome to Ubuntu 24.04 LTS ...</span>
+<span class="out">  USER@nipogl:~$</span></pre>
         <div class="note">✓ Connexion sans mot de passe — la phase SSH est terminée.</div>
       </div>
     </div>
 
     <!-- ─────────────────────────────── PHASE 2 — DOCKER ─────────────────────────────── -->
-    <div class="section-card mb-6">
+    <div id="phase-2" class="section-card mb-6">
       <div class="phase-header bg-slate2-50">
         <div class="phase-num bg-slate2-800 text-white">2</div>
         <div>
@@ -315,14 +396,15 @@
 <span class="cmd">sudo usermod -aG docker $USER</span>
 <span class="cmd">newgrp docker</span>
 
-<span class="comment"># Vérifier</span>
+<span class="comment"># Vérifier l'installation Docker</span>
 <span class="cmd">docker run --rm hello-world</span>
-<span class="out">  → Hello from Docker!</span></pre>
+<span class="comment">  # → résultat attendu :</span>
+<span class="out">  Hello from Docker!</span></pre>
       </div>
     </div>
 
     <!-- ─────────────────────────────── PHASE 3 — HOME ASSISTANT ─────────────────────────────── -->
-    <div class="section-card mb-6">
+    <div id="phase-3" class="section-card mb-6">
       <div class="phase-header bg-slate2-50">
         <div class="phase-num bg-slate2-800 text-white">3</div>
         <div>
@@ -364,7 +446,7 @@ EOF</span></pre>
     </div>
 
     <!-- ─────────────────────────────── PHASE 4 — DONGLE ZIGBEE ─────────────────────────────── -->
-    <div class="section-card mb-6">
+    <div id="phase-4" class="section-card mb-6">
       <div class="phase-header bg-slate2-50">
         <div class="phase-num bg-slate2-800 text-white">4</div>
         <div>
@@ -383,11 +465,13 @@ EOF</span></pre>
 
 <span class="comment"># Confirmer la détection dans dmesg</span>
 <span class="cmd">dmesg | tail -20</span>
-<span class="out">  → usb 1-1: cdc_acm 1-1:1.0: ttyACM0: USB ACM device</span>
+<span class="comment">  # → résultat attendu :</span>
+<span class="out">  usb 1-1: cdc_acm 1-1:1.0: ttyACM0: USB ACM device</span>
 
 <span class="comment"># Trouver le by-id stable — à utiliser dans Z2M</span>
 <span class="cmd">ls -la /dev/serial/by-id/</span>
-<span class="out">  → usb-Itead_Sonoff_Zigbee_3.0_USB_Dongle_Plus_V2_XXXXX-if00-port0 -> ../../ttyACM0</span></pre>
+<span class="comment">  # → résultat attendu :</span>
+<span class="out">  usb-Itead_Sonoff_Zigbee_3.0_USB_Dongle_Plus_V2_XXXXX-if00-port0 -> ../../ttyACM0</span></pre>
         <div class="note">Copier le chemin complet <strong>/dev/serial/by-id/usb-Itead_Sonoff_…</strong> — il sera utilisé dans le <code class="mono">compose.yaml</code> de Zigbee2MQTT.</div>
       </div>
 
@@ -421,7 +505,7 @@ EOF</span>
     </div>
 
     <!-- ─────────────────────────────── PHASE 5 — MOSQUITTO + Z2M ─────────────────────────────── -->
-    <div class="section-card mb-6">
+    <div id="phase-5" class="section-card mb-6">
       <div class="phase-header bg-slate2-50">
         <div class="phase-num bg-slate2-800 text-white">5</div>
         <div>
@@ -548,7 +632,7 @@ EOF</span></pre>
     </div>
 
     <!-- ─────────────────────────────── PHASE 6 — RESPEAKER ─────────────────────────────── -->
-    <div class="section-card mb-6">
+    <div id="phase-6" class="section-card mb-6">
       <div class="phase-header bg-slate2-50">
         <div class="phase-num bg-slate2-800 text-white">6</div>
         <div>
@@ -611,7 +695,7 @@ EOF</span>
     </div>
 
     <!-- ─────────────────────────────── PHASE 7 — VOIX LOCALE ─────────────────────────────── -->
-    <div class="section-card mb-6">
+    <div id="phase-7" class="section-card mb-6">
       <div class="phase-header bg-slate2-50">
         <div class="phase-num bg-slate2-800 text-white">7</div>
         <div>
@@ -711,7 +795,7 @@ EOF</span>
     </div>
 
     <!-- ─────────────────────────────── PHASE 8 — SPOTIFY + YOUTUBE ─────────────────────────────── -->
-    <div class="section-card mb-6">
+    <div id="phase-8" class="section-card mb-6">
       <div class="phase-header bg-slate2-50">
         <div class="phase-num bg-slate2-800 text-white">8</div>
         <div>
@@ -781,6 +865,51 @@ EOF</span>
         <pre id="pre-yt-3"><button class="copy-btn" onclick="copyPre('pre-yt-3')">Copier</button>service: shell_command.youtube_play
 data:
   url: <span class="str">"https://www.youtube.com/watch?v=<span class="placeholder">VIDEO_ID</span>"</span></pre>
+      </div>
+    </div>
+
+    <!-- ─────────────────────────────── DEBUG ─────────────────────────────── -->
+    <div id="debug" class="section-card mb-6">
+      <div class="phase-header bg-slate2-900" style="border-bottom: 1px solid #433f35;">
+        <div class="phase-num bg-slate2-700 text-white" style="font-size:1rem;">🔍</div>
+        <div>
+          <div class="font-bold text-white">Commandes de debug rapide</div>
+          <div class="mono text-xs text-slate2-400 mt-0.5">Vérifications essentielles pendant et après l'installation</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-label">Logs en temps réel</div>
+        <pre id="pre-debug-1"><button class="copy-btn" onclick="copyPre('pre-debug-1')">Copier</button><span class="comment"># Logs Home Assistant (temps réel)</span>
+<span class="cmd">docker logs -f homeassistant</span>
+
+<span class="comment"># Logs Zigbee2MQTT</span>
+<span class="cmd">docker logs -f zigbee2mqtt</span>
+
+<span class="comment"># Logs Mosquitto</span>
+<span class="cmd">docker logs -f mosquitto</span></pre>
+      </div>
+
+      <div class="step">
+        <div class="step-label">Test micro ReSpeaker</div>
+        <pre id="pre-debug-2"><button class="copy-btn" onclick="copyPre('pre-debug-2')">Copier</button><span class="comment"># Enregistrer 3 secondes puis réécouter</span>
+<span class="cmd">arecord -D hw:1,0 -f S16_LE -r 16000 -d 3 test.wav && aplay test.wav</span></pre>
+        <div class="note">Remplacer <code class="mono">hw:1,0</code> par <code class="mono">hw:CARD,0</code> avec le numéro de carte trouvé en Phase 6.</div>
+      </div>
+
+      <div class="step">
+        <div class="step-label">Vérifier les services Wyoming + HA + dongle</div>
+        <pre id="pre-debug-3"><button class="copy-btn" onclick="copyPre('pre-debug-3')">Copier</button><span class="comment"># Vérifier services Wyoming actifs</span>
+<span class="cmd">docker ps | grep wyoming</span>
+<span class="out">  # → résultat attendu : 3 conteneurs wyoming (whisper, piper, openwakeword)</span>
+
+<span class="comment"># Vérifier port HA accessible</span>
+<span class="cmd">curl -s http://localhost:8123 | head -5</span>
+<span class="out">  # → résultat attendu : &lt;!DOCTYPE html&gt; ... (page HA)</span>
+
+<span class="comment"># Vérifier dongle Zigbee détecté</span>
+<span class="cmd">ls /dev/ttyACM* && dmesg | grep -i "cdc_acm\|CH9102" | tail -5</span>
+<span class="out">  # → résultat attendu : /dev/ttyACM0 + ligne "ttyACM0: USB ACM device"</span></pre>
       </div>
     </div>
 

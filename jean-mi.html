@@ -97,6 +97,9 @@
     .btn-acheter { display: inline-block; padding: 4px 12px; border-radius: 6px; background: #0f7a59; color: white !important; font-family: 'DM Mono', monospace; font-size: 0.68rem; font-weight: 500; text-decoration: none !important; white-space: nowrap; }
     .btn-acheter:hover { background: #085d44; }
     .btn-acheter-off { display: inline-block; padding: 4px 12px; border-radius: 6px; background: #d8d5cb; color: #5a5549 !important; font-family: 'DM Mono', monospace; font-size: 0.68rem; font-weight: 500; text-decoration: none !important; white-space: nowrap; cursor: default; pointer-events: none; }
+    /* Colonne Conso. masquée par défaut */
+    table.hide-conso th:nth-child(5),
+    table.hide-conso td:nth-child(5) { display: none; }
   </style>
 </head>
 <body class="min-h-screen">
@@ -177,11 +180,15 @@
     </div>
 
     <!-- TABLE 1 : MICRO -->
-    <section class="section-card fade-up fade-up-2">
+    <section class="section-card fade-up fade-up-2" id="section-micro">
       <div class="section-header">
         <span class="dot bg-home-500"></span>
         <h2 class="font-bold text-slate2-800 text-base">Micro USB pieuvre</h2>
         <span class="mono text-xs text-slate2-400 ml-auto">ReSpeaker USB Mic Array <span class="badge" style="background:#fef3c7;color:#92400e;margin-left:4px">⚠ EOL</span> — 4 mics · AEC · 5m · Successeur conseillé : XVF3800</span>
+      </div>
+      <p class="text-slate2-500 text-sm px-5 py-3 bg-slate2-50 border-b border-slate2-100">★ Recommandé : ReSpeaker XVF-3800 (~76 €) chez OpenELAB 🇩🇪 — le XVF-3000 est EOL et son prix a grimpé à ~97 €. Chercher d'abord sur Le Bon Coin (occasion, 25–35 €).</p>
+      <div class="flex justify-end px-4 py-2 border-b border-slate2-100">
+        <button onclick="toggleConso('micro')" class="mono text-xs text-slate2-400 border border-slate2-200 rounded px-2 py-1 hover:bg-slate2-100 transition-colors" id="btn-conso-micro">Afficher conso élec.</button>
       </div>
       <div class="overflow-wrapper">
         <table>
@@ -302,11 +309,15 @@
     </section>
 
     <!-- TABLE 2 : PRISE -->
-    <section class="section-card fade-up fade-up-3">
+    <section class="section-card fade-up fade-up-3" id="section-prise">
       <div class="section-header">
         <span class="dot bg-amber-500"></span>
         <h2 class="font-bold text-slate2-800 text-base">Prise Zigbee secteur</h2>
         <span class="mono text-xs text-slate2-400 ml-auto">Contrôle lampe branchée — 16A · mesure conso · end-device</span>
+      </div>
+      <p class="text-slate2-500 text-sm px-5 py-3 bg-slate2-50 border-b border-slate2-100">★ Recommandé : NOUS A1Z (~13–15 €) sur eBay.fr — 16A, mesure conso précise, end-device fiable. Les prises IKEA sont moins chères mais sans mesure conso (TRETAKT) ou avec précision aléatoire (INSPELNING).</p>
+      <div class="flex justify-end px-4 py-2 border-b border-slate2-100">
+        <button onclick="toggleConso('prise')" class="mono text-xs text-slate2-400 border border-slate2-200 rounded px-2 py-1 hover:bg-slate2-100 transition-colors" id="btn-conso-prise">Afficher conso élec.</button>
       </div>
       <div class="overflow-wrapper">
         <table>
@@ -460,11 +471,15 @@
     </section>
 
     <!-- TABLE 3 : PLAFONNIER -->
-    <section class="section-card fade-up fade-up-4">
+    <section class="section-card fade-up fade-up-4" id="section-plafonnier">
       <div class="section-header">
         <span class="dot bg-blue-500"></span>
         <h2 class="font-bold text-slate2-800 text-base">Module plafonnier</h2>
         <span class="mono text-xs text-slate2-400 ml-auto">Interrupteur sans neutre — Zigbee 3.0 · 6A/1440W · encastrable derrière l'interrupteur existant</span>
+      </div>
+      <p class="text-slate2-500 text-sm px-5 py-3 bg-slate2-50 border-b border-slate2-100">★ Recommandé : SONOFF ZBMINIL2 (~10–14 €) sur eBay.fr 🇩🇪 — sans neutre, ultra-compact. Vérifier le câblage existant (phase + neutre ou phase seule) avant l'achat.</p>
+      <div class="flex justify-end px-4 py-2 border-b border-slate2-100">
+        <button onclick="toggleConso('plafonnier')" class="mono text-xs text-slate2-400 border border-slate2-200 rounded px-2 py-1 hover:bg-slate2-100 transition-colors" id="btn-conso-plafonnier">Afficher conso élec.</button>
       </div>
       <div class="overflow-wrapper">
         <table>
@@ -639,7 +654,29 @@
   </footer>
 
   <script>
+    // Toggle colonne Conso. pour une section donnée
+    function toggleConso(sectionKey) {
+      var sectionId = 'section-' + sectionKey;
+      var btnId = 'btn-conso-' + sectionKey;
+      var section = document.getElementById(sectionId);
+      var btn = document.getElementById(btnId);
+      if (!section || !btn) return;
+      var table = section.querySelector('table');
+      if (!table) return;
+      var hidden = table.classList.toggle('hide-conso');
+      btn.textContent = hidden ? 'Afficher conso élec.' : 'Masquer conso élec.';
+    }
+
     (function () {
+      // Masquer la colonne Conso. par défaut dans chaque tableau
+      ['section-micro', 'section-prise', 'section-plafonnier'].forEach(function (id) {
+        var section = document.getElementById(id);
+        if (section) {
+          var table = section.querySelector('table');
+          if (table) table.classList.add('hide-conso');
+        }
+      });
+
       // Parse a cell's text to a sortable value (numeric if possible)
       function cellVal(td) {
         var raw = td.innerText.trim();

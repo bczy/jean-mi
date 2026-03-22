@@ -19,8 +19,8 @@ Guide de contexte pour Claude Code. À lire avant toute modification du projet.
 | RAM | 16 Go LPDDR5 5500 MT/s |
 | Stockage | 512 Go M.2 NVMe PCIe 3.0 |
 | OS | Ubuntu 24.04 LTS + GNOME |
-| Coordinateur Zigbee | SONOFF ZigBee 3.0 USB Dongle Plus (EFR32MG21) |
-| Plateforme | Home Assistant + Zigbee2MQTT |
+| Coordinateur Zigbee | SONOFF ZBDongle-E (EFR32MG21, `1a86:55d4`, `ttyACM0`) |
+| Plateforme | Home Assistant Container (Docker) + Zigbee2MQTT |
 
 ---
 
@@ -47,16 +47,9 @@ Guide de contexte pour Claude Code. À lire avant toute modification du projet.
 
 ---
 
-## Produits cibles et budget de référence (mars 2026)
+## Produits cibles et budget de référence
 
-| Produit | Référence | Prix indicatif | Source recommandée |
-|---------|-----------|---------------|--------------------|
-| Micro USB | **ReSpeaker XVF-3800** (successeur XVF-3000 EOL) | ~75,95 € | OpenELAB 🇩🇪 |
-| Prise Zigbee | **NOUS A1Z** — 16A, mesure conso, end-device | ~13–15 € | eBay.fr 🇵🇱 |
-| Module plafonnier | **SONOFF ZBMINIL2** — sans neutre, 6A/1440W | ~10–14 € | eBay.fr 🇩🇪 |
-| **TOTAL** | | **~102 €** | |
-
-> Le ReSpeaker XVF-3000 est **EOL** (End of Life) — son prix actuel a grimpé à ~96,95 €. Le successeur XVF-3800 (~75,95 €) est la référence recommandée.
+Les prix et sources d'achat sont dans `jean-mi.html` (source de vérité). Consulter ce fichier pour les données à jour.
 
 ---
 
@@ -69,8 +62,8 @@ Guide de contexte pour Claude Code. À lire avant toute modification du projet.
 | `avancement.html` | Suivi des achats et de la progression | Après jean-mi.html |
 | `installation.html` | Guide d'installation software (SSH · Docker · HA · Z2M · Voix) | Indépendant |
 | `achats.json` | État des achats (micro, prise Zigbee, module plafonnier) | Après avancement.html |
-| `README.md` | Intro rapide, stack, budget résumé, déploiement | Après jean-mi.html |
-| `PROJET.md` | Spec complète, tableaux détaillés, checklist, SSH/GitHub | Après jean-mi.html |
+| `README.md` | Intro rapide, stack, liens utiles, GitHub Pages | Après jean-mi.html |
+| `PROJET.md` | Spec complète, préférences d'achat, SSH/GitHub, checklist | Après jean-mi.html |
 | `CLAUDE.md` | Ce fichier — contexte pour Claude Code | Mettre à jour si changement majeur |
 | `.claude/settings.local.json` | Permissions WebFetch par domaine | Si nouveau vendeur à autoriser |
 
@@ -88,3 +81,16 @@ Guide de contexte pour Claude Code. À lire avant toute modification du projet.
 - **IKEA TRETAKT E22x4** : pas de mesure conso, ~15A max (vs 16A NOUS A1Z) — on/off uniquement
 - IKEA n'a **pas** d'équivalent pour le micro USB ni pour le module plafonnier sans-neutre
 - GitHub Pages : `https://bczy.github.io/jean-mi/` — fichier principal : `jean-mi.html`
+
+---
+
+## Corrections techniques importantes
+
+Vérités techniques que Claude doit connaître avant de modifier ou générer du code/config :
+
+- **NOUS A1Z** : end-device Zigbee (pas routeur) — ne pas le présenter comme routeur de maillage
+- **SONOFF ZBDongle-E** : puce EFR32MG21, interface USB via WCH CH9102F, IDs USB `1a86:55d4`, port `ttyACM0`, driver kernel `cdc-acm` (chargé automatiquement sur Ubuntu 24.04)
+- **Docker GPG 2025** : le fichier de clé s'appelle `docker.asc` (format ASCII armored), pas `docker.gpg` — les tutos anciens utilisent `.gpg` (format binaire) ce qui cause des erreurs apt
+- **pip3 sur Ubuntu 24.04** : `pip3 install yt-dlp` échoue (PEP 668 — environnement géré par le système) → utiliser `sudo apt install yt-dlp` à la place
+- **wyoming-openwakeword v2.0+** : le flag `--preload-model` a été supprimé — ne pas l'inclure dans les commandes de démarrage
+- **HA Container + réseau** : avec `network_mode: host` dans docker-compose, Home Assistant accède à Mosquitto via `localhost:1883` (pas `mosquitto:1883` qui ne fonctionne qu'en mode bridge Docker)
