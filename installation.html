@@ -215,14 +215,23 @@
 
       <!-- Étape 2 -->
       <div class="step">
-        <div class="step-label">Étape 2 — Sur Ubuntu · trouver l'adresse IP locale</div>
-        <p class="text-sm text-slate2-600">Repérer l'IP du Mini PC sur le réseau local (réseau en 192.168.x.x ou 10.x.x.x).</p>
-        <pre id="pre-ssh2"><button class="copy-btn" onclick="copyPre('pre-ssh2')">Copier</button><span class="cmd">hostname -I</span>
-<span class="out">  → 192.168.1.42  (exemple — noter cette valeur)</span>
+        <div class="step-label">Étape 2 — Sur Ubuntu · hostname mDNS (recommandé Freebox Pop)</div>
+        <p class="text-sm text-slate2-600">Avec une Freebox Pop, l'IP locale peut changer (DHCP). La solution recommandée est d'utiliser le <strong>hostname mDNS</strong> (<code class="mono">jean-mi.local</code>) — stable sans configuration réseau, supporté nativement par macOS (Bonjour) et Ubuntu (Avahi).</p>
+        <pre id="pre-ssh2"><button class="copy-btn" onclick="copyPre('pre-ssh2')">Copier</button><span class="comment"># Vérifier le hostname Ubuntu</span>
+<span class="cmd">hostname</span>
+<span class="out">  → jean-mi  (ou le nom choisi lors de l'installation)</span>
 
-<span class="comment"># Alternative plus détaillée</span>
-<span class="cmd">ip addr show | grep "inet " | grep -v 127.0.0.1</span></pre>
-        <div class="warn">⚠️ Remplacer <span class="mono font-semibold">IP_UBUNTU</span> et <span class="mono font-semibold">USER</span> par tes vraies valeurs dans les commandes suivantes.</div>
+<span class="comment"># Définir le hostname si besoin (remplacer jean-mi par ton choix)</span>
+<span class="cmd">sudo hostnamectl set-hostname jean-mi</span>
+
+<span class="comment"># Vérifier qu'avahi-daemon (mDNS) est actif</span>
+<span class="cmd">sudo systemctl status avahi-daemon</span>
+<span class="out">  → Active: active (running) ...</span>
+
+<span class="comment"># Installer avahi si absent (rare sur Ubuntu 24.04)</span>
+<span class="cmd">sudo apt install avahi-daemon</span></pre>
+        <div class="note">✓ Une fois fait, le PC est joignable via <strong>jean-mi.local</strong> depuis le Mac (et tout appareil du réseau local). Utiliser ce nom à la place de <code class="mono">IP_UBUNTU</code> dans toutes les commandes suivantes.</div>
+        <div class="warn">⚠️ Remplacer <span class="mono font-semibold">USER</span> par ton vrai nom d'utilisateur Ubuntu dans les commandes suivantes.</div>
       </div>
 
       <!-- Étape 3 -->
@@ -237,7 +246,7 @@
       <!-- Étape 4 -->
       <div class="step">
         <div class="step-label">Étape 4 — Sur Mac · copier la clé publique vers Ubuntu</div>
-        <pre id="pre-ssh4"><button class="copy-btn" onclick="copyPre('pre-ssh4')">Copier</button><span class="cmd">ssh-copy-id <span class="flag">-i</span> ~/.ssh/jean_mi_ubuntu.pub <span class="placeholder">USER</span>@<span class="placeholder">IP_UBUNTU</span></span>
+        <pre id="pre-ssh4"><button class="copy-btn" onclick="copyPre('pre-ssh4')">Copier</button><span class="cmd">ssh-copy-id <span class="flag">-i</span> ~/.ssh/jean_mi_ubuntu.pub <span class="placeholder">USER</span>@jean-mi.local</span>
 <span class="out">  → /usr/bin/ssh-copy-id: INFO: 1 key(s) were left to be installed.</span>
 <span class="comment"># Saisir le mot de passe Ubuntu une dernière fois</span></pre>
         <div class="note">Après cette étape, la connexion par mot de passe n'est plus nécessaire.</div>
@@ -248,11 +257,12 @@
         <div class="step-label">Étape 5 — Sur Mac · configurer ~/.ssh/config</div>
         <p class="text-sm text-slate2-600 mb-2">Ajouter ce bloc dans <code class="mono text-slate2-700">~/.ssh/config</code> (créer le fichier si absent).</p>
         <pre id="pre-ssh5"><button class="copy-btn" onclick="copyPre('pre-ssh5')">Copier</button>Host jean-mi
-  HostName <span class="placeholder">IP_UBUNTU</span>
+  HostName jean-mi.local
   User <span class="placeholder">USER</span>
   IdentityFile ~/.ssh/jean_mi_ubuntu
   AddKeysToAgent yes
   UseKeychain yes</pre>
+        <div class="note">Si tu as choisi un hostname différent, remplacer <code class="mono">jean-mi.local</code> par <code class="mono">ton-hostname.local</code>. Le <code class="mono">.local</code> est obligatoire pour la résolution mDNS.</div>
       </div>
 
       <!-- Étape 6 -->
@@ -349,7 +359,7 @@ EOF</span></pre>
 <span class="comment"># Suivre les logs au démarrage</span>
 <span class="cmd">docker compose logs -f</span>
 <span class="out">  → (attendre "Home Assistant initialized")</span></pre>
-        <div class="note">Accéder à HA depuis le réseau local : <strong>http://IP_UBUNTU:8123</strong><br>Ou depuis le Mac via tunnel SSH : <code class="mono">ssh -L 8123:localhost:8123 jean-mi</code> puis ouvrir <strong>http://localhost:8123</strong></div>
+        <div class="note">Accéder à HA depuis le réseau local : <strong>http://jean-mi.local:8123</strong><br>Ou depuis le Mac via tunnel SSH : <code class="mono">ssh -L 8123:localhost:8123 jean-mi</code> puis ouvrir <strong>http://localhost:8123</strong></div>
       </div>
     </div>
 
@@ -503,7 +513,7 @@ EOF</span></pre>
 <span class="out">  → Coordinator firmware version: {"meta":{"maintrel":3,"majorrel":2,...}}</span>
 <span class="out">  → Connected to MQTT server</span>
 <span class="out">  → Started frontend on port 8080</span></pre>
-        <div class="note">Interface Zigbee2MQTT : <strong>http://IP_UBUNTU:8080</strong></div>
+        <div class="note">Interface Zigbee2MQTT : <strong>http://jean-mi.local:8080</strong></div>
         <div class="warn mt-3">⚠️ <strong>Intégration MQTT dans HA</strong> : HA Container utilise <code class="mono">network_mode: host</code> (réseau de l'OS), donc il ne peut <strong>pas</strong> résoudre le nom <code class="mono">mosquitto</code>. Lors de la configuration de l'intégration MQTT dans HA (Settings → Devices & Services → MQTT), utiliser <strong><code class="mono">localhost</code></strong> comme broker (port 1883) — pas <code class="mono">mosquitto:1883</code>.</div>
       </div>
 
@@ -690,9 +700,9 @@ EOF</span>
           <table class="w-full text-xs">
             <thead><tr class="border-b border-slate2-200"><th class="px-3 py-2 text-left mono text-slate2-400">Host</th><th class="px-3 py-2 text-left mono text-slate2-400">Port</th><th class="px-3 py-2 text-left mono text-slate2-400">Service reconnu</th></tr></thead>
             <tbody>
-              <tr class="border-b border-slate2-100"><td class="px-3 py-2 mono text-slate2-600">IP_UBUNTU</td><td class="px-3 py-2 mono text-slate2-600">10300</td><td class="px-3 py-2 text-slate2-600">Whisper STT</td></tr>
-              <tr class="border-b border-slate2-100"><td class="px-3 py-2 mono text-slate2-600">IP_UBUNTU</td><td class="px-3 py-2 mono text-slate2-600">10200</td><td class="px-3 py-2 text-slate2-600">Piper TTS</td></tr>
-              <tr><td class="px-3 py-2 mono text-slate2-600">IP_UBUNTU</td><td class="px-3 py-2 mono text-slate2-600">10400</td><td class="px-3 py-2 text-slate2-600">openWakeWord (ok nabu)</td></tr>
+              <tr class="border-b border-slate2-100"><td class="px-3 py-2 mono text-slate2-600">jean-mi.local</td><td class="px-3 py-2 mono text-slate2-600">10300</td><td class="px-3 py-2 text-slate2-600">Whisper STT</td></tr>
+              <tr class="border-b border-slate2-100"><td class="px-3 py-2 mono text-slate2-600">jean-mi.local</td><td class="px-3 py-2 mono text-slate2-600">10200</td><td class="px-3 py-2 text-slate2-600">Piper TTS</td></tr>
+              <tr><td class="px-3 py-2 mono text-slate2-600">jean-mi.local</td><td class="px-3 py-2 mono text-slate2-600">10400</td><td class="px-3 py-2 text-slate2-600">openWakeWord (ok nabu)</td></tr>
             </tbody>
           </table>
         </div>

@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Projet Jean-Mi — Domotique Home Assistant</title>
+  <meta name="description" content="Jean-Mi — Guide domotique Home Assistant : comparatif matériel Zigbee, suivi d'achats et guide d'installation complet pour salon 20m².">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏠</text></svg>">
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
   <script>
@@ -65,6 +67,16 @@
 </head>
 <body class="min-h-screen">
 
+  <!-- Barre de navigation -->
+  <nav class="bg-slate2-800 border-b border-slate2-700">
+    <div class="max-w-5xl mx-auto px-6 py-2 flex items-center gap-6">
+      <a href="index.html" class="mono text-xs text-home-400 font-medium tracking-wide">Accueil</a>
+      <a href="jean-mi.html" class="mono text-xs text-slate2-400 hover:text-white tracking-wide transition-colors">Tableau d'achat</a>
+      <a href="avancement.html" class="mono text-xs text-slate2-400 hover:text-white tracking-wide transition-colors">Avancement</a>
+      <a href="installation.html" class="mono text-xs text-slate2-400 hover:text-white tracking-wide transition-colors">Guide d'installation</a>
+    </div>
+  </nav>
+
   <!-- Header -->
   <header class="bg-slate2-900 text-white fade-up fade-up-1">
     <div class="max-w-5xl mx-auto px-6 py-10">
@@ -100,6 +112,25 @@
         Jean-Mi est un projet de domotique résidentielle basé sur <strong class="text-slate2-700">Home Assistant</strong> et <strong class="text-slate2-700">Zigbee2MQTT</strong>.
         Retrouvez ci-dessous le tableau comparatif d'achat du matériel et le suivi d'avancement du projet.
       </p>
+    </div>
+
+    <!-- Comment démarrer ? -->
+    <div class="fade-up fade-up-2 mb-8 bg-home-50 rounded-xl p-4 border border-home-100">
+      <div class="mono text-xs text-home-600 tracking-widest uppercase mb-3">Comment démarrer ?</div>
+      <ol class="space-y-2">
+        <li class="flex items-start gap-3 text-sm text-slate2-600">
+          <span class="flex-shrink-0 w-6 h-6 rounded-full bg-home-500 text-white flex items-center justify-center mono text-xs font-bold">1</span>
+          <span>Consulte le <a href="jean-mi.html" class="font-semibold text-slate2-800 hover:text-home-600 underline underline-offset-2">Tableau d'achat</a> pour comparer et choisir le matériel selon ton budget.</span>
+        </li>
+        <li class="flex items-start gap-3 text-sm text-slate2-600">
+          <span class="flex-shrink-0 w-6 h-6 rounded-full bg-home-500 text-white flex items-center justify-center mono text-xs font-bold">2</span>
+          <span>Suis tes commandes dans <a href="avancement.html" class="font-semibold text-slate2-800 hover:text-home-600 underline underline-offset-2">Avancement</a> une fois les achats passés.</span>
+        </li>
+        <li class="flex items-start gap-3 text-sm text-slate2-600">
+          <span class="flex-shrink-0 w-6 h-6 rounded-full bg-home-500 text-white flex items-center justify-center mono text-xs font-bold">3</span>
+          <span>Installe et configure avec le <a href="installation.html" class="font-semibold text-slate2-800 hover:text-home-600 underline underline-offset-2">Guide d'installation</a> quand le matériel arrive.</span>
+        </li>
+      </ol>
     </div>
 
     <!-- Navigation cards -->
