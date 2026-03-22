@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projet Jean-Mi — Matériel Domotique</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Syne', 'sans-serif'],
+            mono: ['DM Mono', 'monospace'],
+          },
+          colors: {
+            home: {
+              50:  '#f0faf5',
+              100: '#d6f2e4',
+              200: '#a8e3c6',
+              300: '#6dcda2',
+              400: '#3ab47e',
+              500: '#1d9e75',
+              600: '#0f7a59',
+              700: '#085d44',
+              800: '#054232',
+              900: '#022a1f',
+            },
+            slate2: {
+              50:  '#f8f7f4',
+              100: '#eeece6',
+              200: '#d8d5cb',
+              300: '#bab6a8',
+              400: '#958f7e',
+              500: '#746e5e',
+              600: '#5a5549',
+              700: '#433f35',
+              800: '#2e2b24',
+              900: '#1a1916',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Syne', sans-serif; background: #f8f7f4; }
+    .mono { font-family: 'DM Mono', monospace; }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .fade-up { animation: fadeUp 0.5s ease both; }
+    .fade-up-1 { animation-delay: 0.05s; }
+    .fade-up-2 { animation-delay: 0.15s; }
+    .fade-up-3 { animation-delay: 0.25s; }
+    .fade-up-4 { animation-delay: 0.35s; }
+    tr { transition: background 0.15s; }
+    .badge { display: inline-block; font-family: 'DM Mono', monospace; font-size: 0.68rem; font-weight: 500; padding: 2px 8px; border-radius: 4px; white-space: nowrap; letter-spacing: 0.02em; }
+    .rec-badge { border: 1.5px solid #0f7a59; }
+    th { font-family: 'DM Mono', monospace; font-size: 0.68rem; letter-spacing: 0.06em; text-transform: uppercase; }
+    td { font-size: 0.82rem; }
+    .total-best { color: #0f7a59; font-weight: 600; font-family: 'DM Mono', monospace; }
+    .total-norm { color: #5a5549; font-weight: 500; font-family: 'DM Mono', monospace; }
+    .price-cell { font-family: 'DM Mono', monospace; font-weight: 500; }
+    .section-card { background: white; border-radius: 16px; border: 1px solid #e8e5dc; overflow: hidden; }
+    .section-header { padding: 1rem 1.5rem; border-bottom: 1px solid #eeece6; display: flex; align-items: center; gap: 10px; }
+    .overflow-wrapper { overflow-x: auto; }
+    table { border-collapse: collapse; width: 100%; min-width: 900px; }
+    thead tr { background: #f8f7f4; }
+    thead th { padding: 0.65rem 0.85rem; text-align: left; color: #746e5e; border-bottom: 1px solid #eeece6; }
+    tbody td { padding: 0.75rem 0.85rem; border-bottom: 1px solid #f0ede5; vertical-align: top; color: #2e2b24; }
+    tbody tr:last-child td { border-bottom: none; }
+    tbody tr:hover { background: #faf9f6; }
+    .pro-text { color: #0f7a59; font-size: 0.78rem; line-height: 1.5; }
+    .con-text { color: #b45309; font-size: 0.78rem; line-height: 1.5; }
+    .sub-text  { color: #8c8779; font-size: 0.72rem; margin-top: 2px; }
+    .tag-ebay { background: #ede9fe; color: #4c1d95; }
+    .tag-lbc  { background: #d1fae5; color: #065f46; }
+    .tag-gp   { background: #dbeafe; color: #1e3a8a; }
+    .tag-new  { background: #f1f0eb; color: #44403c; }
+    .tag-used { background: #fef3c7; color: #92400e; }
+    .tag-expo { background: #fce7f3; color: #9d174d; }
+    .tag-rec  { background: #d1fae5; color: #065f46; border: 1.5px solid #0f7a59; }
+    .free-port { color: #0f7a59; font-weight: 600; font-family: 'DM Mono', monospace; font-size: 0.78rem; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+  </style>
+</head>
+<body class="min-h-screen">
+
+  <!-- Header -->
+  <header class="bg-slate2-900 text-white fade-up fade-up-1">
+    <div class="max-w-7xl mx-auto px-6 py-10">
+      <div class="flex items-start justify-between flex-wrap gap-4">
+        <div>
+          <div class="mono text-home-400 text-xs tracking-widest mb-2">PROJET / JEAN-MI</div>
+          <h1 class="text-4xl font-extrabold tracking-tight text-white">Domotique Home Assistant</h1>
+          <p class="mt-2 text-slate2-300 text-sm max-w-xl">Comparatif matériel — micro USB pieuvre, prise Zigbee secteur, micro-module plafonnier. Sources : eBay UE · Le Bon Coin · Google Products.</p>
+        </div>
+        <div class="text-right">
+          <div class="mono text-slate2-400 text-xs">PC cible</div>
+          <div class="text-white font-semibold text-sm mt-1">NiPoGi E3B · Ryzen 7 7735HS</div>
+          <div class="mono text-slate2-400 text-xs mt-1">Ubuntu 24.04 + GNOME · SONOFF ZigBee 3.0</div>
+        </div>
+      </div>
+
+      <!-- Config pills -->
+      <div class="flex flex-wrap gap-2 mt-6">
+        <span class="badge bg-home-800 text-home-200">Home Assistant</span>
+        <span class="badge bg-home-800 text-home-200">Zigbee2MQTT</span>
+        <span class="badge bg-slate2-700 text-slate2-200">16 Go LPDDR5</span>
+        <span class="badge bg-slate2-700 text-slate2-200">512 Go NVMe</span>
+        <span class="badge bg-slate2-700 text-slate2-200">Salon ~20m²</span>
+        <span class="badge bg-amber-900 text-amber-200">Livraison France uniquement</span>
+        <span class="badge bg-amber-900 text-amber-200">Provenance UE uniquement</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-6 py-10 space-y-10">
+
+    <!-- Préférences achat -->
+    <div class="fade-up fade-up-2 grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <div class="section-card p-5">
+        <div class="mono text-xs text-slate2-400 mb-1">Priorité 1</div>
+        <div class="font-bold text-lg text-slate2-800">eBay</div>
+        <div class="text-slate2-500 text-sm mt-1">Occasion de préférence, vendeurs UE uniquement</div>
+      </div>
+      <div class="section-card p-5">
+        <div class="mono text-xs text-slate2-400 mb-1">Priorité 2</div>
+        <div class="font-bold text-lg text-slate2-800">Le Bon Coin</div>
+        <div class="text-slate2-500 text-sm mt-1">Particuliers France, remise en main propre possible</div>
+      </div>
+      <div class="section-card p-5">
+        <div class="mono text-xs text-slate2-400 mb-1">Priorité 3</div>
+        <div class="font-bold text-lg text-slate2-800">Google Products</div>
+        <div class="text-slate2-500 text-sm mt-1">Revendeurs spécialisés UE (Domadoo, OpenELAB…)</div>
+      </div>
+    </div>
+
+    <!-- TABLE 1 : MICRO -->
+    <section class="section-card fade-up fade-up-2">
+      <div class="section-header">
+        <span class="dot bg-home-500"></span>
+        <h2 class="font-bold text-slate2-800 text-base">Micro USB pieuvre</h2>
+        <span class="mono text-xs text-slate2-400 ml-auto">ReSpeaker USB Mic Array — 4 mics · AEC · champ lointain 5m · plug &amp; play Linux</span>
+      </div>
+      <div class="overflow-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Produit</th>
+              <th>Plateforme</th>
+              <th>État</th>
+              <th>Origine</th>
+              <th>Prix prod.</th>
+              <th>Frais port</th>
+              <th>Avantages</th>
+              <th>Inconvénients</th>
+              <th>Total TTC</th>
+              <th>Lien</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="font-semibold text-slate2-800">ReSpeaker USB Mic Array</div>
+                <div class="sub-text">4 mics XMOS XVF-3000</div>
+              </td>
+              <td><span class="badge tag-ebay">eBay</span></td>
+              <td><span class="badge tag-new">Neuf</span></td>
+              <td class="mono text-xs">🇩🇪 / 🇵🇱</td>
+              <td class="price-cell">~45 €</td>
+              <td><span class="price-cell">~3–5 €</span><div class="sub-text">SpeedPAK UE</div></td>
+              <td class="pro-text">Référence HA, compatible SONOFF dongle, pas de driver Linux requis</td>
+              <td class="con-text">Produit EOL, peu de vendeurs UE sur eBay, pas d'occasion</td>
+              <td class="total-norm">~48–50 €</td>
+              <td><a href="https://www.ebay.fr/sch/i.html?_nkw=ReSpeaker+USB+Mic+Array" target="_blank" class="text-home-600 hover:underline mono text-xs">Chercher ↗</a></td>
+            </tr>
+            <tr>
+              <td>
+                <div class="font-semibold text-slate2-800">ReSpeaker USB Mic Array</div>
+              </td>
+              <td><span class="badge tag-lbc">Le Bon Coin</span></td>
+              <td><span class="badge tag-used">Occasion</span></td>
+              <td class="mono text-xs">🇫🇷 France</td>
+              <td class="price-cell">~25–35 €</td>
+              <td><span class="free-port">0 €</span><div class="sub-text">Remise en main</div></td>
+              <td class="pro-text">Prix bas, pas de port, achat local, négociable</td>
+              <td class="con-text">Quasi-introuvable sur LBC, produit de niche, aucune garantie</td>
+              <td class="total-best">~25–35 €</td>
+              <td><a href="https://www.leboncoin.fr/recherche?text=respeaker+microphone" target="_blank" class="text-home-600 hover:underline mono text-xs">Chercher ↗</a></td>
+            </tr>
+            <tr class="bg-home-50">
+              <td>
+                <span class="badge tag-rec rec-badge mr-1">★ Recommandé</span>
+                <div class="font-semibold text-slate2-800 mt-1">ReSpeaker USB Mic Array</div>
+              </td>
+              <td><span class="badge tag-gp">Google Prod.</span></td>
+              <td><span class="badge tag-new">Neuf</span></td>
+              <td class="mono text-xs">🇩🇪 OpenELAB</td>
+              <td class="price-cell">~45 €</td>
+              <td><span class="free-port">0 €</span><div class="sub-text">Gratuit ≥ 50 €</div></td>
+              <td class="pro-text">Stock UE garanti, entrepôt Munich, TVA incluse, livraison 4–6j France</td>
+              <td class="con-text">Neuf uniquement, commande min. 50 € pour port gratuit</td>
+              <td class="total-best">~45 €</td>
+              <td><a href="https://openelab.io/fr/products/respeaker-usb-mic-array" target="_blank" class="text-home-600 hover:underline mono text-xs">openelab.io ↗</a></td>
+            </tr>
+            <tr>
+              <td>
+                <div class="font-semibold text-slate2-800">ReSpeaker USB Mic Array</div>
+              </td>
+              <td><span class="badge tag-gp">Google Prod.</span></td>
+              <td><span class="badge tag-new">Neuf</span></td>
+              <td class="mono text-xs">🇵🇱 Botland</td>
+              <td class="price-cell">~47 €</td>
+              <td><span class="price-cell">~6–8 €</span><div class="sub-text">Colissimo depuis PL</div></td>
+              <td class="pro-text">Revendeur officiel Seeed UE, marquage CE, SAV européen</td>
+              <td class="con-text">Plus cher au total, délai 6–10j depuis Pologne</td>
+              <td class="total-norm">~53–55 €</td>
+              <td><a href="https://botland.store/voice-assistants/15689-respeaker-usb-mic-array-voice-assistant-5904422377939.html" target="_blank" class="text-home-600 hover:underline mono text-xs">botland.store ↗</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- TABLE 2 : PRISE -->
+    <section class="section-card fade-up fade-up-3">
+      <div class="section-header">
+        <span class="dot bg-amber-500"></span>
+        <h2 class="font-bold text-slate2-800 text-base">Prise Zigbee secteur</h2>
+        <span class="mono text-xs text-slate2-400 ml-auto">Contrôle lampe branchée — 16A · mesure conso · routeur Zigbee</span>
+      </div>
+      <div class="overflow-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Produit</th>
+              <th>Plateforme</th>
+              <th>État</th>
+              <th>Origine</th>
+              <th>Prix prod.</th>
+              <th>Frais port</th>
+              <th>Avantages</th>
+              <th>Inconvénients</th>
+              <th>Total TTC</th>
+              <th>Lien</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="bg-home-50">
+              <td>
+                <span class="badge tag-rec rec-badge mr-1">★ Recommandé</span>
+                <div class="font-semibold text-slate2-800 mt-1">NOUS A1Z</div>
+                <div class="sub-text">16A · mesure conso · routeur Zigbee</div>
+              </td>
+              <td><span class="badge tag-ebay">eBay</span></td>
+              <td><span class="badge tag-new">Neuf</span></td>
+              <td class="mono text-xs">🇵🇱 Pologne</td>
+              <td class="price-cell">~11–14 €</td>
+              <td><span class="free-port">0 €</span><div class="sub-text">Souvent offert</div></td>
+              <td class="pro-text">Marque polonaise (UE), très bien supportée Z2M + HA, mesure conso incluse</td>
+              <td class="con-text">Stock eBay.fr fluctuant, vérifier provenance UE du vendeur</td>
+              <td class="total-best">~11–14 €</td>
+              <td><a href="https://www.ebay.fr/sch/i.html?_nkw=NOUS+A1Z+Zigbee" target="_blank" class="text-home-600 hover:underline mono text-xs">Chercher ↗</a></td>
+            </tr>
+            <tr>
+              <td>
+                <div class="font-semibold text-slate2-800">NOUS A1Z</div>
+              </td>
+              <td><span class="badge tag-lbc">Le Bon Coin</span></td>
+              <td><span class="badge tag-used">Occasion</span></td>
+              <td class="mono text-xs">🇫🇷 France</td>
+              <td class="price-cell">~6–10 €</td>
+              <td><span class="free-port">0 €</span><div class="sub-text">Remise en main</div></td>
+              <td class="pro-text">Prix très bas, achat local, pas de port</td>
+              <td class="con-text">Rare sur LBC, annonces expirées fréquentes, état inconnu</td>
+              <td class="total-best">~6–10 €</td>
+              <td><a href="https://www.leboncoin.fr/recherche?text=prise+zigbee+domotique" target="_blank" class="text-home-600 hover:underline mono text-xs">Chercher ↗</a></td>
+            </tr>
+            <tr>
+              <td>
+                <div class="font-semibold text-slate2-800">SONOFF S60ZBTPF</div>
+                <div class="sub-text">16A · mesure conso · routeur Zigbee</div>
+              </td>
+              <td><span class="badge tag-gp">Google Prod.</span></td>
+              <td><span class="badge tag-new">Neuf</span></td>
+              <td class="mono text-xs">🇫🇷 Domadoo</td>
+              <td class="price-cell">~13 €</td>
+              <td><span class="price-cell">6,90 €</span><div class="sub-text">&lt; 99 € de commande</div></td>
+              <td class="pro-text">Même écosystème que le dongle SONOFF, SAV français, livraison 24–48h</td>
+              <td class="con-text">Port payant si commande &lt; 99 €, trop récent pour trouver en occasion</td>
+              <td class="total-norm">~20 €</td>
+              <td><a href="https://www.domadoo.fr/fr/produits-zigbee/7851-sonoff-prise-connectee-zigbee-16a-mesure-consommation.html" target="_blank" class="text-home-600 hover:underline mono text-xs">domadoo.fr ↗</a></td>
+            </tr>
+            <tr>
+              <td>
+                <div class="font-semibold text-slate2-800">Innr SP 240</div>
+                <div class="sub-text">Prise Zigbee premium</div>
+              </td>
+              <td><span class="badge tag-ebay">eBay</span></td>
+              <td><span class="badge tag-new">Neuf</span></td>
+              <td class="mono text-xs">🇳🇱 Pays-Bas</td>
+              <td class="price-cell">~19–22 €</td>
+              <td><span class="price-cell">~3–4 €</span></td>
+              <td class="pro-text">Marque européenne Innr (NL), qualité premium, routeur fiable</td>
+              <td class="con-text">Plus chère, légèrement encombrante</td>
+              <td class="total-norm">~22–26 €</td>
+              <td><a href="https://www.ebay.fr/sch/i.html?_nkw=Innr+SP240+Zigbee" target="_blank" class="text-home-600 hover:underline mono text-xs">Chercher ↗</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- TABLE 3 : PLAFONNIER -->
+    <section class="section-card fade-up fade-up-4">
+      <div class="section-header">
+        <span class="dot bg-blue-500"></span>
+        <h2 class="font-bold text-slate2-800 text-base">Module plafonnier</h2>
+        <span class="mono text-xs text-slate2-400 ml-auto">Interrupteur sans neutre — Zigbee 3.0 · 6A/1440W · encastrable derrière l'interrupteur existant</span>
+      </div>
+      <div class="overflow-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Produit</th>
+              <th>Plateforme</th>
+              <th>État</th>
+              <th>Origine</th>
+              <th>Prix prod.</th>
+              <th>Frais port</th>
+              <th>Avantages</th>
+              <th>Inconvénients</th>
+              <th>Total TTC</th>
+              <th>Lien</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="bg-home-50">
+              <td>
+                <span class="badge tag-rec rec-badge mr-1">★ Recommandé</span>
+                <div class="font-semibold text-slate2-800 mt-1">SONOFF ZBMINIL2</div>
+                <div class="sub-text">Sans neutre · 6A/1440W · Zigbee 3.0</div>
+              </td>
+              <td><span class="badge tag-ebay">eBay</span></td>
+              <td><span class="badge tag-new">Neuf</span></td>
+              <td class="mono text-xs">🇩🇪 Allemagne</td>
+              <td class="price-cell">~10–14 €</td>
+              <td><span class="free-port">0 €</span><div class="sub-text">Livraison offerte</div></td>
+              <td class="pro-text">Même écosystème SONOFF, ultra-compact, sans neutre, bien documenté HA + Z2M</td>
+              <td class="con-text">End-device (pas routeur Zigbee), vérifier câblage avant achat</td>
+              <td class="total-best">~10–14 €</td>
+              <td><a href="https://www.ebay.fr/itm/314632303696" target="_blank" class="text-home-600 hover:underline mono text-xs">eBay.fr 🇩🇪 ↗</a></td>
+            </tr>
+            <tr>
+              <td>
+                <div class="font-semibold text-slate2-800">SONOFF ZBMINIL2 B-WARE</div>
+                <div class="sub-text">Pièce d'exposition, fonctionnelle</div>
+              </td>
+              <td><span class="badge tag-ebay">eBay</span></td>
+              <td><span class="badge tag-expo">Expo</span></td>
+              <td class="mono text-xs">🇵🇱 MatimEU</td>
+              <td class="price-cell">16,87 €</td>
+              <td><span class="price-cell">~4–5 €</span><div class="sub-text">Depuis Pologne</div></td>
+              <td class="pro-text">Vendeur pro 14 000+ avis (98,1%), produit fonctionnel garanti, quasi-neuf</td>
+              <td class="con-text">Emballage potentiellement abîmé, plus cher que neuf en Allemagne</td>
+              <td class="total-norm">~21–22 €</td>
+              <td><a href="https://www.ebay.fr/itm/167574917989" target="_blank" class="text-home-600 hover:underline mono text-xs">eBay.fr 🇵🇱 ↗</a></td>
+            </tr>
+            <tr>
+              <td>
+                <div class="font-semibold text-slate2-800">SONOFF ZBMINIL2</div>
+              </td>
+              <td><span class="badge tag-lbc">Le Bon Coin</span></td>
+              <td><span class="badge tag-used">Occasion</span></td>
+              <td class="mono text-xs">🇫🇷 France</td>
+              <td class="price-cell">~8–12 €</td>
+              <td><span class="free-port">0 €</span><div class="sub-text">Remise en main</div></td>
+              <td class="pro-text">Annonces actives sur LBC, prix très bas, local France</td>
+              <td class="con-text">Pas de garantie, stock aléatoire, nécessite déplacement ou envoi particulier</td>
+              <td class="total-best">~8–12 €</td>
+              <td><a href="https://www.leboncoin.fr/ck/bricolage/sonoff-zigbee" target="_blank" class="text-home-600 hover:underline mono text-xs">leboncoin.fr ↗</a></td>
+            </tr>
+            <tr>
+              <td>
+                <div class="font-semibold text-slate2-800">SONOFF ZBMINIL2</div>
+              </td>
+              <td><span class="badge tag-gp">Google Prod.</span></td>
+              <td><span class="badge tag-new">Neuf</span></td>
+              <td class="mono text-xs">🇫🇷 Domadoo</td>
+              <td class="price-cell">14,90 €</td>
+              <td><span class="price-cell">6,90 €</span><div class="sub-text">&lt; 99 € de commande</div></td>
+              <td class="pro-text">Spécialiste domotique FR, SAV français, stock stable, livraison 24–48h</td>
+              <td class="con-text">Port payant si commande &lt; 99 €, prix total le plus élevé</td>
+              <td class="total-norm">~21,80 €</td>
+              <td><a href="https://www.domadoo.fr/fr/peripheriques/6619-sonoff-commutateur-intelligent-sans-neutre-zigbee-30-zbminil2.html" target="_blank" class="text-home-600 hover:underline mono text-xs">domadoo.fr ↗</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Récap budget optimal -->
+    <section class="fade-up fade-up-4 section-card p-6">
+      <h2 class="font-bold text-slate2-800 text-base mb-4">Scénario budget optimal — tout UE, livraison France</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+        <div class="bg-slate2-50 rounded-xl p-4 border border-slate2-100">
+          <div class="mono text-xs text-slate2-400 mb-1">Micro pieuvre</div>
+          <div class="font-bold text-home-700 text-xl">~45 €</div>
+          <div class="text-slate2-500 text-xs mt-1">OpenELAB 🇩🇪 — port offert</div>
+        </div>
+        <div class="bg-slate2-50 rounded-xl p-4 border border-slate2-100">
+          <div class="mono text-xs text-slate2-400 mb-1">Prise Zigbee</div>
+          <div class="font-bold text-home-700 text-xl">~12 €</div>
+          <div class="text-slate2-500 text-xs mt-1">NOUS A1Z eBay.fr 🇵🇱 — port offert</div>
+        </div>
+        <div class="bg-slate2-50 rounded-xl p-4 border border-slate2-100">
+          <div class="mono text-xs text-slate2-400 mb-1">Module plafonnier</div>
+          <div class="font-bold text-home-700 text-xl">~12 €</div>
+          <div class="text-slate2-500 text-xs mt-1">ZBMINIL2 eBay.fr 🇩🇪 — port offert</div>
+        </div>
+      </div>
+      <div class="flex items-center justify-between border-t border-slate2-100 pt-4">
+        <div class="text-slate2-500 text-sm">Total estimé toutes plateformes confondues</div>
+        <div class="font-extrabold text-2xl text-slate2-800">~69 €</div>
+      </div>
+      <div class="mt-3 text-xs text-slate2-400 mono">* Prix indicatifs · Frais de port inclus · Provenance UE garantie · Livraison France</div>
+    </section>
+
+    <!-- GitHub instructions -->
+    <section class="fade-up fade-up-4 bg-slate2-900 text-white rounded-2xl p-6">
+      <h2 class="font-bold text-base mb-3 text-slate2-100">Déploiement GitHub — projet jean-mi</h2>
+      <div class="mono text-xs text-slate2-300 space-y-1">
+        <div class="text-home-400 mb-2"># Créer le repo et pousser ce fichier</div>
+        <div>git init jean-mi</div>
+        <div>cd jean-mi</div>
+        <div>cp /path/to/jean-mi.html index.html</div>
+        <div>git add index.html</div>
+        <div>git commit -m "feat: comparatif matériel domotique HA"</div>
+        <div>git remote add origin https://github.com/TON_USER/jean-mi.git</div>
+        <div>git push -u origin main</div>
+        <div class="text-home-400 mt-3 mb-1"># Activer GitHub Pages (Settings → Pages → Branch: main)</div>
+        <div class="text-slate2-300">→ Accessible sur https://TON_USER.github.io/jean-mi/</div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="max-w-7xl mx-auto px-6 py-6 border-t border-slate2-200 mt-4">
+    <div class="flex items-center justify-between flex-wrap gap-2">
+      <div class="mono text-xs text-slate2-400">Projet Jean-Mi · Home Assistant · Généré avec Claude</div>
+      <div class="mono text-xs text-slate2-400">Données indicatives — vérifier les prix avant achat</div>
+    </div>
+  </footer>
+
+</body>
+</html>
