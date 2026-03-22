@@ -38,10 +38,12 @@ Guide de contexte pour Claude Code. À lire avant toute modification du projet.
 |----------|------------|----------|
 | 1 | eBay | Occasion de préférence, vendeurs UE uniquement |
 | 2 | Le Bon Coin | Particuliers France, remise en main propre |
-| 3 | Rakuten FR | Vendeurs pro UE |
-| 4 | Domadoo / OpenELAB / spécialistes UE | Revendeurs spécialisés domotique, neuf uniquement |
+| 3 | Google Products | Revendeurs spécialisés UE (Domadoo, OpenELAB…) |
+| 4 | Rakuten FR | Vendeurs pro UE, occasion certifiée |
+| 5 | Domotique-Store | Spécialiste FR — hors ligne depuis mars 2026 |
+| 6 | **IKEA** | Magasin physique FR, retrait immédiat, gamme DIRIGERA/TRÅDFRI — pertinent uniquement pour les prises Zigbee |
 
-> Domotique-Store.fr : hors ligne depuis mars 2026 — ne pas utiliser.
+> IKEA badge CSS : `.tag-ikea { background: #fef9c3; color: #713f12; }` — couleur jaune IKEA.
 
 ---
 
@@ -78,4 +80,7 @@ Guide de contexte pour Claude Code. À lire avant toute modification du projet.
 - Les prises Zigbee affichent leur conso en **veille** (~0,5 W) — la charge (lampe) s'ajoute
 - SONOFF ZBMINIL2 est un **end-device** (pas routeur Zigbee) — à noter dans les inconvénients
 - Le port est **gratuit** chez OpenELAB pour commandes ≥ 50 € — à vérifier si commande < 50 €
+- **IKEA INSPELNING E2201** : mesure conso incluse mais précision parfois aberrante (kWh bloqué à 0) — à signaler dans les inconvénients
+- **IKEA TRETAKT E22x4** : pas de mesure conso, 10A max (vs 16A NOUS A1Z) — on/off uniquement
+- IKEA n'a **pas** d'équivalent pour le micro USB ni pour le module plafonnier sans-neutre
 - GitHub Pages : `https://bczy.github.io/jean-mi/` — fichier principal : `jean-mi.html`

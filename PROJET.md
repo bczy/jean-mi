@@ -34,17 +34,17 @@ Créer un système domotique **Home Assistant** avec commande vocale locale (san
 
 | Priorité | Plateforme | Critères |
 |----------|------------|----------|
-| 1 | **eBay** | Occasion de préférence |
+| 1 | **eBay** | Occasion de préférence, vendeurs UE uniquement |
 | 2 | **Le Bon Coin** | Particuliers France, remise en main propre |
-| 3 | **Rakuten FR** | Vendeurs pro UE |
-| 4 | **Google Products** | Revendeurs spécialisés UE (Domadoo, OpenELAB…) |
+| 3 | **Google Products** | Revendeurs spécialisés UE (Domadoo, OpenELAB…) |
+| 4 | **Rakuten FR** | Marketplace FR, vendeurs pro, occasion certifiée, retours 30j |
+| 5 | **Domotique-Store** | Spécialiste FR — hors ligne depuis mars 2026 |
+| 6 | **IKEA** | Magasin physique FR, retrait immédiat, gamme DIRIGERA/TRÅDFRI — pertinent uniquement pour les prises Zigbee |
 
 > **Règles absolues**
 > - Provenance **Zone Économique Européenne (ZEE) uniquement**
 > - Livraison **en France uniquement**
 > - Occasion de préférence, neuf si introuvable
-
-> **Note** : Domotique-Store.fr est hors ligne depuis mars 2026 — ne pas utiliser.
 
 ---
 
@@ -76,6 +76,8 @@ Créer un système domotique **Home Assistant** avec commande vocale locale (san
 | NOUS A1Z | Rakuten FR | Neuf | 🇪🇺 | ~13–16 € | Variable | ~15–18 € |
 | SONOFF S60ZBTPF | Google Products (Domadoo 🇫🇷) | Neuf | 🇫🇷 | ~13 € | 6,90 € | ~20 € |
 | Innr SP 240 | eBay.fr | Neuf | 🇳🇱 | ~19–22 € | ~3–4 € | ~22–26 € |
+| IKEA INSPELNING E2201 | IKEA (magasin FR) | Neuf | 🇸🇪/🇫🇷 | 9,99 € | 0 € | **~9,99 €** *(⚠️ précision conso aléatoire)* |
+| IKEA TRETAKT E22x4 | IKEA (magasin FR) | Neuf | 🇸🇪/🇫🇷 | 7,99 € | 0 € | **~7,99 €** *(sans mesure conso)* |
 
 **Caractéristiques NOUS A1Z :** 16A · mesure conso (W/V/A/kWh) · routeur Zigbee · compatible Zigbee2MQTT + ZHA + HA · marque UE (Pologne)
 **Lien recommandé :** https://www.ebay.fr/sch/i.html?_nkw=NOUS+A1Z+Zigbee

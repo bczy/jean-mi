@@ -91,6 +91,9 @@ Le fichier utilise :
 | 1 | **eBay** | Occasion de préférence, vendeurs UE uniquement |
 | 2 | **Le Bon Coin** | Particuliers France, remise en main propre |
 | 3 | **Google Products** | Revendeurs spécialisés UE (Domadoo, OpenELAB…) |
+| 4 | **Rakuten FR** | Marketplace FR, vendeurs pro, occasion certifiée |
+| 5 | **Domotique-Store** | Spécialiste FR — hors ligne depuis mars 2026 |
+| 6 | **IKEA** | Magasin physique FR, retrait immédiat — pertinent pour les prises Zigbee |
 
 > **Règles absolues** : provenance Zone Économique Européenne uniquement · Livraison en France uniquement
 
