@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Installation — Jean-Mi Domotique</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Syne', 'sans-serif'],
+            mono: ['DM Mono', 'monospace'],
+          },
+          colors: {
+            home: {
+              50:  '#f0faf5',
+              100: '#d6f2e4',
+              200: '#a8e3c6',
+              300: '#6dcda2',
+              400: '#3ab47e',
+              500: '#1d9e75',
+              600: '#0f7a59',
+              700: '#085d44',
+              800: '#054232',
+              900: '#022a1f',
+            },
+            slate2: {
+              50:  '#f8f7f4',
+              100: '#eeece6',
+              200: '#d8d5cb',
+              300: '#bab6a8',
+              400: '#958f7e',
+              500: '#746e5e',
+              600: '#5a5549',
+              700: '#433f35',
+              800: '#2e2b24',
+              900: '#1a1916',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Syne', sans-serif; background: #f8f7f4; }
+    .mono { font-family: 'DM Mono', monospace; }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .fade-up   { animation: fadeUp 0.5s ease both; }
+    .fade-up-1 { animation-delay: 0.05s; }
+    .fade-up-2 { animation-delay: 0.15s; }
+    .fade-up-3 { animation-delay: 0.25s; }
+    .badge { display: inline-block; font-family: 'DM Mono', monospace; font-size: 0.68rem; font-weight: 500; padding: 2px 8px; border-radius: 4px; white-space: nowrap; letter-spacing: 0.02em; }
+    .section-card { background: white; border-radius: 16px; border: 1px solid #e8e5dc; overflow: hidden; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
+    .phase-header { display: flex; align-items: center; gap: 12px; padding: 1.25rem 1.5rem; border-bottom: 1px solid #e8e5dc; }
+    .phase-num { font-family: 'DM Mono', monospace; font-size: 0.75rem; font-weight: 500; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .step { padding: 1.25rem 1.5rem; border-bottom: 1px solid #f0ede6; }
+    .step:last-child { border-bottom: none; }
+    .step-label { font-family: 'DM Mono', monospace; font-size: 0.68rem; font-weight: 500; color: #958f7e; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.5rem; }
+    pre {
+      background: #1a1916;
+      color: #d8d5cb;
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.78rem;
+      line-height: 1.7;
+      overflow-x: auto;
+      margin-top: 0.75rem;
+      position: relative;
+    }
+    .comment { color: #5a5549; }
+    .cmd { color: #6dcda2; }
+    .flag { color: #a8e3c6; }
+    .str { color: #fbbf24; }
+    .out { color: #bab6a8; font-style: italic; }
+    .placeholder { color: #f97316; font-weight: 500; }
+    .copy-btn {
+      position: absolute; top: 0.6rem; right: 0.6rem;
+      background: #2e2b24; border: 1px solid #433f35;
+      color: #958f7e; border-radius: 6px;
+      font-family: 'DM Mono', monospace; font-size: 0.65rem;
+      padding: 3px 10px; cursor: pointer; transition: background 0.15s, color 0.15s;
+    }
+    .copy-btn:hover { background: #433f35; color: #d8d5cb; }
+    .note { background: #f0faf5; border-left: 3px solid #3ab47e; border-radius: 0 6px 6px 0; padding: 0.75rem 1rem; margin-top: 0.75rem; font-size: 0.82rem; color: #085d44; }
+    .warn { background: #fffbeb; border-left: 3px solid #f59e0b; border-radius: 0 6px 6px 0; padding: 0.75rem 1rem; margin-top: 0.75rem; font-size: 0.82rem; color: #92400e; }
+    .status-todo    { background: #f1f0eb; color: #5a5549; }
+    .status-done    { background: #d1fae5; color: #065f46; }
+    .status-wip     { background: #dbeafe; color: #1e3a8a; }
+    .back-link { display: inline-flex; align-items: center; gap: 6px; font-family: 'DM Mono', monospace; font-size: 0.75rem; color: #6dcda2; text-decoration: none; }
+    .back-link:hover { color: #3ab47e; }
+  </style>
+</head>
+<body class="min-h-screen">
+
+  <!-- Header -->
+  <header class="bg-slate2-900 text-white fade-up fade-up-1">
+    <div class="max-w-4xl mx-auto px-6 py-10">
+      <a href="index.html" class="back-link mb-4 block">← Retour à l'accueil</a>
+      <div class="flex items-start justify-between flex-wrap gap-4">
+        <div>
+          <div class="mono text-home-400 text-xs tracking-widest mb-2">PROJET / JEAN-MI / SOFTWARE</div>
+          <h1 class="text-4xl font-extrabold tracking-tight text-white">Guide d'installation</h1>
+          <p class="mt-2 text-slate2-300 text-sm max-w-xl">SSH · Docker · Home Assistant · Zigbee2MQTT · Voix locale · Spotify</p>
+        </div>
+        <div class="text-right">
+          <div class="mono text-slate2-400 text-xs">Serveur cible</div>
+          <div class="text-white font-semibold text-sm mt-1">NiPoGi E3B · Ubuntu 24.04</div>
+          <div class="mono text-slate2-400 text-xs mt-1">Machine de travail : macOS</div>
+        </div>
+      </div>
+      <div class="flex flex-wrap gap-2 mt-6">
+        <span class="badge bg-home-800 text-home-200">8 phases</span>
+        <span class="badge bg-slate2-700 text-slate2-200">Local · sans cloud</span>
+        <span class="badge bg-slate2-700 text-slate2-200">Commandes vocales FR</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-4xl mx-auto px-6 py-12 fade-up fade-up-2">
+
+    <!-- Roadmap overview -->
+    <div class="section-card mb-8">
+      <div class="phase-header" style="border-bottom:none">
+        <div class="mono text-xs text-slate2-400 tracking-widest uppercase">Roadmap</div>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <tbody>
+            <tr class="border-b border-slate2-100">
+              <td class="px-6 py-3 mono text-xs text-slate2-400 w-8">1</td>
+              <td class="px-4 py-3 font-semibold text-slate2-800">SSH Mac → Ubuntu</td>
+              <td class="px-4 py-3 text-slate2-500 text-xs">Accès distant depuis le Mac · clé Ed25519 · alias <code class="mono">ssh jean-mi</code></td>
+              <td class="px-6 py-3 text-right"><span class="badge status-done">✓ Documenté</span></td>
+            </tr>
+            <tr class="border-b border-slate2-100">
+              <td class="px-6 py-3 mono text-xs text-slate2-400">2</td>
+              <td class="px-4 py-3 font-semibold text-slate2-800">Docker Engine</td>
+              <td class="px-4 py-3 text-slate2-500 text-xs">Installation via repo officiel apt · Docker Compose</td>
+              <td class="px-6 py-3 text-right"><span class="badge status-done">✓ Documenté</span></td>
+            </tr>
+            <tr class="border-b border-slate2-100">
+              <td class="px-6 py-3 mono text-xs text-slate2-400">3</td>
+              <td class="px-4 py-3 font-semibold text-slate2-800">Home Assistant</td>
+              <td class="px-4 py-3 text-slate2-500 text-xs">HA Container via Docker Compose · port 8123</td>
+              <td class="px-6 py-3 text-right"><span class="badge status-done">✓ Documenté</span></td>
+            </tr>
+            <tr class="border-b border-slate2-100">
+              <td class="px-6 py-3 mono text-xs text-slate2-400">4</td>
+              <td class="px-4 py-3 font-semibold text-slate2-800">Dongle Zigbee</td>
+              <td class="px-4 py-3 text-slate2-500 text-xs">Identifier /dev/ttyUSB* · règles udev · droits dialout</td>
+              <td class="px-6 py-3 text-right"><span class="badge status-todo">À venir</span></td>
+            </tr>
+            <tr class="border-b border-slate2-100">
+              <td class="px-6 py-3 mono text-xs text-slate2-400">5</td>
+              <td class="px-4 py-3 font-semibold text-slate2-800">Mosquitto + Zigbee2MQTT</td>
+              <td class="px-4 py-3 text-slate2-500 text-xs">Broker MQTT · Z2M Docker · appairage NOUS A1Z + ZBMINIL2</td>
+              <td class="px-6 py-3 text-right"><span class="badge status-todo">À venir</span></td>
+            </tr>
+            <tr class="border-b border-slate2-100">
+              <td class="px-6 py-3 mono text-xs text-slate2-400">6</td>
+              <td class="px-4 py-3 font-semibold text-slate2-800">ReSpeaker XVF-3800</td>
+              <td class="px-4 py-3 text-slate2-500 text-xs">Plug & play Linux · test arecord · carte ALSA par défaut</td>
+              <td class="px-6 py-3 text-right"><span class="badge status-todo">À venir</span></td>
+            </tr>
+            <tr class="border-b border-slate2-100">
+              <td class="px-6 py-3 mono text-xs text-slate2-400">7</td>
+              <td class="px-4 py-3 font-semibold text-slate2-800">Voix locale (STT + TTS)</td>
+              <td class="px-4 py-3 text-slate2-500 text-xs">Whisper Wyoming · Piper TTS · HA Assist en français</td>
+              <td class="px-6 py-3 text-right"><span class="badge status-todo">À venir</span></td>
+            </tr>
+            <tr>
+              <td class="px-6 py-3 mono text-xs text-slate2-400">8</td>
+              <td class="px-4 py-3 font-semibold text-slate2-800">Spotify + YouTube</td>
+              <td class="px-4 py-3 text-slate2-500 text-xs">Spotcast / Spotify Connect · media player</td>
+              <td class="px-6 py-3 text-right"><span class="badge status-todo">À venir</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ─────────────────────────────── PHASE 1 — SSH ─────────────────────────────── -->
+    <div class="section-card mb-6">
+      <div class="phase-header bg-slate2-50">
+        <div class="phase-num bg-slate2-800 text-white">1</div>
+        <div>
+          <div class="font-bold text-slate2-800">SSH Mac → Ubuntu</div>
+          <div class="mono text-xs text-slate2-400 mt-0.5">Accès distant depuis le Mac de travail</div>
+        </div>
+        <div class="ml-auto"><span class="badge status-done">✓ Documenté</span></div>
+      </div>
+
+      <!-- Étape 1 -->
+      <div class="step">
+        <div class="step-label">Étape 1 — Sur Ubuntu · installer le serveur SSH</div>
+        <p class="text-sm text-slate2-600">Ubuntu 24.04 Desktop n'inclut pas <code class="mono text-slate2-700">openssh-server</code> par défaut. À faire une seule fois, directement sur la machine.</p>
+        <pre id="pre-ssh1"><button class="copy-btn" onclick="copyPre('pre-ssh1')">Copier</button><span class="comment"># Installer openssh-server</span>
+<span class="cmd">sudo apt update && sudo apt install -y openssh-server</span>
+
+<span class="comment"># Activer le démarrage automatique et démarrer maintenant</span>
+<span class="cmd">sudo systemctl enable --now ssh</span>
+
+<span class="comment"># Vérifier que le service tourne</span>
+<span class="cmd">sudo systemctl status ssh</span>
+<span class="out">  → Active: active (running) since ...</span></pre>
+      </div>
+
+      <!-- Étape 2 -->
+      <div class="step">
+        <div class="step-label">Étape 2 — Sur Ubuntu · trouver l'adresse IP locale</div>
+        <p class="text-sm text-slate2-600">Repérer l'IP du Mini PC sur le réseau local (réseau en 192.168.x.x ou 10.x.x.x).</p>
+        <pre id="pre-ssh2"><button class="copy-btn" onclick="copyPre('pre-ssh2')">Copier</button><span class="cmd">hostname -I</span>
+<span class="out">  → 192.168.1.42  (exemple — noter cette valeur)</span>
+
+<span class="comment"># Alternative plus détaillée</span>
+<span class="cmd">ip addr show | grep "inet " | grep -v 127.0.0.1</span></pre>
+        <div class="warn">⚠️ Remplacer <span class="mono font-semibold">IP_UBUNTU</span> et <span class="mono font-semibold">USER</span> par tes vraies valeurs dans les commandes suivantes.</div>
+      </div>
+
+      <!-- Étape 3 -->
+      <div class="step">
+        <div class="step-label">Étape 3 — Sur Mac · générer une clé Ed25519 dédiée</div>
+        <p class="text-sm text-slate2-600">Créer une clé SSH spécifique à cette connexion (ne pas réutiliser la clé GitHub).</p>
+        <pre id="pre-ssh3"><button class="copy-btn" onclick="copyPre('pre-ssh3')">Copier</button><span class="cmd">ssh-keygen -t ed25519 <span class="flag">-C</span> <span class="str">"mac → jean-mi ubuntu"</span> <span class="flag">-f</span> ~/.ssh/jean_mi_ubuntu</span>
+<span class="out">  → Generating public/private ed25519 key pair.</span>
+<span class="out">  → Passphrase : laisser vide ou choisir une passphrase</span></pre>
+      </div>
+
+      <!-- Étape 4 -->
+      <div class="step">
+        <div class="step-label">Étape 4 — Sur Mac · copier la clé publique vers Ubuntu</div>
+        <pre id="pre-ssh4"><button class="copy-btn" onclick="copyPre('pre-ssh4')">Copier</button><span class="cmd">ssh-copy-id <span class="flag">-i</span> ~/.ssh/jean_mi_ubuntu.pub <span class="placeholder">USER</span>@<span class="placeholder">IP_UBUNTU</span></span>
+<span class="out">  → /usr/bin/ssh-copy-id: INFO: 1 key(s) were left to be installed.</span>
+<span class="comment"># Saisir le mot de passe Ubuntu une dernière fois</span></pre>
+        <div class="note">Après cette étape, la connexion par mot de passe n'est plus nécessaire.</div>
+      </div>
+
+      <!-- Étape 5 -->
+      <div class="step">
+        <div class="step-label">Étape 5 — Sur Mac · configurer ~/.ssh/config</div>
+        <p class="text-sm text-slate2-600 mb-2">Ajouter ce bloc dans <code class="mono text-slate2-700">~/.ssh/config</code> (créer le fichier si absent).</p>
+        <pre id="pre-ssh5"><button class="copy-btn" onclick="copyPre('pre-ssh5')">Copier</button>Host jean-mi
+  HostName <span class="placeholder">IP_UBUNTU</span>
+  User <span class="placeholder">USER</span>
+  IdentityFile ~/.ssh/jean_mi_ubuntu
+  AddKeysToAgent yes
+  UseKeychain yes</pre>
+      </div>
+
+      <!-- Étape 6 -->
+      <div class="step">
+        <div class="step-label">Étape 6 — Sur Mac · tester la connexion</div>
+        <pre id="pre-ssh6"><button class="copy-btn" onclick="copyPre('pre-ssh6')">Copier</button><span class="cmd">ssh jean-mi</span>
+<span class="out">  → Welcome to Ubuntu 24.04 LTS ...</span>
+<span class="out">  → USER@nipogl:~$</span></pre>
+        <div class="note">✓ Connexion sans mot de passe — la phase SSH est terminée.</div>
+      </div>
+    </div>
+
+    <!-- ─────────────────────────────── PHASE 2 — DOCKER ─────────────────────────────── -->
+    <div class="section-card mb-6">
+      <div class="phase-header bg-slate2-50">
+        <div class="phase-num bg-slate2-800 text-white">2</div>
+        <div>
+          <div class="font-bold text-slate2-800">Docker Engine</div>
+          <div class="mono text-xs text-slate2-400 mt-0.5">Prérequis pour Home Assistant, Mosquitto et Zigbee2MQTT</div>
+        </div>
+        <div class="ml-auto"><span class="badge status-done">✓ Documenté</span></div>
+      </div>
+
+      <div class="step">
+        <div class="step-label">Installer Docker via le repo officiel apt</div>
+        <p class="text-sm text-slate2-600 mb-2">Ne pas utiliser le paquet snap ni le paquet Ubuntu — utiliser le repo officiel Docker.</p>
+        <pre id="pre-docker1"><button class="copy-btn" onclick="copyPre('pre-docker1')">Copier</button><span class="comment"># Supprimer d'éventuelles anciennes versions</span>
+<span class="cmd">sudo apt remove -y docker docker-engine docker.io containerd runc 2>/dev/null; true</span>
+
+<span class="comment"># Dépendances</span>
+<span class="cmd">sudo apt update && sudo apt install -y ca-certificates curl gnupg lsb-release</span>
+
+<span class="comment"># Clé GPG officielle Docker</span>
+<span class="cmd">sudo install -m 0755 -d /etc/apt/keyrings</span>
+<span class="cmd">curl -fsSL https://download.docker.com/linux/ubuntu/gpg \
+  | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg</span>
+<span class="cmd">sudo chmod a+r /etc/apt/keyrings/docker.gpg</span>
+
+<span class="comment"># Ajouter le repo</span>
+<span class="cmd">echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] \
+  https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) stable" \
+  | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null</span>
+
+<span class="comment"># Installer Docker Engine + Compose</span>
+<span class="cmd">sudo apt update && sudo apt install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin</span>
+
+<span class="comment"># Ajouter l'utilisateur au groupe docker (évite sudo)</span>
+<span class="cmd">sudo usermod -aG docker $USER</span>
+<span class="cmd">newgrp docker</span>
+
+<span class="comment"># Vérifier</span>
+<span class="cmd">docker run --rm hello-world</span>
+<span class="out">  → Hello from Docker!</span></pre>
+      </div>
+    </div>
+
+    <!-- ─────────────────────────────── PHASE 3 — HOME ASSISTANT ─────────────────────────────── -->
+    <div class="section-card mb-6">
+      <div class="phase-header bg-slate2-50">
+        <div class="phase-num bg-slate2-800 text-white">3</div>
+        <div>
+          <div class="font-bold text-slate2-800">Home Assistant Container</div>
+          <div class="mono text-xs text-slate2-400 mt-0.5">Déploiement via Docker Compose · accès sur :8123</div>
+        </div>
+        <div class="ml-auto"><span class="badge status-done">✓ Documenté</span></div>
+      </div>
+
+      <div class="step">
+        <div class="step-label">Créer le répertoire et le fichier compose</div>
+        <pre id="pre-ha1"><button class="copy-btn" onclick="copyPre('pre-ha1')">Copier</button><span class="cmd">mkdir -p ~/homeassistant && cd ~/homeassistant</span>
+<span class="cmd">cat > compose.yaml << 'EOF'
+services:
+  homeassistant:
+    image: ghcr.io/home-assistant/home-assistant:stable
+    container_name: homeassistant
+    restart: unless-stopped
+    network_mode: host
+    privileged: true
+    volumes:
+      - ./config:/config
+      - /etc/localtime:/etc/localtime:ro
+      - /run/dbus:/run/dbus:ro
+EOF</span></pre>
+      </div>
+
+      <div class="step">
+        <div class="step-label">Démarrer Home Assistant</div>
+        <pre id="pre-ha2"><button class="copy-btn" onclick="copyPre('pre-ha2')">Copier</button><span class="cmd">docker compose up -d</span>
+<span class="out">  → [+] Running 1/1</span>
+<span class="out">  → ✔ Container homeassistant  Started</span>
+
+<span class="comment"># Suivre les logs au démarrage</span>
+<span class="cmd">docker compose logs -f</span>
+<span class="out">  → (attendre "Home Assistant initialized")</span></pre>
+        <div class="note">Accéder à HA depuis le réseau local : <strong>http://IP_UBUNTU:8123</strong><br>Ou depuis le Mac via tunnel SSH : <code class="mono">ssh -L 8123:localhost:8123 jean-mi</code> puis ouvrir <strong>http://localhost:8123</strong></div>
+      </div>
+    </div>
+
+    <!-- ─────────────────────────────── PHASES 4-8 — À VENIR ─────────────────────────────── -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+
+      <div class="section-card opacity-60">
+        <div class="phase-header">
+          <div class="phase-num bg-slate2-200 text-slate2-500">4</div>
+          <div>
+            <div class="font-bold text-slate2-600">Dongle Zigbee</div>
+            <div class="mono text-xs text-slate2-400 mt-0.5">SONOFF ZigBee 3.0 USB · udev · dialout</div>
+          </div>
+          <div class="ml-auto"><span class="badge status-todo">À venir</span></div>
+        </div>
+        <div class="px-6 py-4 text-xs text-slate2-400 mono">Après réception du matériel</div>
+      </div>
+
+      <div class="section-card opacity-60">
+        <div class="phase-header">
+          <div class="phase-num bg-slate2-200 text-slate2-500">5</div>
+          <div>
+            <div class="font-bold text-slate2-600">Mosquitto + Zigbee2MQTT</div>
+            <div class="mono text-xs text-slate2-400 mt-0.5">MQTT broker · Z2M · appairage appareils</div>
+          </div>
+          <div class="ml-auto"><span class="badge status-todo">À venir</span></div>
+        </div>
+        <div class="px-6 py-4 text-xs text-slate2-400 mono">Après phase 4</div>
+      </div>
+
+      <div class="section-card opacity-60">
+        <div class="phase-header">
+          <div class="phase-num bg-slate2-200 text-slate2-500">6</div>
+          <div>
+            <div class="font-bold text-slate2-600">ReSpeaker XVF-3800</div>
+            <div class="mono text-xs text-slate2-400 mt-0.5">Plug & play · arecord · ALSA</div>
+          </div>
+          <div class="ml-auto"><span class="badge status-todo">À venir</span></div>
+        </div>
+        <div class="px-6 py-4 text-xs text-slate2-400 mono">Après réception du ReSpeaker</div>
+      </div>
+
+      <div class="section-card opacity-60">
+        <div class="phase-header">
+          <div class="phase-num bg-slate2-200 text-slate2-500">7</div>
+          <div>
+            <div class="font-bold text-slate2-600">Voix locale</div>
+            <div class="mono text-xs text-slate2-400 mt-0.5">Whisper STT · Piper TTS · HA Assist FR</div>
+          </div>
+          <div class="ml-auto"><span class="badge status-todo">À venir</span></div>
+        </div>
+        <div class="px-6 py-4 text-xs text-slate2-400 mono">Après phase 6</div>
+      </div>
+
+    </div>
+
+    <div class="section-card mb-6 opacity-60">
+      <div class="phase-header">
+        <div class="phase-num bg-slate2-200 text-slate2-500">8</div>
+        <div>
+          <div class="font-bold text-slate2-600">Spotify + YouTube</div>
+          <div class="mono text-xs text-slate2-400 mt-0.5">Spotcast / Spotify Connect · media player</div>
+        </div>
+        <div class="ml-auto"><span class="badge status-todo">À venir</span></div>
+      </div>
+      <div class="px-6 py-4 text-xs text-slate2-400 mono">Après phase 7 — commandes vocales de lecture multimédia</div>
+    </div>
+
+  </main>
+
+  <footer class="max-w-4xl mx-auto px-6 py-6 border-t border-slate2-200 mt-4">
+    <div class="flex items-center justify-between flex-wrap gap-2">
+      <div class="mono text-xs text-slate2-400">Projet Jean-Mi · Home Assistant · Généré avec Claude</div>
+      <div class="mono text-xs text-slate2-400">Commandes testées sur Ubuntu 24.04 LTS</div>
+    </div>
+  </footer>
+
+  <script>
+    function copyPre(id) {
+      const pre = document.getElementById(id);
+      const btn = pre.querySelector('.copy-btn');
+      // Extraire le texte brut (sans les spans HTML)
+      const lines = [];
+      pre.childNodes.forEach(node => {
+        if (node.nodeName === 'BUTTON') return;
+        lines.push(node.textContent);
+      });
+      const text = lines.join('').replace(/^\n/, '').replace(/\n$/, '');
+      navigator.clipboard.writeText(text).then(() => {
+        const orig = btn.textContent;
+        btn.textContent = 'Copié !';
+        btn.style.color = '#6dcda2';
+        setTimeout(() => { btn.textContent = orig; btn.style.color = ''; }, 1500);
+      });
+    }
+  </script>
+
+</body>
+</html>

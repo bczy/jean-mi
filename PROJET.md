@@ -117,10 +117,14 @@ Créer un système domotique **Home Assistant** avec commande vocale locale (san
 
 ```
 jean-mi/
-├── jean-mi.html   # Comparatif interactif (source de vérité)
-├── README.md      # Présentation du projet
-├── PROJET.md      # Ce fichier — résumé complet
-└── CLAUDE.md      # Guide de contexte pour Claude Code
+├── index.html          # Page d'accueil — navigation vers les autres pages
+├── jean-mi.html        # Comparatif interactif matériel (source de vérité)
+├── avancement.html     # Suivi des achats et de la progression
+├── installation.html   # Guide d'installation software (SSH · Docker · HA · Z2M · Voix)
+├── achats.json         # État des achats (micro, prise Zigbee, module plafonnier)
+├── README.md           # Présentation du projet
+├── PROJET.md           # Ce fichier — résumé complet
+└── CLAUDE.md           # Guide de contexte pour Claude Code
 ```
 
 ---
