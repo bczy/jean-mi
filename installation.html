@@ -129,7 +129,7 @@
         </div>
       </div>
       <div class="flex flex-wrap gap-2 mt-6">
-        <span class="badge bg-home-800 text-home-200">9 phases</span>
+        <span class="badge bg-home-800 text-home-200">10 phases</span>
         <span class="badge bg-slate2-700 text-slate2-200">Local · sans cloud</span>
         <span class="badge bg-slate2-700 text-slate2-200">Commandes vocales FR</span>
       </div>
@@ -138,7 +138,7 @@
 
   <main class="max-w-4xl mx-auto px-6 py-12 fade-up fade-up-2">
 
-    <!-- Tableau récapitulatif des 9 phases -->
+    <!-- Tableau récapitulatif des 10 phases -->
     <div class="section-card p-4 mb-8">
       <div class="mono text-xs text-slate2-400 tracking-widest uppercase mb-3 px-2">Récapitulatif des phases</div>
       <div class="overflow-x-auto">
@@ -200,11 +200,17 @@
               <td class="px-3 py-2 mono text-xs text-slate2-500">~20 min</td>
               <td class="px-3 py-2"><span class="badge status-done">✓ Documenté</span></td>
             </tr>
-            <tr class="hover:bg-slate2-50 transition-colors">
+            <tr class="border-b border-slate2-100 hover:bg-slate2-50 transition-colors">
               <td class="px-3 py-2 mono text-xs text-slate2-400">9</td>
               <td class="px-3 py-2"><a href="#phase-9" class="font-semibold text-slate2-800 hover:text-home-500 transition-colors">Freebox Player (décodeur TV)</a></td>
               <td class="px-3 py-2 mono text-xs text-slate2-500">~20 min</td>
               <td class="px-3 py-2"><span class="badge status-done">✓ Documenté</span></td>
+            </tr>
+            <tr class="hover:bg-slate2-50 transition-colors">
+              <td class="px-3 py-2 mono text-xs text-slate2-400">10</td>
+              <td class="px-3 py-2"><a href="#phase-10" class="font-semibold text-slate2-800 hover:text-home-500 transition-colors">LLM local — Ollama (commandes vocales libres)</a></td>
+              <td class="px-3 py-2 mono text-xs text-slate2-500">~30 min</td>
+              <td class="px-3 py-2"><span class="badge bg-amber-100 text-amber-700">⚡ Optionnel</span></td>
             </tr>
           </tbody>
         </table>
@@ -267,14 +273,41 @@
               <td class="px-4 py-3 text-slate2-500 text-xs">Spotcast / Spotify Connect · yt-dlp + mpv</td>
               <td class="px-6 py-3 text-right"><span class="badge status-done">✓ Documenté</span></td>
             </tr>
-            <tr>
+            <tr class="border-b border-slate2-100">
               <td class="px-6 py-3 mono text-xs text-slate2-400">9</td>
               <td class="px-4 py-3 font-semibold text-slate2-800">Freebox Player</td>
               <td class="px-4 py-3 text-slate2-500 text-xs">Contrôle du décodeur TV via HACS · power · volume · chaînes</td>
               <td class="px-6 py-3 text-right"><span class="badge status-done">✓ Documenté</span></td>
             </tr>
+            <tr>
+              <td class="px-6 py-3 mono text-xs text-slate2-400">10</td>
+              <td class="px-4 py-3 font-semibold text-slate2-800">LLM local — Ollama</td>
+              <td class="px-4 py-3 text-slate2-500 text-xs">Conversations libres en français · Ollama Docker · intégration HA native · 100% local</td>
+              <td class="px-6 py-3 text-right"><span class="badge bg-amber-100 text-amber-700">⚡ Optionnel</span></td>
+            </tr>
           </tbody>
         </table>
+      </div>
+    </div>
+
+    <!-- ─────────────────────────────── NOTE RÉSEAU DOCKER ─────────────────────────────── -->
+    <div class="section-card mb-8 p-4">
+      <div class="mono text-xs text-slate2-400 tracking-widest uppercase mb-3 px-2">Note — Réseau Docker</div>
+      <div class="step" style="border-bottom:none">
+        <p class="text-sm text-slate2-600 mb-3">Ce guide utilise deux modes réseau Docker distincts. Comprendre cette distinction évite la majorité des problèmes de connexion entre services.</p>
+        <div class="overflow-x-auto">
+          <table class="w-full text-xs">
+            <thead><tr class="border-b border-slate2-200"><th class="px-3 py-2 text-left mono text-slate2-400">Service</th><th class="px-3 py-2 text-left mono text-slate2-400">Mode réseau</th><th class="px-3 py-2 text-left mono text-slate2-400">Pour s'y connecter depuis HA</th></tr></thead>
+            <tbody>
+              <tr class="border-b border-slate2-100"><td class="px-3 py-2 mono text-slate2-700">Home Assistant</td><td class="px-3 py-2 text-slate2-600"><code class="mono">network_mode: host</code></td><td class="px-3 py-2 text-slate2-600">— (c'est HA lui-même)</td></tr>
+              <tr class="border-b border-slate2-100"><td class="px-3 py-2 mono text-slate2-700">Mosquitto</td><td class="px-3 py-2 text-slate2-600">bridge nommé (Docker Compose)</td><td class="px-3 py-2 text-slate2-600"><code class="mono">localhost:1883</code></td></tr>
+              <tr class="border-b border-slate2-100"><td class="px-3 py-2 mono text-slate2-700">Zigbee2MQTT</td><td class="px-3 py-2 text-slate2-600">bridge nommé (Docker Compose)</td><td class="px-3 py-2 text-slate2-600"><code class="mono">localhost:8080</code></td></tr>
+              <tr class="border-b border-slate2-100"><td class="px-3 py-2 mono text-slate2-700">Wyoming (Whisper/Piper/OWW)</td><td class="px-3 py-2 text-slate2-600">bridge nommé (Docker Compose)</td><td class="px-3 py-2 text-slate2-600"><code class="mono">jean-mi.local:103xx</code></td></tr>
+              <tr><td class="px-3 py-2 mono text-slate2-700">Ollama</td><td class="px-3 py-2 text-slate2-600">bridge nommé (Docker Compose)</td><td class="px-3 py-2 text-slate2-600"><code class="mono">localhost:11434</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="note mt-3"><strong>Règle simple :</strong> Depuis Home Assistant (<code class="mono">network_mode: host</code>), utiliser toujours <code class="mono">localhost:PORT</code> pour accéder aux autres services. Les autres services (Mosquitto, Z2M, Wyoming…) partagent un réseau bridge nommé créé automatiquement par Docker Compose — ils peuvent donc se parler entre eux via le nom du conteneur (ex: <code class="mono">mosquitto:1883</code> depuis Zigbee2MQTT). C'est pourquoi la configuration Z2M utilise <code class="mono">mqtt://mosquitto:1883</code> mais HA utilise <code class="mono">localhost:1883</code>.</div>
       </div>
     </div>
 
@@ -308,7 +341,8 @@
       <!-- Étape 2 -->
       <div class="step">
         <div class="step-label">Étape 2 — Sur Ubuntu · hostname mDNS (recommandé Freebox Pop)</div>
-        <p class="text-sm text-slate2-600">Avec une Freebox Pop, l'IP locale peut changer (DHCP). La solution recommandée est d'utiliser le <strong>hostname mDNS</strong> (<code class="mono">jean-mi.local</code>) — stable sans configuration réseau, supporté nativement par macOS (Bonjour) et Ubuntu (Avahi).</p>
+        <div class="warn">⚠️ Étape critique — Si le hostname n'est pas changé, <code class="mono">jean-mi.local</code> n'existera pas sur le réseau et SSH sans mot de passe ne fonctionnera pas. Cette étape est souvent sautée par erreur.</div>
+        <p class="text-sm text-slate2-600 mt-2">Avec une Freebox Pop, l'IP locale peut changer (DHCP). La solution recommandée est d'utiliser le <strong>hostname mDNS</strong> (<code class="mono">jean-mi.local</code>) — stable sans configuration réseau, supporté nativement par macOS (Bonjour) et Ubuntu (Avahi).</p>
         <pre id="pre-ssh2"><button class="copy-btn" onclick="copyPre('pre-ssh2')">Copier</button><span class="comment"># Vérifier le hostname Ubuntu</span>
 <span class="cmd">hostname</span>
 <span class="out">  → jean-mi  (ou le nom choisi lors de l'installation)</span>
@@ -321,7 +355,18 @@
 <span class="out">  → Active: active (running) ...</span>
 
 <span class="comment"># Installer avahi si absent (rare sur Ubuntu 24.04)</span>
-<span class="cmd">sudo apt install avahi-daemon</span></pre>
+<span class="cmd">sudo apt install avahi-daemon</span>
+
+<span class="comment"># S'assurer qu'Avahi démarre automatiquement</span>
+<span class="cmd">sudo systemctl enable --now avahi-daemon</span>
+
+<span class="comment"># Tester la résolution mDNS (depuis le Mac)</span>
+<span class="cmd">avahi-resolve-host-name jean-mi.local</span>
+<span class="out">  → jean-mi.local    192.168.X.X</span>
+
+<span class="comment"># Test depuis le Mac — doit retourner 192.168.X.X</span>
+<span class="cmd">ping -c 1 jean-mi.local</span>
+<span class="out">  → 64 bytes from 192.168.X.X ...</span></pre>
         <div class="note">✓ Une fois fait, le PC est joignable via <strong>jean-mi.local</strong> depuis le Mac (et tout appareil du réseau local). Utiliser ce nom à la place de <code class="mono">IP_UBUNTU</code> dans toutes les commandes suivantes.</div>
         <div class="warn">⚠️ Remplacer <span class="mono font-semibold">USER</span> par ton vrai nom d'utilisateur Ubuntu dans les commandes suivantes.</div>
       </div>
@@ -436,6 +481,9 @@ services:
     container_name: homeassistant
     restart: unless-stopped
     network_mode: host
+    depends_on:
+      - mosquitto
+      - zigbee2mqtt
     privileged: true
     volumes:
       - ./config:/config
@@ -528,6 +576,7 @@ EOF</span>
       </div>
 
       <div class="step">
+        <div class="note">Matériel : voir le <a href="jean-mi.html#section-prise" class="underline text-home-600">tableau comparatif des prises Zigbee</a> et <a href="jean-mi.html#section-plafonnier" class="underline text-home-600">modules plafonniers</a>.</div>
         <div class="step-label">Étape 1 — Créer la structure de répertoires</div>
         <pre id="pre-z5-1"><button class="copy-btn" onclick="copyPre('pre-z5-1')">Copier</button><span class="cmd">mkdir -p ~/homeassistant/mosquitto/{config,data,log}
 mkdir -p ~/homeassistant/zigbee2mqtt/data</span></pre>
@@ -655,6 +704,7 @@ EOF</span></pre>
       </div>
 
       <div class="step">
+        <div class="note">Matériel : voir le <a href="jean-mi.html#section-micro" class="underline text-home-600">tableau comparatif des micros</a> pour les options d'achat.</div>
         <div class="step-label">Étape 1 — Vérifier la détection USB</div>
         <p class="text-sm text-slate2-600">Le XVF-3800 est plug & play sur Linux via le driver USB Audio standard — aucune installation de driver requise.</p>
         <pre id="pre-rs-1"><button class="copy-btn" onclick="copyPre('pre-rs-1')">Copier</button><span class="comment"># Vérifier la présence du périphérique USB</span>
@@ -1047,6 +1097,136 @@ target:
 data:
   media_player_entity_id: media_player.freebox_player_pop
   message: <span class="str">"Bonjour, le dîner est prêt"</span></pre>
+      </div>
+    </div>
+
+    <!-- ─────────────────────────────── PHASE 10 — LLM LOCAL (OLLAMA) ─────────────────────────────── -->
+    <div id="phase-10" class="section-card mb-6">
+      <div class="phase-header bg-slate2-50">
+        <div class="phase-num bg-slate2-800 text-white">10</div>
+        <div>
+          <div class="font-bold text-slate2-800">LLM local — Ollama</div>
+          <div class="mono text-xs text-slate2-400 mt-0.5">Conversations libres en français · 100% local · aucune donnée hors réseau</div>
+        </div>
+        <div class="ml-auto"><span class="badge bg-amber-100 text-amber-700">⚡ Optionnel</span></div>
+      </div>
+
+      <div class="step">
+        <div class="step-label">Pourquoi cette phase ?</div>
+        <p class="text-sm text-slate2-600 mb-3">La Phase 7 (HA Assist) reconnaît uniquement des <strong>phrases prédéfinies</strong>. Ollama ajoute un vrai LLM local : l'assistant peut répondre à des questions libres, comprendre des formulations variées, sans qu'aucune donnée ne quitte le réseau local.</p>
+        <div class="overflow-x-auto">
+          <table class="w-full text-xs">
+            <thead><tr class="border-b border-slate2-200"><th class="px-3 py-2 text-left mono text-slate2-400">Mode</th><th class="px-3 py-2 text-left mono text-slate2-400">Pipeline</th><th class="px-3 py-2 text-left mono text-slate2-400">Usage idéal</th></tr></thead>
+            <tbody>
+              <tr class="border-b border-slate2-100"><td class="px-3 py-2 mono text-slate2-700">HA Assist (Phase 7)</td><td class="px-3 py-2 text-slate2-600">STT → pattern matching → action</td><td class="px-3 py-2 text-slate2-600">Commandes domotiques précises · rapide · déterministe</td></tr>
+              <tr><td class="px-3 py-2 mono text-slate2-700">Ollama (Phase 10)</td><td class="px-3 py-2 text-slate2-600">STT → LLM local → réponse TTS</td><td class="px-3 py-2 text-slate2-600">Questions libres · conversations · formulations variées</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="note mt-3">Les deux modes <strong>coexistent</strong> : créer deux Voice Assistants dans HA (un par mode), chacun avec son mot de réveil.</div>
+      </div>
+
+      <div class="step">
+        <div class="step-label">Ressources système (NiPoGi Ryzen 7 7735HS · 16 Go RAM)</div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-xs">
+            <thead><tr class="border-b border-slate2-200"><th class="px-3 py-2 text-left mono text-slate2-400">Modèle</th><th class="px-3 py-2 text-left mono text-slate2-400">RAM utilisée</th><th class="px-3 py-2 text-left mono text-slate2-400">Vitesse (CPU)</th><th class="px-3 py-2 text-left mono text-slate2-400">Qualité FR</th></tr></thead>
+            <tbody>
+              <tr class="border-b border-slate2-100"><td class="px-3 py-2 mono text-slate2-700">mistral:7b-instruct-q4_K_M</td><td class="px-3 py-2 text-slate2-600">~4,1 Go</td><td class="px-3 py-2 text-slate2-600">~8 tok/s</td><td class="px-3 py-2 text-slate2-600">⭐⭐⭐⭐ — recommandé</td></tr>
+              <tr><td class="px-3 py-2 mono text-slate2-700">llama3.2:3b-instruct-q8_0</td><td class="px-3 py-2 text-slate2-600">~3,3 Go</td><td class="px-3 py-2 text-slate2-600">~15 tok/s</td><td class="px-3 py-2 text-slate2-600">⭐⭐⭐ — plus rapide</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="note mt-2">Les services existants (HA, Whisper, Piper, Z2M, Mosquitto) occupent ~3–4 Go. Il reste ~10 Go disponibles — le Ryzen 7 7735HS gère très bien l'inférence CPU.</div>
+      </div>
+
+      <div class="step">
+        <div class="step-label">Étape 1 — Ajouter Ollama dans compose.yaml</div>
+        <pre id="pre-ol1"><button class="copy-btn" onclick="copyPre('pre-ol1')">Copier</button>  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    restart: unless-stopped
+    ports:
+      - "11434:11434"
+    volumes:
+      - ./ollama-data:/root/.ollama
+    environment:
+      TZ: Europe/Paris
+    deploy:
+      resources:
+        limits:
+          cpus: '6'
+          memory: 10G</pre>
+        <div class="note">Puis démarrer le conteneur : <code class="mono">cd ~/homeassistant && docker compose up -d ollama</code></div>
+      </div>
+
+      <div class="step">
+        <div class="step-label">Étape 2 — Télécharger le modèle</div>
+        <pre id="pre-ol2"><button class="copy-btn" onclick="copyPre('pre-ol2')">Copier</button><span class="comment"># Télécharger Mistral 7B quantifié (~4 Go — attendre la fin)</span>
+<span class="cmd">docker exec ollama ollama pull mistral:7b-instruct-q4_K_M</span>
+<span class="out">  → pulling manifest...</span>
+<span class="out">  → pulling model... ████████████ 100%</span>
+<span class="out">  → success</span>
+
+<span class="comment"># Vérifier le modèle installé</span>
+<span class="cmd">docker exec ollama ollama list</span>
+<span class="out">  → mistral:7b-instruct-q4_K_M   4.1 GB   ...</span>
+
+<span class="comment"># Test rapide en ligne de commande</span>
+<span class="cmd">curl -s http://localhost:11434/api/generate \
+  -d '{"model":"mistral:7b-instruct-q4_K_M","prompt":"Bonjour, réponds en français.","stream":false}' \
+  | python3 -c "import sys,json; print(json.load(sys.stdin)['response'])"</span>
+<span class="out">  → Bonjour ! Comment puis-je vous aider ?</span></pre>
+      </div>
+
+      <div class="step">
+        <div class="step-label">Étape 3 — Intégrer Ollama dans Home Assistant</div>
+        <p class="text-sm text-slate2-600 mb-2"><strong>Settings → Devices &amp; Services → Add Integration → Ollama</strong></p>
+        <div class="overflow-x-auto">
+          <table class="w-full text-xs">
+            <thead><tr class="border-b border-slate2-200"><th class="px-3 py-2 text-left mono text-slate2-400">Champ</th><th class="px-3 py-2 text-left mono text-slate2-400">Valeur</th></tr></thead>
+            <tbody>
+              <tr class="border-b border-slate2-100"><td class="px-3 py-2 mono text-slate2-700">URL</td><td class="px-3 py-2 mono text-slate2-600">http://localhost:11434</td></tr>
+              <tr><td class="px-3 py-2 mono text-slate2-700">Modèle</td><td class="px-3 py-2 mono text-slate2-600">mistral:7b-instruct-q4_K_M</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="warn mt-2">⚠️ Utiliser <code class="mono">localhost</code> et non <code class="mono">ollama</code> — HA Container utilise <code class="mono">network_mode: host</code>, le nom du conteneur Docker n'est pas résolu (même comportement que Mosquitto en Phase 5).</div>
+      </div>
+
+      <div class="step">
+        <div class="step-label">Étape 4 — Créer un Voice Assistant dédié "Ollama"</div>
+        <p class="text-sm text-slate2-600 mb-2"><strong>Settings → Voice Assistants → Add Assistant</strong></p>
+        <div class="overflow-x-auto">
+          <table class="w-full text-xs">
+            <thead><tr class="border-b border-slate2-200"><th class="px-3 py-2 text-left mono text-slate2-400">Paramètre</th><th class="px-3 py-2 text-left mono text-slate2-400">Valeur</th></tr></thead>
+            <tbody>
+              <tr class="border-b border-slate2-100"><td class="px-3 py-2 mono text-slate2-700">Nom</td><td class="px-3 py-2 text-slate2-600">Jean-Mi IA</td></tr>
+              <tr class="border-b border-slate2-100"><td class="px-3 py-2 mono text-slate2-700">Language</td><td class="px-3 py-2 text-slate2-600">Français</td></tr>
+              <tr class="border-b border-slate2-100"><td class="px-3 py-2 mono text-slate2-700">Conversation agent</td><td class="px-3 py-2 text-slate2-600">Ollama Conversation</td></tr>
+              <tr class="border-b border-slate2-100"><td class="px-3 py-2 mono text-slate2-700">STT</td><td class="px-3 py-2 text-slate2-600">Wyoming (Whisper) — identique Phase 7</td></tr>
+              <tr class="border-b border-slate2-100"><td class="px-3 py-2 mono text-slate2-700">TTS</td><td class="px-3 py-2 text-slate2-600">Wyoming (Piper) — identique Phase 7</td></tr>
+              <tr><td class="px-3 py-2 mono text-slate2-700">Wake word</td><td class="px-3 py-2 text-slate2-600">hey_jarvis (pour différencier de ok_nabu → HA Assist)</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="note mt-2">Conserver l'assistant <strong>HA Assist</strong> (Phase 7) sur <em>ok nabu</em> pour les commandes domotiques. Le nouvel assistant Ollama répond sur <em>hey Jarvis</em> pour les questions libres.</div>
+      </div>
+
+      <div class="step">
+        <div class="step-label">Étape 5 — Vérification</div>
+        <pre id="pre-ol5"><button class="copy-btn" onclick="copyPre('pre-ol5')">Copier</button><span class="comment"># Vérifier que le conteneur tourne</span>
+<span class="cmd">docker ps | grep ollama</span>
+<span class="out">  → ollama   Up X minutes   0.0.0.0:11434->11434/tcp</span>
+
+<span class="comment"># Vérifier la RAM utilisée par Ollama</span>
+<span class="cmd">docker stats ollama --no-stream</span>
+<span class="out">  → MEM USAGE: ~4.1GiB / 15.5GiB  (dans la norme attendue)</span>
+
+<span class="comment"># Tester l'API Ollama directement</span>
+<span class="cmd">curl -s http://localhost:11434/api/tags | python3 -m json.tool</span>
+<span class="out">  → {"models": [{"name": "mistral:7b-instruct-q4_K_M", ...}]}</span></pre>
+        <div class="note">Dans HA : <strong>Developer Tools → Assist</strong> → sélectionner l'assistant "Jean-Mi IA" → taper <em>"Quelle est la capitale de la France ?"</em> — la réponse doit arriver en quelques secondes (inférence CPU).</div>
       </div>
     </div>
 
