@@ -620,16 +620,16 @@
           <span id="step-plafonnier-icon" class="mono text-slate2-300">○</span>
           Acheter le module SONOFF ZBMINIL2
         </div>
-        <div class="flex items-center gap-2 text-sm text-slate2-500">
-          <span class="mono text-slate2-200">○</span>
+        <div class="flex items-center gap-2 text-sm" style="color:#0f7a59;font-weight:600;text-decoration:line-through;opacity:0.6">
+          <span class="mono" style="color:#0f7a59">✓</span>
           Installer Home Assistant sur Ubuntu 24.04
         </div>
-        <div class="flex items-center gap-2 text-sm text-slate2-500">
-          <span class="mono text-slate2-200">○</span>
+        <div class="flex items-center gap-2 text-sm" style="color:#0f7a59;font-weight:600;text-decoration:line-through;opacity:0.6">
+          <span class="mono" style="color:#0f7a59">✓</span>
           Appairer le coordinateur SONOFF Zigbee Dongle Plus
         </div>
-        <div class="flex items-center gap-2 text-sm text-slate2-500">
-          <span class="mono text-slate2-200">○</span>
+        <div class="flex items-center gap-2 text-sm" style="color:#0f7a59;font-weight:600;text-decoration:line-through;opacity:0.6">
+          <span class="mono" style="color:#0f7a59">✓</span>
           Configurer Zigbee2MQTT
         </div>
         <div class="flex items-center gap-2 text-sm text-slate2-500">
@@ -640,8 +640,8 @@
           <span class="mono text-slate2-200">○</span>
           Installer le ZBMINIL2 derrière l'interrupteur
         </div>
-        <div class="flex items-center gap-2 text-sm text-slate2-500">
-          <span class="mono text-slate2-200">○</span>
+        <div class="flex items-center gap-2 text-sm" style="color:#0284c7;font-weight:600">
+          <span class="mono" style="color:#0284c7">◐</span>
           Brancher le ReSpeaker et configurer la voix
         </div>
         <div class="flex items-center gap-2 text-sm text-slate2-500">
@@ -652,43 +652,93 @@
 
       <!-- Sous-titre installation software -->
       <div class="mt-8 mb-4 mono text-xs text-slate2-400 tracking-widest uppercase">Installation software</div>
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2">
-        <div class="flex items-center gap-2 text-sm text-slate2-500">
-          <span class="mono text-slate2-200">○</span>
-          Phase 1 — Connexion SSH Mac → Ubuntu
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3">
+
+        <!-- Phase 1 — SSH -->
+        <div class="flex items-center justify-between gap-3 text-sm">
+          <div class="flex items-center gap-2" style="color:#0f7a59;font-weight:600">
+            <span class="mono" style="color:#0f7a59">✓</span>
+            Phase 1 — Connexion SSH Mac → Ubuntu
+          </div>
+          <span class="badge" style="background:#d1fae5;color:#065f46">Terminé</span>
         </div>
-        <div class="flex items-center gap-2 text-sm text-slate2-500">
-          <span class="mono text-slate2-200">○</span>
-          Phase 2 — Installation Docker
+
+        <!-- Phase 2 — Docker -->
+        <div class="flex items-center justify-between gap-3 text-sm">
+          <div class="flex items-center gap-2" style="color:#0f7a59;font-weight:600">
+            <span class="mono" style="color:#0f7a59">✓</span>
+            Phase 2 — Installation Docker
+          </div>
+          <span class="badge" style="background:#d1fae5;color:#065f46">Terminé</span>
         </div>
-        <div class="flex items-center gap-2 text-sm text-slate2-500">
-          <span class="mono text-slate2-200">○</span>
-          Phase 3 — Déploiement Home Assistant
+
+        <!-- Phase 3 — Home Assistant -->
+        <div class="flex items-center justify-between gap-3 text-sm">
+          <div class="flex items-center gap-2" style="color:#0f7a59;font-weight:600">
+            <span class="mono" style="color:#0f7a59">✓</span>
+            Phase 3 — Déploiement Home Assistant
+          </div>
+          <span class="badge" style="background:#d1fae5;color:#065f46">Terminé</span>
         </div>
-        <div class="flex items-center gap-2 text-sm text-slate2-500">
-          <span class="mono text-slate2-200">○</span>
-          Phase 4 — Configuration dongle Zigbee
+
+        <!-- Phase 4 — Dongle Zigbee -->
+        <div class="flex items-center justify-between gap-3 text-sm">
+          <div class="flex items-center gap-2" style="color:#0f7a59;font-weight:600">
+            <span class="mono" style="color:#0f7a59">✓</span>
+            Phase 4 — Configuration dongle Zigbee
+          </div>
+          <span class="badge" style="background:#d1fae5;color:#065f46">Terminé</span>
         </div>
-        <div class="flex items-center gap-2 text-sm text-slate2-500">
-          <span class="mono text-slate2-200">○</span>
-          Phase 5 — Mosquitto + Zigbee2MQTT
+
+        <!-- Phase 5 — Mosquitto + Z2M -->
+        <div class="flex items-center justify-between gap-3 text-sm">
+          <div class="flex items-center gap-2" style="color:#0f7a59;font-weight:600">
+            <span class="mono" style="color:#0f7a59">✓</span>
+            Phase 5 — Mosquitto + Zigbee2MQTT
+          </div>
+          <span class="badge" style="background:#d1fae5;color:#065f46">Terminé</span>
         </div>
-        <div class="flex items-center gap-2 text-sm text-slate2-500">
-          <span class="mono text-slate2-200">○</span>
-          Phase 6 — ReSpeaker (micro USB)
+
+        <!-- Phase 6 — ReSpeaker -->
+        <div class="flex items-center justify-between gap-3 text-sm">
+          <div class="flex items-center gap-2" style="color:#0f7a59;font-weight:600">
+            <span class="mono" style="color:#0f7a59">✓</span>
+            Phase 6 — ReSpeaker (micro USB)
+          </div>
+          <span class="badge" style="background:#d1fae5;color:#065f46">Terminé</span>
         </div>
-        <div class="flex items-center gap-2 text-sm text-slate2-500">
-          <span class="mono text-slate2-200">○</span>
-          Phase 7 — Commande vocale locale (Wyoming)
+
+        <!-- Phase 7 — Wyoming -->
+        <div class="flex items-center justify-between gap-3 text-sm">
+          <div class="flex items-center gap-2" style="color:#0284c7;font-weight:600">
+            <span class="mono" style="color:#0284c7">◐</span>
+            Phase 7 — Commande vocale locale (Wyoming)
+          </div>
+          <span class="badge" style="background:#e0f2fe;color:#075985">Conteneurs actifs</span>
         </div>
+
+        <!-- Phase 8 — Spotify / YouTube -->
         <div class="flex items-center gap-2 text-sm text-slate2-500">
           <span class="mono text-slate2-200">○</span>
           Phase 8 — Spotify / YouTube
         </div>
+
+        <!-- Phase 9 — Freebox Player -->
         <div class="flex items-center gap-2 text-sm text-slate2-500">
           <span class="mono text-slate2-200">○</span>
           Phase 9 — Freebox Player (décodeur TV)
         </div>
+
+        <!-- Phase 10 — Ollama -->
+        <div class="flex items-center gap-2 text-sm text-slate2-500">
+          <span class="mono text-amber-400">○</span>
+          <span>Phase 10 — LLM local — Ollama</span>
+        </div>
+
+      </div>
+      <div class="mt-3 text-xs text-slate2-400 flex items-start gap-2 pl-1">
+        <span class="mono flex-shrink-0" style="color:#0284c7">→</span>
+        <span>Phase 7 — Whisper (10300) · Piper (10200) · OpenWakeWord (10400) actifs · reste : connecter les intégrations Wyoming dans HA (<strong>Settings → Devices &amp; Services → Wyoming Protocol</strong>)</span>
       </div>
       <div class="mt-4">
         <a href="installation.html" class="mono text-xs text-home-600 hover:underline">Voir le guide d'installation →</a>

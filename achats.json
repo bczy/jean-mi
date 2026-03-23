@@ -1,10 +1,12 @@
 {
   "micro": {
     "achete": true,
+    "installe": true,
     "produit": "ReSpeaker USB Mic Array (SEE-15689)",
     "prix": 65,
     "source": "Botland 🇵🇱",
-    "date": "2026-03-22"
+    "date": "2026-03-22",
+    "note": "Détecté par ALSA (card 1: USB Audio Device) — config ALSA à vérifier"
   },
   "prise_zigbee": {
     "achete": false,
