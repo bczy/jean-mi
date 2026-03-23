@@ -210,7 +210,7 @@
               <td class="px-3 py-2 mono text-xs text-slate2-400">10</td>
               <td class="px-3 py-2"><a href="#phase-10" class="font-semibold text-slate2-800 hover:text-home-500 transition-colors">LLM local — Ollama (commandes vocales libres)</a></td>
               <td class="px-3 py-2 mono text-xs text-slate2-500">~30 min</td>
-              <td class="px-3 py-2"><span class="badge bg-amber-100 text-amber-700">⚡ Optionnel</span></td>
+              <td class="px-3 py-2"><span class="badge bg-slate2-100 text-slate2-500">~30 min</span></td>
             </tr>
           </tbody>
         </table>
@@ -283,7 +283,7 @@
               <td class="px-6 py-3 mono text-xs text-slate2-400">10</td>
               <td class="px-4 py-3 font-semibold text-slate2-800">LLM local — Ollama</td>
               <td class="px-4 py-3 text-slate2-500 text-xs">Conversations libres en français · Ollama Docker · intégration HA native · 100% local</td>
-              <td class="px-6 py-3 text-right"><span class="badge bg-amber-100 text-amber-700">⚡ Optionnel</span></td>
+              <td class="px-6 py-3 text-right"><span class="badge bg-slate2-100 text-slate2-500">~30 min</span></td>
             </tr>
           </tbody>
         </table>
@@ -738,7 +738,7 @@ pcm.!default {
 }
 pcm.mic {
   type plug
-  slave { pcm hw:CARD,0; rate 16000 }
+  slave.pcm "hw:CARD,0"
 }
 pcm.speaker {
   type plug
@@ -1108,7 +1108,7 @@ data:
           <div class="font-bold text-slate2-800">LLM local — Ollama</div>
           <div class="mono text-xs text-slate2-400 mt-0.5">Conversations libres en français · 100% local · aucune donnée hors réseau</div>
         </div>
-        <div class="ml-auto"><span class="badge bg-amber-100 text-amber-700">⚡ Optionnel</span></div>
+        <div class="ml-auto"><span class="badge bg-slate2-100 text-slate2-500">~30 min</span></div>
       </div>
 
       <div class="step">
